@@ -1,0 +1,146 @@
+.nav-bar {
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  padding: 20px 20px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  /* border-bottom: 1px solid rgba(53, 53, 53, 0.75); */
+}
+
+.logo {
+  background-image: url("../../assets/phhLogo.png");
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 50%;
+  width: 40px;
+}
+.title {
+  font: var(--text-large);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 10px;
+  background-color: #ffffff;
+  padding: 2px 15px;
+  border-radius: 10px;
+  a {
+    font: var(--text-caption);
+    text-decoration: none;
+    margin: 0px 10px;
+    padding: 2px;
+    border-radius: 5px;
+  }
+}
+.buttons {
+  margin-left: auto;
+  gap: 10px;
+}
+.mobile-nav {
+  display: none;
+}
+.toggle-button {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .nav-bar {
+    .title {
+      font: var(--text-large);
+    }
+  }
+  .nav-links {
+    display: none;
+  }
+  .buttons {
+    display: none;
+  }
+  .toggle-button {
+    display: flex;
+    margin-left: auto;
+  }
+  .view {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    gap: 10px;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: 80%;
+    height: 100%;
+    padding: 10px;
+    border-radius: 20px 0 0 20px;
+    animation: SlideInFromRight 1s ease-out;
+    background-color: white;
+
+    border-left: 1px solid var(--text-color);
+    .mobile-links {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px 20px;
+      gap: 10px;
+      width: 100%;
+    }
+    a {
+      font: var(--text-medium);
+      box-shadow: var(--default-shadow);
+      padding: 5px 15px;
+      border-radius: 20px;
+    }
+    .mobile-buttons {
+      border-top: 1px solid var(--text-color);
+      border-bottom: 1px solid var(--text-color);
+      flex-direction: row;
+      justify-content: space-around;
+      width: 100%;
+      padding: 10px 20px;
+    }
+    .toggle-button {
+      z-index: 200;
+    }
+    .side-button {
+      color: var(--primary-color);
+      font-size: 30px;
+    }
+    .mascot-message {
+      margin-top: 10px;
+      width: 100%;
+      height: fit-content;
+      p {
+        text-align: center;
+        font: var(--text-large);
+      }
+    }
+    .mascot-2 {
+      align-self: flex-start;
+      background: url("../../assets/ms-1.png");
+      width: 40%;
+      aspect-ratio: 1;
+      background-size: contain;
+      background-repeat: no-repeat;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+
+@keyframes SlideInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
