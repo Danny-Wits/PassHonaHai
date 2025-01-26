@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import NavBar from "../../Components/Jsx/NavBar";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { PageRoutes } from "../../Scripts/Const";
 import { useAuth } from "../../Context";
 import Card from "../../Components/Jsx/Card";
@@ -9,25 +9,17 @@ import oldPaper from "../../assets/oldpapers.png";
 import studyNotes from "../../assets/studynotes.png";
 import colab from "../../assets/colab.png";
 import senior from "../../assets/senior.png";
-import step1 from "../../assets/step1.png";
-import step2 from "../../assets/step2.png";
-import step3 from "../../assets/step3.png";
-import step4 from "../../assets/step4.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBook,
   faBookOpen,
-  faBookSkull,
-  faDashboard,
   faDownload,
-  faExchange,
   faHandshake,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 function Landing() {
   const { user_info } = useAuth();
   if (user_info) {
-    return <Navigate to={PageRoutes.Dashboard + user_info?.name} />;
+    return <Navigate to={PageRoutes.Explore} />;
   }
   return (
     <div className="page">
@@ -97,14 +89,14 @@ function Landing() {
             1<FontAwesomeIcon icon={faUpload} />
           </h1>
           <h3 className="text">
-            <h1 className="primary">Upload Your Notes</h1>
+            <p className="primary">Upload Your Notes</p>
             Contribute to the community by uploading your class notes, study
             guides, or solved papers.
           </h3>
         </div>
         <div className="step">
           <h3 className="text">
-            <h1 className="primary">Explore the Library</h1>
+            <p className="primary">Explore the Library</p>
             Access an ever-growing library of notes and resources shared by
             students like you.
           </h3>
@@ -117,7 +109,7 @@ function Landing() {
             3<FontAwesomeIcon icon={faDownload} />
           </h1>
           <h3 className="text">
-            <h1 className="primary">Download What You Need</h1>
+            <p className="primary">Download What You Need</p>
             Find and download notes for your exams, assignments, or projects
             with ease
           </h3>
@@ -125,7 +117,7 @@ function Landing() {
 
         <div className="step">
           <h3 className="text">
-            <h1 className="primary ">Grow Together</h1>
+            <p className="primary ">Grow Together</p>
             Help others succeed and benefit from a collaborative community of
             learners.
           </h3>

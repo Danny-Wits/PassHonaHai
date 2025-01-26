@@ -58,31 +58,61 @@ function NavBar() {
           {isAuthenticated() ? (
             <>
               <NavLink
+                style={({ isActive }) => {
+                  return isActive ? { color: "var(--primary-color)" } : {};
+                }}
                 to={PageRoutes.Dashboard + user_info?.name}
                 onClick={toggle}
               >
                 Dashboard
               </NavLink>
               <NavLink
+                style={({ isActive }) => {
+                  return isActive ? { color: "var(--primary-color)" } : {};
+                }}
                 to={PageRoutes.PublicProfile + user_info?.name}
                 onClick={toggle}
               >
                 People
               </NavLink>
 
-              <NavLink to={PageRoutes.AboutUs} onClick={toggle}>
+              <NavLink
+                style={({ isActive }) => {
+                  return isActive ? { color: "var(--primary-color)" } : {};
+                }}
+                to={PageRoutes.AboutUs}
+                onClick={toggle}
+              >
                 Know More
               </NavLink>
-              <NavLink to={PageRoutes.ContactUs} onClick={toggle}>
+              <NavLink
+                style={({ isActive }) => {
+                  return isActive ? { color: "var(--primary-color)" } : {};
+                }}
+                to={PageRoutes.ContactUs}
+                onClick={toggle}
+              >
                 Contact Us
               </NavLink>
             </>
           ) : (
             <>
-              <NavLink to={PageRoutes.AboutUs} onClick={toggle}>
+              <NavLink
+                style={({ isActive }) => {
+                  return isActive ? { color: "var(--primary-color)" } : {};
+                }}
+                to={PageRoutes.AboutUs}
+                onClick={toggle}
+              >
                 Know More
               </NavLink>
-              <NavLink to={PageRoutes.ContactUs} onClick={toggle}>
+              <NavLink
+                style={({ isActive }) => {
+                  return isActive ? { color: "var(--primary-color)" } : {};
+                }}
+                to={PageRoutes.ContactUs}
+                onClick={toggle}
+              >
                 Contact Us
               </NavLink>
             </>
@@ -119,20 +149,51 @@ function NavBar() {
         <p className="title">PassHonaHai</p>
       </div>
       <nav className="flex nav-links">
-        <NavLink to={PageRoutes.Landing}>Home</NavLink>
+        <NavLink
+          style={({ isActive }) => {
+            return isActive ? { color: "var(--primary-color)" } : {};
+          }}
+          to={PageRoutes.Landing}
+        >
+          Home
+        </NavLink>
         {isAuthenticated() ? (
           <>
-            <NavLink to={PageRoutes.Dashboard + user_info?.name}>
+            <NavLink
+              style={({ isActive }) => {
+                return isActive ? { color: "var(--primary-color)" } : {};
+              }}
+              to={PageRoutes.Dashboard + user_info?.name}
+            >
               Dashboard
             </NavLink>
-            <NavLink to={PageRoutes.PublicProfile + user_info?.name}>
+            <NavLink
+              style={({ isActive }) => {
+                return isActive ? { color: "var(--primary-color)" } : {};
+              }}
+              to={PageRoutes.PublicProfile + user_info?.name}
+            >
               People
             </NavLink>
           </>
         ) : null}
 
-        <NavLink to={PageRoutes.AboutUs}>Know More</NavLink>
-        <NavLink to={PageRoutes.ContactUs}>Contact Us</NavLink>
+        <NavLink
+          style={({ isActive }) => {
+            return isActive ? { color: "var(--primary-color)" } : {};
+          }}
+          to={PageRoutes.AboutUs}
+        >
+          Know More
+        </NavLink>
+        <NavLink
+          style={({ isActive }) => {
+            return isActive ? { color: "var(--primary-color)" } : {};
+          }}
+          to={PageRoutes.ContactUs}
+        >
+          Contact Us
+        </NavLink>
       </nav>
 
       <div className="buttons flex">

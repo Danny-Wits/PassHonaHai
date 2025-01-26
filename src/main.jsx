@@ -16,6 +16,7 @@ import { SnackbarProvider } from "notistack";
 import PrivateRoute from "./PrivateRoute.jsx";
 import AboutUs from "./Pages/Jsx/AboutUs.jsx";
 import ContactUs from "./Pages/Jsx/ContactUs.jsx";
+import Explore from "./Pages/Jsx/Explore.jsx";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -41,13 +42,17 @@ const router = createBrowserRouter([
     element: <ContactUs />,
   },
   {
+    path: PageRoutes.Explore,
+    element: <Explore />,
+  },
+  {
     path: PageRoutes.Dashboard + ":name",
     element: <PrivateRoute element={<Dashboard />} />,
   },
 
   {
     path: PageRoutes.PublicProfile + ":name",
-    element: <PrivateRoute element={<Dashboard />} />,
+    element: <PrivateRoute element={<PublicProfile />} />,
   },
 ]);
 

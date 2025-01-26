@@ -2,6 +2,7 @@ import { get, post, put, del } from "superagent";
 const $API_URL = import.meta.env.VITE_API_URL;
 const $API_TOKEN = "123456";
 
+
 // Reusable functions for GET and POST requests
 export const getter = async (request) => {
   const response = await get($API_URL + request);
@@ -33,8 +34,10 @@ export const deleter = async (url, payload = {}) => {
   return response.body; // Superagent response body is accessible via `.body`
 };
 const API = {
+  getUserInfo: async (user_id) => getter("/user/" + user_id),
+  getProfilePic: async (user_id) => getter("/pic/" + user_id),
   getStudyMaterials: async (page_no = 1) =>
-    getter("/study-materials/?" + page_no),
+    getter("/study-materials/?page_no=" + page_no),
   getStudyMaterialByID: async (id) => getter("/study-material/" + id),
   getStudyMaterialsOfUser: async (user_id, page_no = 1) =>
     getter("/study-materials-user/" + user_id + "?page_no=" + page_no),
@@ -44,5 +47,7 @@ const API = {
     poster("/login", { email: email, password: password }),
   registerUser: async (name, email, password) =>
     poster("/register", { name: name, email: email, password: password }),
+  uploadProfilePic: async (user_id, data) =>
+    poster("/pic/" + user_id, { file: data.blob, filetype: data.type })
 };
 export default API;
