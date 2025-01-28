@@ -15,30 +15,27 @@ function Explore() {
         queryKey: ["get_material", page_no],
         queryFn: () => API.getStudyMaterials(page_no),
         keepPreviousData: true,
-        cacheTime: Times.Minute,
-        staleTime: Times.Minute,
+        cacheTime: Times.Minute * 5,
+        staleTime: Times.Minute * 5,
     });
-
+    useQuery({
+        queryKey: ["get_material", page_no + 1],
+        queryFn: () => API.getStudyMaterials(page_no),
+        keepPreviousData: true,
+        cacheTime: Times.Minute * 10,
+        staleTime: Times.Minute * 5,
+    });
     const handleSubmit = (e) => {
         e.preventDefault();
     };
     const pagesArray = Array(data?.total_pages)
         .fill()
         .map((_, i) => i + 1);
-    //   material_id: 8
-    //   user_id: 6;
-    //   title: "Newest";
-    //   description: "new new ";
-    //   view_count: 1;
-    //   file_url: "6_1736965669.png";
-    //   file_type: "image/png";
-    //   category: "new";
-    //   tags: "new";
-    //   upload_date: "2025-01-15 18:27:32";
-    //   download_link: "http://localhost/projprogrammer/download.php?file=6_1736965669.png";
+
     return (
         <div className="page">
             <NavBar/>
+
             <form onSubmit={handleSubmit} className="flex login-form">
                 <label htmlFor="filter">Filter</label>
                 <input
@@ -69,7 +66,7 @@ function Explore() {
                 </button>
                 <button
                     onClick={() => setPageNo(page_no + 1)}
-                    disabled={page_no === data?.total_pages ?? 1}
+                    disabled={page_no === (data?.total_pages ?? 1)}
                 >
                     Next
                 </button>
@@ -88,12 +85,15 @@ function Explore() {
                                 image={material.image ?? defaultImage}
                                 title={material.title}
                                 subtitle={material.description}
+                                category={material.category}
                                 link={material.download_link}
                             />
                         );
                     })}
             </div>
+
         </div>
+
     );
 }
 

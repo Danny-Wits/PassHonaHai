@@ -1,12 +1,11 @@
 import NavBar from "../../Components/Jsx/NavBar";
 import React from "react";
-import {useQueries, useQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import API from "../../Scripts/API.js";
 import {Times} from "../../Scripts/Const.js";
-import Card from "../../Components/Jsx/Card.jsx";
-import defaultImage from "../../assets/mascot1.png";
+import UserCard from "../../Components/Jsx/UserCard.jsx";
 
-function PublicProfile() {
+function PublicProfiles() {
 
     const [filter, setFilter] = React.useState("");
     const [search, setSearch] = React.useState("");
@@ -27,14 +26,12 @@ function PublicProfile() {
         enabled: false,
     })
     //preloading few pages.
-    useQueries({
-        queries: Array(page_no - 1, page_no + 1).map((page) => ({
-            queryKey: ["get_users", page],
-            queryFn: () => API.getAllUsers(page),
-            keepPreviousData: true,
-            cacheTime: Times.Minute,
-            staleTime: Times.Minute,
-        }))
+    useQuery({
+        queryKey: ["get_users", page_no + 1],
+        queryFn: () => API.getAllUsers(page_no),
+        keepPreviousData: true,
+        cacheTime: Times.Minute * 10,
+        staleTime: Times.Minute * 2,
     });
 
 
@@ -58,15 +55,16 @@ function PublicProfile() {
                 <input id="search" type="text" value={search} onChange={(e) => setSearch(e.target.value)}/>
                 <button type="submit" onClick={refetchSearch} disabled={isSearching}>Search</button>
             </form>
-            <div className="flex card-container">
+            <div className="flex">
                 {(searchData?.users ?? [])
                     .map((user) => {
                         return (
-                            <Card
+                            <UserCard
                                 key={user.user_id}
-                                image={user.profile_picture ?? defaultImage}
-                                title={user.name}
-                                subtitle={user.bio}
+                                id={user.user_id}
+                                image={user.profile_picture_url}
+                                name={user.name}
+                                bio={user.bio}
                             />
                         );
                     })}
@@ -123,17 +121,19 @@ function PublicProfile() {
                     )
                     .map((user) => {
                         return (
-                            <Card
+                            <UserCard
                                 key={user.user_id}
-                                image={user.profile_picture ?? defaultImage}
-                                title={user.name}
-                                subtitle={user.bio}
+                                id={user.user_id}
+                                image={user.profile_picture_url}
+                                name={user.name}
+                                bio={user.bio}
                             />
                         );
+                        a
                     })}
             </div>
         </div>
     );
 }
 
-export default PublicProfile;
+export default PublicProfiles;

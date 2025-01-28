@@ -1,4 +1,6 @@
 import {createContext, useContext, useEffect, useState} from "react";
+import API from "./Scripts/API.js";
+import {enqueueSnackbar} from "notistack";
 
 const AuthContext = createContext();
 
@@ -19,6 +21,16 @@ const AuthProvider = ({children}) => {
         sessionStorage.removeItem("__user__");
         set_user_info(undefined);
     };
+    const refetch_user_info = async () => {
+        const data = await API.getUserInfo(user_info.user_id);
+        if (!data) return;
+        if (data.error) {
+            enqueueSnackbar("Could not Refresh User Info", {variant: "error"});
+            return;
+        }
+        set_user_info(data.user_info);
+        sessionStorage.setItem("__user__", JSON.stringify(data.user_info));
+    }
 
     const isAuthenticated = () => stored_user !== null || user_info !== undefined;
 
@@ -29,6 +41,7 @@ const AuthProvider = ({children}) => {
                 set_user_info,
                 logout,
                 isAuthenticated,
+                refetch_user_info
             }}
         >
             {children}

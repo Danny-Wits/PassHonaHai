@@ -41,7 +41,7 @@
     .subtitle {
         font: var(--text-small);
         color: gray;
-        overflow-x: auto;
+        overflow-x: scroll;
     }
 
     .category {

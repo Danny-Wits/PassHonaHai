@@ -32,3 +32,6 @@
     object-fit: cover;
 }
 
+.file-dropzone input[type="file"] {
+    display: none;
+}
