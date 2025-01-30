@@ -4,7 +4,6 @@ import "../Styles/Login.css";
 import {useQuery} from "@tanstack/react-query";
 import API from "../../Scripts/API";
 import Card from "../../Components/Jsx/Card";
-import defaultImage from "../../assets/mascot1.png";
 import {Times} from "../../Scripts/Const";
 
 function Explore() {
@@ -20,7 +19,7 @@ function Explore() {
     });
     useQuery({
         queryKey: ["get_material", page_no + 1],
-        queryFn: () => API.getStudyMaterials(page_no),
+        queryFn: () => API.getStudyMaterials(page_no + 1),
         keepPreviousData: true,
         cacheTime: Times.Minute * 10,
         staleTime: Times.Minute * 5,
@@ -71,7 +70,7 @@ function Explore() {
                     Next
                 </button>
             </div>
-            <div className="flex card-container">
+            <div className="card-container">
                 {data?.materials
                     .filter(
                         (material) =>
@@ -82,7 +81,7 @@ function Explore() {
                         return (
                             <Card
                                 key={material.material_id}
-                                image={material.image ?? defaultImage}
+                                image={material?.download_link}
                                 title={material.title}
                                 subtitle={material.description}
                                 category={material.category}

@@ -3,7 +3,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {PageRoutes} from "../../Scripts/Const";
 import "../Styles/NavBar.css";
 import {useAuth} from "../../Context";
-import {faBars, faXmark,} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faGear, faHome, faPeopleGroup, faSearch, faXmark,} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function NavBar() {
@@ -133,7 +133,9 @@ function NavBar() {
                         </button>
                     )}
                 </div>
+
             </div>
+
         );
     };
 
@@ -158,10 +160,19 @@ function NavBar() {
                             style={({isActive}) => {
                                 return isActive ? {color: "var(--primary-color)"} : {};
                             }}
+                            to={PageRoutes.Explore}
+                        >
+                            Explore
+                        </NavLink>
+                        <NavLink
+                            style={({isActive}) => {
+                                return isActive ? {color: "var(--primary-color)"} : {};
+                            }}
                             to={PageRoutes.Dashboard + user_info?.name}
                         >
                             Dashboard
                         </NavLink>
+
                         <NavLink
                             style={({isActive}) => {
                                 return isActive ? {color: "var(--primary-color)"} : {};
@@ -217,6 +228,37 @@ function NavBar() {
                 <button className="clear-button" onClick={() => toggle()}>
                     <FontAwesomeIcon icon={faBars}/>
                 </button>
+            </div>
+            <div className={"tab-bar"}>
+                <NavLink to={PageRoutes.Landing}
+                         style={({isActive}) => (isActive ? {color: "var(--primary-color)"} : {})}>
+                    <FontAwesomeIcon
+                        icon={faHome}
+                        style={{color: "inherit"}}
+                    />
+                </NavLink>
+                <NavLink to={PageRoutes.Explore}
+                         style={({isActive}) => (isActive ? {color: "var(--primary-color)"} : {})}>
+                    <FontAwesomeIcon
+                        icon={faSearch}
+                        style={{color: "inherit"}}
+                    />
+                </NavLink>
+
+                <NavLink to={PageRoutes.PublicProfiles}
+                         style={({isActive}) => (isActive ? {color: "var(--primary-color)"} : {})}>
+                    <FontAwesomeIcon
+                        icon={faPeopleGroup}
+                        style={{color: "inherit"}}
+                    />
+                </NavLink>
+
+                <NavLink to={PageRoutes.Dashboard + user_info?.name}
+                         style={({isActive}) => (isActive ? {color: "var(--primary-color)"} : {})}>
+                    <FontAwesomeIcon
+                        icon={faGear} style={{color: "inherit"}}
+                    />
+                </NavLink>
             </div>
         </div>
     );
