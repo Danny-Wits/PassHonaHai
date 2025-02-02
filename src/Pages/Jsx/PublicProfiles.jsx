@@ -28,7 +28,7 @@ function PublicProfiles() {
     //preloading few pages.
     useQuery({
         queryKey: ["get_users", page_no + 1],
-        queryFn: () => API.getAllUsers(page_no),
+        queryFn: () => API.getAllUsers(page_no + 1),
         keepPreviousData: true,
         cacheTime: Times.Minute * 10,
         staleTime: Times.Minute * 2,

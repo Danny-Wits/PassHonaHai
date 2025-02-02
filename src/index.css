@@ -153,6 +153,10 @@ button:disabled {
     color: var(--primary-color);
 }
 
+.notistack-SnackbarContainer {
+    z-index: 9999 !important;
+}
+
 @media (max-width: 600px) {
     :root {
         --text-small: normal 400 12px/1.5 var(--font-family);

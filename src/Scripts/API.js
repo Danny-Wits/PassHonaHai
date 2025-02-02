@@ -27,6 +27,15 @@ const API = {
     getJuniors: async (user_id) => getter("/juniors/" + user_id),
     uploadStudyMaterial: async (user_id, data) =>
         posterMultipart("/study-material/" + user_id, data),
+    updateUserInfo: async (user_id, data) =>
+        putter("/user/" + user_id, data),
+    deleteStudyMaterial: async (id) => deleter("/study-material/" + id),
+    getStudyMaterialLikes: async (id) => getter("/likes/" + id),
+    getStudyMaterialComments: async (id) => getter("/comments/" + id),
+    likeMaterial: async (id, data) => poster("/like/" + id, data),
+    commentMaterial: async (id, data) => poster("/comment/" + id, data),
+    unlikeMaterial: async (id, data) => deleter("/like/" + id, data),
+    deleteComment: async (id, data) => deleter("/comment/" + id, data),
 };
 export default API;
 // Reusable functions for GET and POST requests

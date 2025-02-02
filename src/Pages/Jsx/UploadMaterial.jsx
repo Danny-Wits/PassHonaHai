@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import NavBar from "../../Components/Jsx/NavBar.jsx";
 import Dropzone from 'react-dropzone';
 import "../Styles/UploadMaterial.css";
@@ -6,6 +6,7 @@ import {enqueueSnackbar} from "notistack";
 import {useAuth} from "../../Context.jsx";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import API from "../../Scripts/API.js";
+import {Fields, Standards} from "../../Scripts/Const.js";
 
 // (material_id: INT AUTO_INCREMENT, user_id: INT, title: VARCHAR(255),
 // description: TEXT, view_count: INT, file_url: VARCHAR(255),
@@ -32,12 +33,24 @@ const UploadMaterial = () => {
             enqueueSnackbar(error.message, {variant: "error"})
         }
     })
-    const [formData, setFormData] = React.useState({
-        title: "",
-        description: "",
-        category: "General",
-        tags: "",
-    });
+    const [formData, setFormData] = React.useState({});
+
+    useEffect(() => {
+        if (!user_info) {
+            return;
+        }
+        setFormData(
+            {
+                title: "",
+                description: "",
+                standard: user_info?.standard ?? 10,
+                field: user_info?.field ?? "Science",
+                branch: user_info?.branch ?? "Computer Science",
+                tags: "",
+                file: null
+            }
+        )
+    }, [user_info]);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -54,7 +67,7 @@ const UploadMaterial = () => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.title || !formData.description || !formData.category || !formData.tags || !formData.file) {
+        if (!formData.title || !formData.description || !formData.standard || !formData.field || !formData.branch || !formData.tags || !formData.file) {
             enqueueSnackbar("Please fill all the fields", {variant: "error"});
             return;
         }
@@ -73,9 +86,11 @@ const UploadMaterial = () => {
         const formDataObject = new FormData();
         formDataObject.append("title", formData.title);
         formDataObject.append("description", formData.description);
-        formDataObject.append("category", formData.category);
         formDataObject.append("tags", formData.tags);
         formDataObject.append("file", formData.file);
+        formDataObject.append("standard", formData.standard);
+        formDataObject.append("field", formData.field);
+        formDataObject.append("branch", formData.branch);
         for (const key in formData) {
             formDataObject.append(key, formData[key]);
         }
@@ -100,19 +115,30 @@ const UploadMaterial = () => {
                 <input type="text" id={"description"} name={"description"} value={formData.description}
                        onChange={handleChange} min={10} max={1000}
                        placeholder={"Enter Description of content : 10 to 1000 letters"}/>
-                <label htmlFor={"category"}>Category</label>
-                <select value={formData.category} name={"category"} id={"category"} onChange={handleChange}>
-                    <option value="General">General</option>
-                    <option value="Mathematics">Mathematics</option>
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="Physics">Physics</option>
-                    <option value="Chemistry">Chemistry</option>
-                    <option value="Biology">Biology</option>
-                    <option value="English">English</option>
-                    <option value="History">History</option>
-                    <option value="Geography">Geography</option>
-                    <option value="Psychology">Psychology</option>
+                <label htmlFor={"field"}>Field</label>
+                <select id={"field"} name={"field"} value={formData.field} onChange={handleChange}>
+                    {Object.keys(Fields).map((key) =>
+                        <option key={key} value={key}>{key}</option>
+                    )
+                    }
                 </select>
+                <label htmlFor={"standard"}>Standard</label>
+                <select id={"standard"} name={"standard"} value={formData.standard} onChange={handleChange}>
+                    {
+                        Standards.map(
+                            (standard) => <option key={standard} value={standard}>{standard}</option>
+                        )
+                    }
+                </select>
+                <label htmlFor={"branch"}>Branch</label>
+                <select id={"branch"} name={"branch"} value={formData.branch} onChange={handleChange}>
+                    {
+                        (Fields[formData.field] ?? []).map(
+                            (branch) => <option key={branch} value={branch}>{branch}</option>
+                        )
+                    }
+                </select>
+
                 <label htmlFor="tags">Tags</label>
                 <input type="text" id={"tags"} name={"tags"} max={50} value={formData.tags} onChange={handleChange}/>
                 {

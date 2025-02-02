@@ -19,7 +19,8 @@ import ContactUs from "./Pages/Jsx/ContactUs.jsx";
 import Explore from "./Pages/Jsx/Explore.jsx";
 import Profile from "./Pages/Jsx/Profile.jsx";
 import UploadMaterial from "./Pages/Jsx/UploadMaterial.jsx";
-
+import StudyMaterial from "./Pages/Jsx/StudyMaterial.jsx";
+import {M}
 const queryClient = new QueryClient();
 
 
@@ -65,8 +66,13 @@ const router = createBrowserRouter([
     {
         path: PageRoutes.UploadMaterial,
         element: <PrivateRoute element={<UploadMaterial/>}/>
+    },
+    {
+        path: PageRoutes.StudyMaterial + ":id",
+        element: <PrivateRoute element={<StudyMaterial/>}/>
     }
 ]);
+
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>

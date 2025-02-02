@@ -10,7 +10,6 @@
 
 .card {
     position: relative;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,10 +26,12 @@
 
     .avatar {
         width: 100%;
+        aspect-ratio: 1;
         border-radius: 20px;
         object-fit: cover;
         transition: all 0.3s ease-in-out;
         margin-bottom: 10px;
+        cursor: pointer;
     }
 
     .text {
@@ -39,7 +40,9 @@
         flex-direction: column;
         align-items: flex-start;
         width: 90%;
+
     }
+
 
     .title {
         font: var(--text-medium);
@@ -47,6 +50,12 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         width: 100%;
+        cursor: pointer;
+    }
+
+    .title:hover {
+        color: var(--primary-color);
+        text-decoration: underline;
     }
 
     .subtitle {
@@ -94,8 +103,8 @@
     .card {
         .avatar {
             transform: rotate(0deg);
-            width: 50%;
-            object-fit: contain;
+            width: 100%;
+            aspect-ratio: 3/2;
         }
 
         min-width: 200px;

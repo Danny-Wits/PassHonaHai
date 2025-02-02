@@ -68,7 +68,7 @@ const Profile = () => {
             <NavBar/>
 
             <UserCard
-                image={person_info?.profile_pic_url}
+                image={person_info?.profile_picture_url}
                 name={person_info?.name}
                 id={person_info?.user_id}
             />

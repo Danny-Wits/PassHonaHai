@@ -3,8 +3,8 @@ import NavBar from "../../Components/Jsx/NavBar";
 import "../Styles/Login.css";
 import {useQuery} from "@tanstack/react-query";
 import API from "../../Scripts/API";
-import Card from "../../Components/Jsx/Card";
 import {Times} from "../../Scripts/Const";
+import MaterialCard from "../../Components/Jsx/MaterialCard.jsx";
 
 function Explore() {
     const [filter, setFilter] = React.useState("");
@@ -79,13 +79,9 @@ function Explore() {
                     )
                     .map((material) => {
                         return (
-                            <Card
+                            <MaterialCard
                                 key={material.material_id}
-                                image={material?.download_link}
-                                title={material.title}
-                                subtitle={material.description}
-                                category={material.category}
-                                link={material.download_link}
+                                material={material}
                             />
                         );
                     })}
