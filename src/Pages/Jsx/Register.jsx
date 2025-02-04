@@ -1,165 +1,355 @@
-import {useState} from "react";
-import "../Styles/Login.css";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEnvelope, faLock, faUser, faXmark,} from "@fortawesome/free-solid-svg-icons";
-import {Link, useNavigate} from "react-router-dom";
-import {PageRoutes} from "../../Scripts/Const";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAt,
+  faEye,
+  faEyeSlash,
+  faKey,
+  faLock,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { PageRoutes } from "../../Scripts/Const";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import API from "../../Scripts/API";
-import {enqueueSnackbar} from "notistack";
-import {useAuth} from "../../Context";
-import PasswordInput from "../../Components/Jsx/PasswordInput";
+import { useAuth } from "../../Context";
+import {
+  BackgroundImage,
+  Button,
+  Center,
+  CloseButton,
+  Flex,
+  Overlay,
+  PasswordInput,
+  Stack,
+  Text,
+  TextInput,
+  useComputedColorScheme,
+} from "@mantine/core";
+import loginImageLeft from "../../assets/login-pic-left.png";
+import loginImageRight from "../../assets/login-pic-right.png";
+import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 
 function Register() {
-    const navigate = useNavigate();
-    const queryClient = useQueryClient();
-    const {set_user_info} = useAuth();
-    const [formData, setFormData] = useState({
-        email: "",
-        password: "",
-        name: "",
-        confirm_password: "",
-    });
-    const [showPassword, setShowPassword] = useState(false);
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormData({...formData, [name]: value});
-    };
-    const {mutate: registrationPost, isLoading} = useMutation({
-        mutationKey: ["registrationPost"],
-        mutationFn: (formData) =>
-            API.registerUser(formData.name, formData.email, formData.password),
-        onSuccess: async (data) => {
-            if (data["error"]) {
-                enqueueSnackbar(data["error"], {variant: "error"});
-                return;
-            }
-            const user_info = data["user_info"];
-            sessionStorage.setItem("__user__", JSON.stringify(user_info));
-            queryClient.setQueryData(["user_info"], user_info);
-            set_user_info(user_info);
-            enqueueSnackbar("Registration Successful", {variant: "success"});
-            enqueueSnackbar("Add and Edit your profile ", {variant: "info", preventDuplicate: true});
-            enqueueSnackbar("Welcome " + name, {variant: "success", preventDuplicate: true, autoHideDuration: 5000});
-            navigate(PageRoutes.Dashboard + user_info.name);
-        },
-        onError: (error, data) => {
-            enqueueSnackbar("Registration Failed : " + error, {
-                variant: "error",
-            });
-            console.log(error);
-            console.log(data);
-        },
-    });
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { set_user_info } = useAuth();
+  const [visible, setvisible] = useState(false);
+  const colorSheme = useComputedColorScheme();
+  const { mutate: registrationPost, isLoading } = useMutation({
+    mutationKey: ["registrationPost"],
+    mutationFn: (formData) =>
+      API.registerUser(formData.name, formData.email, formData.password),
+    onSuccess: async (data) => {
+      if (data["error"]) {
+        notifications.show({
+          title: "ERROR",
+          message: data.error,
+          color: "red",
+          withCloseButton: true,
+          autoHideDuration: 5000,
+        });
+        return;
+      }
+      const user_info = data["user_info"];
+      sessionStorage.setItem("__user__", JSON.stringify(user_info));
+      queryClient.setQueryData(["user_info"], user_info);
+      set_user_info(user_info);
+      notifications.show({
+        title: "Registration Successful",
+        message: "Welcome " + name,
+        withCloseButton: true,
+        autoHideDuration: 3000,
+      });
+      notifications.show({
+        title: "Add and Edit your profile ",
+        message: "",
+        autoHideDuration: 1000,
+        withCloseButton: true,
+      });
+      navigate(PageRoutes.Dashboard);
+    },
+    onError: (error, data) => {
+      notifications.show({
+        title: "Registration Failed",
+        message: error.message,
+        variant: "error",
+        autoClose: 1000,
+        withCloseButton: true,
+      });
+      console.log(error);
+      console.log(data);
+    },
+  });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (formData.password !== formData.confirm_password) {
-            enqueueSnackbar("Passwords do not match", {variant: "error"});
-            return;
-        }
-        registrationPost(formData);
-    };
+  const handleSubmit = async (values, e) => {
+    e.preventDefault();
+    registrationPost(values);
+  };
+  const form = useForm({
+    mode: "uncontrolled",
+    initialValues: {
+      email: "",
+      name: "",
+      password: "",
+      confirm_password: "",
+    },
+    validateInputOnChange: true,
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      name: (value) =>
+        value.length < 3 || value.length > 16
+          ? "Name must be 3-16 characters"
+          : null,
+      password: (value) =>
+        value.length < 4 || value.length > 16
+          ? "Password must be 4-16 characters"
+          : null,
+      confirm_password: (value, values) =>
+        value !== values.password ? "Passwords did not match" : null,
+    },
+  });
+  const toggle = () => {
+    setvisible((pre) => !pre);
+  };
+  return (
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      align="center"
+      mih={"100vh"}
+      justify={{ base: "center", md: "flex-start" }}
+      style={{ position: "relative" }}
+    >
+      <Flex
+        h={{ base: "50vh", md: "100vh" }}
+        w={{ base: "100%", md: "50%" }}
+        style={{ position: "relative" }}
+      >
+        <BackgroundImage src={loginImageLeft} h={"100%"}></BackgroundImage>
+        <Overlay backgroundOpacity={0.4} style={{ zIndex: 1 }}></Overlay>
+      </Flex>
 
-    return (
-        <div className="page flex login-page">
-            <div alt="background-image" className="bg-image image-right"></div>
-            <div alt="background-image" className="bg-image image-left"></div>
+      {/*LOGIN FORM*/}
+      <Center
+        top={"0px"}
+        left={{ base: "5%", md: "50%" }}
+        w={{ base: "90%", md: "50%" }}
+        miw={"300px"}
+        h={"100%"}
+        style={{ zIndex: 10, position: "absolute" }}
+      >
+        <Flex
+          direction={"column"}
+          w={{ base: "90%", md: "400px" }}
+          bg={"var(--mantine-color-body)"}
+          p={"xl"}
+          radius={"md"}
+          style={{
+            border: "1px solid var(--text-color)",
+            boxShadow: "var(--thicker-shadow)",
+            borderRadius: "10px",
+            position: "relative",
+          }}
+        >
+          <div className="mascot-1"></div>{" "}
+          <CloseButton
+            pos={"absolute"}
+            top={"10px"}
+            right={"10px"}
+            size="lg"
+            onClick={() => navigate(PageRoutes.Landing)}
+          />
+          <Text ta={"center"} size={"xl"} fw={900}>
+            Welcome to{" "}
+            <span style={{ color: "var(--primary-color)" }}>Pass Hona Hai</span>
+          </Text>
+          <form onSubmit={form.onSubmit(handleSubmit)}>
+            <Stack>
+              <TextInput
+                label="Name"
+                placeholder="Name"
+                withAsterisk
+                leftSection={<FontAwesomeIcon icon={faUser} />}
+                key={form.key("name")}
+                {...form.getInputProps("name")}
+              />
+              <TextInput
+                label="Email"
+                placeholder="Email"
+                withAsterisk
+                leftSection={<FontAwesomeIcon icon={faAt} />}
+                key={form.key("email")}
+                {...form.getInputProps("email")}
+              />
+              <PasswordInput
+                label="Password"
+                placeholder="Password"
+                withAsterisk
+                leftSection={<FontAwesomeIcon icon={faKey} />}
+                visible={visible}
+                onVisibilityChange={toggle}
+                visibilityToggleIcon={({ reveal }) =>
+                  reveal ? (
+                    <FontAwesomeIcon icon={faEye} />
+                  ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} />
+                  )
+                }
+                key={form.key("password")}
+                {...form.getInputProps("password")}
+              />
+              <PasswordInput
+                label="Confirm Password"
+                placeholder="Confirm Password"
+                withAsterisk
+                visible={visible}
+                onVisibilityChange={toggle}
+                leftSection={<FontAwesomeIcon icon={faLock} />}
+                visibilityToggleIcon={({ reveal }) =>
+                  reveal ? (
+                    <FontAwesomeIcon icon={faEye} />
+                  ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} />
+                  )
+                }
+                key={form.key("confirm_password")}
+                {...form.getInputProps("confirm_password")}
+              />
+              <Center>
+                <Button type={"submit"} loading={isLoading}>
+                  Register
+                </Button>
+              </Center>
+              <Center>
+                <Text c={"dimmed"} size={"sm"}>
+                  Already have an account?{" "}
+                  <span
+                    className={"link-like"}
+                    onClick={() => navigate(PageRoutes.Login)}
+                  >
+                    Login
+                  </span>
+                </Text>
+              </Center>
+            </Stack>
+          </form>
+        </Flex>
+      </Center>
 
-            <div className="login-box">
-                <div className="mascot-1"></div>
-                <FontAwesomeIcon
-                    icon={faXmark}
-                    className="cross-button"
-                    onClick={() => navigate(PageRoutes.Landing)}
-                />
-                <div className="title">
-                    Welcome to{" "}
-                    <span
-                        className="link-like title"
-                        onClick={() => enqueueSnackbar("Login first", {variant: "info"})}
-                    >
-            Pass Hona Hai
-          </span>
-                </div>
-                <form className="login-form flex" onSubmit={handleSubmit}>
-                    <label htmlFor="name">
-                        Name &nbsp;
-                        <FontAwesomeIcon
-                            icon={faUser}
-                            style={{color: "var(--primary-color)"}}
-                        />
-                    </label>
-                    <input
-                        type="text"
-                        placeholder="Name"
-                        value={formData.name}
-                        name="name"
-                        onChange={handleChange}
-                        maxLength={255}
-                        minLength={5}
-                        required
-                    />
-                    <label htmlFor="email">
-                        Email &nbsp;
-                        <FontAwesomeIcon
-                            icon={faEnvelope}
-                            style={{color: "var(--primary-color)"}}
-                        />
-                    </label>
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        name="email"
-                        onChange={handleChange}
-                        maxLength={255}
-                        minLength={5}
-                        required
-                    />
-                    <label htmlFor="password">
-                        Password&nbsp;
-                        <FontAwesomeIcon
-                            icon={faLock}
-                            style={{color: "var(--primary-color)"}}
-                        />
-                        &nbsp;
-                    </label>
-                    <PasswordInput
-                        showPassword={showPassword}
-                        setShowPassword={setShowPassword}
-                        handleChange={handleChange}
-                        name="password"
-                        formData={formData.confirm_password}
-                    />
-                    <label htmlFor="password">
-                        Confirm Password&nbsp;
-                        <FontAwesomeIcon
-                            icon={faLock}
-                            style={{color: "var(--primary-color)"}}
-                        />
-                        &nbsp;
-                    </label>
-                    <PasswordInput
-                        showPassword={showPassword}
-                        setShowPassword={setShowPassword}
-                        handleChange={handleChange}
-                        name="confirm_password"
-                        formData={formData.confirm_password}
-                    />
-                    <button type="submit" disabled={isLoading}>
-                        {isLoading ? "Loading..." : "Register"}
-                    </button>
-                    <p className="caption">
-                        Already have an account? &nbsp;
-                        <Link className="link-like" to={PageRoutes.Login}>
-                            Login
-                        </Link>
-                    </p>
-                </form>
-            </div>
-        </div>
-    );
+      <Flex
+        align="center"
+        justify="center"
+        h={{ base: "50vh", md: "100vh" }}
+        w={{ base: "100%", md: "50%" }}
+        style={{ position: "relative" }}
+      >
+        <BackgroundImage
+          src={loginImageRight}
+          h={"100%"}
+          style={{ filter: colorSheme === "dark" ? "invert(1)" : "none" }}
+        ></BackgroundImage>
+      </Flex>
+
+      {/*<div className="page flex login-page">*/}
+      {/*    <div alt="background-image" className="bg-image image-right"></div>*/}
+      {/*    <div alt="background-image" className="bg-image image-left"></div>*/}
+
+      {/*    <div className="login-box">*/}
+      {/*        <div className="mascot-1"></div>*/}
+      {/*        <FontAwesomeIcon*/}
+      {/*            icon={faXmark}*/}
+      {/*            className="cross-button"*/}
+      {/*            onClick={() => navigate(PageRoutes.Landing)}*/}
+      {/*        />*/}
+      {/*        <div className="title">*/}
+      {/*            Welcome to{" "}*/}
+      {/*            <span*/}
+      {/*                className="link-like title"*/}
+      {/*                onClick={() => enqueueSnackbar("Login first", {variant: "info"})}*/}
+      {/*            >*/}
+      {/*    Pass Hona Hai*/}
+      {/*  </span>*/}
+      {/*        </div>*/}
+      {/*        <form className="login-form flex" onSubmit={handleSubmit}>*/}
+      {/*            <label htmlFor="name">*/}
+      {/*                Name &nbsp;*/}
+      {/*                <FontAwesomeIcon*/}
+      {/*                    icon={faUser}*/}
+      {/*                    style={{color: "var(--primary-color)"}}*/}
+      {/*                />*/}
+      {/*            </label>*/}
+      {/*            <input*/}
+      {/*                type="text"*/}
+      {/*                placeholder="Name"*/}
+      {/*                value={formData.name}*/}
+      {/*                name="name"*/}
+      {/*                onChange={handleChange}*/}
+      {/*                maxLength={255}*/}
+      {/*                minLength={5}*/}
+      {/*                required*/}
+      {/*            />*/}
+      {/*            <label htmlFor="email">*/}
+      {/*                Email &nbsp;*/}
+      {/*                <FontAwesomeIcon*/}
+      {/*                    icon={faEnvelope}*/}
+      {/*                    style={{color: "var(--primary-color)"}}*/}
+      {/*                />*/}
+      {/*            </label>*/}
+      {/*            <input*/}
+      {/*                type="email"*/}
+      {/*                placeholder="Email"*/}
+      {/*                value={formData.email}*/}
+      {/*                name="email"*/}
+      {/*                onChange={handleChange}*/}
+      {/*                maxLength={255}*/}
+      {/*                minLength={5}*/}
+      {/*                required*/}
+      {/*            />*/}
+      {/*            <label htmlFor="password">*/}
+      {/*                Password&nbsp;*/}
+      {/*                <FontAwesomeIcon*/}
+      {/*                    icon={faLock}*/}
+      {/*                    style={{color: "var(--primary-color)"}}*/}
+      {/*                />*/}
+      {/*                &nbsp;*/}
+      {/*            </label>*/}
+      {/*            <PasswordInput*/}
+      {/*                showPassword={showPassword}*/}
+      {/*                setShowPassword={setShowPassword}*/}
+      {/*                handleChange={handleChange}*/}
+      {/*                name="password"*/}
+      {/*                formData={formData.confirm_password}*/}
+      {/*            />*/}
+      {/*            <label htmlFor="password">*/}
+      {/*                Confirm Password&nbsp;*/}
+      {/*                <FontAwesomeIcon*/}
+      {/*                    icon={faLock}*/}
+      {/*                    style={{color: "var(--primary-color)"}}*/}
+      {/*                />*/}
+      {/*                &nbsp;*/}
+      {/*            </label>*/}
+      {/*            <PasswordInput*/}
+      {/*                showPassword={showPassword}*/}
+      {/*                setShowPassword={setShowPassword}*/}
+      {/*                handleChange={handleChange}*/}
+      {/*                name="confirm_password"*/}
+      {/*                formData={formData.confirm_password}*/}
+      {/*            />*/}
+      {/*            <button type="submit" disabled={isLoading}>*/}
+      {/*                {isLoading ? "Loading..." : "Register"}*/}
+      {/*            </button>*/}
+      {/*            <p className="caption">*/}
+      {/*                Already have an account? &nbsp;*/}
+      {/*                <Link className="link-like" to={PageRoutes.Login}>*/}
+      {/*                    Login*/}
+      {/*                </Link>*/}
+      {/*            </p>*/}
+      {/*        </form>*/}
+      {/*    </div>*/}
+      {/*</div>*/}
+    </Flex>
+  );
 }
 
 export default Register;

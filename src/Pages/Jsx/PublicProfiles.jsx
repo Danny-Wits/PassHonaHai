@@ -1,139 +1,138 @@
-import NavBar from "../../Components/Jsx/NavBar";
 import React from "react";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import API from "../../Scripts/API.js";
-import {Times} from "../../Scripts/Const.js";
-import UserCard from "../../Components/Jsx/UserCard.jsx";
+import { Times } from "../../Scripts/Const.js";
+import { UserCard } from "../../Components/Jsx/UserCard.jsx";
+import { UsersTable } from "../../Components/Jsx/UsersTable.jsx";
+import {
+  ActionIcon,
+  Button,
+  Center,
+  Divider,
+  Grid,
+  GridCol,
+  Loader,
+  Pagination,
+  Stack,
+  TextInput,
+} from "@mantine/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 function PublicProfiles() {
-
-    const [filter, setFilter] = React.useState("");
-    const [search, setSearch] = React.useState("");
-    const [page_no, setPageNo] = React.useState(1);
-    const {data, isFetching} = useQuery({
-        queryKey: ["get_users", page_no],
-        queryFn: () => API.getAllUsers(page_no),
-        keepPreviousData: true,
-        cacheTime: Times.Minute,
-        staleTime: Times.Minute,
-    });
-    const {data: searchData, refetch: refetchSearch, isFetching: isSearching} = useQuery({
-        queryKey: ["search_users", search],
-        queryFn: () => API.searchUsers(search),
-        keepPreviousData: true,
-        cacheTime: Times.Minute,
-        staleTime: Times.Minute,
-        enabled: false,
-    })
-    //preloading few pages.
-    useQuery({
-        queryKey: ["get_users", page_no + 1],
-        queryFn: () => API.getAllUsers(page_no + 1),
-        keepPreviousData: true,
-        cacheTime: Times.Minute * 10,
-        staleTime: Times.Minute * 2,
-    });
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
-    const pagesArray = Array(data?.total_pages)
-        .fill()
-        .map((_, i) => i + 1);
-
-
-    const handleSearch = (e) => {
-        e.preventDefault();
-
-    };
+  const [search, setSearch] = React.useState("");
+  const [page_no, setPageNo] = React.useState(1);
+  const queryClient = useQueryClient();
+  const { data, isLoading: isLoadingData } = useQuery({
+    queryKey: ["get_users", page_no],
+    queryFn: () => API.getAllUsers(page_no),
+    keepPreviousData: true,
+    cacheTime: Times.Minute,
+    staleTime: Times.Minute,
+  });
+  const {
+    data: searchData,
+    refetch: refetchSearch,
+    isFetching: isSearching,
+  } = useQuery({
+    queryKey: ["search_users", search],
+    queryFn: () => API.searchUsers(search),
+    keepPreviousData: true,
+    cacheTime: Times.Minute,
+    staleTime: Times.Minute,
+    enabled: false,
+  });
+  //preloading few pages.
+  useQuery({
+    queryKey: ["get_users", page_no + 1],
+    queryFn: () => API.getAllUsers(page_no + 1),
+    keepPreviousData: true,
+    cacheTime: Times.Minute * 10,
+    staleTime: Times.Minute * 2,
+  });
+  if (isLoadingData) {
     return (
-        <div className="page">
-            <NavBar/>
-            <form className={"flex login-form"} onClick={handleSearch}>
-                <label htmlFor="search">Search</label>
-                <input id="search" type="text" value={search} onChange={(e) => setSearch(e.target.value)}/>
-                <button type="submit" onClick={refetchSearch} disabled={isSearching}>Search</button>
-            </form>
-            <div className="flex">
-                {(searchData?.users ?? [])
-                    .map((user) => {
-                        return (
-                            <UserCard
-                                key={user.user_id}
-                                id={user.user_id}
-                                image={user.profile_picture_url}
-                                name={user.name}
-                                bio={user.bio}
-                            />
-                        );
-                    })}
-            </div>
-            <form onSubmit={handleSubmit} className="flex login-form">
-                <label htmlFor="filter">Filter</label>
-                <input
-                    type="text"
-                    id="filter"
-                    name="filter"
-                    onChange={(e) => setFilter(e.target.value.toLowerCase())}
-                    placeholder="Filter by title or description"
-                    value={filter}
-                />
-            </form>
-            {
-                isFetching && <div className="link-like" style={{
-                    color: "var(--primary-color)",
-                    fontSize: "1.5rem",
-                    textAlign: "center",
-                }}>Loading...</div>
-            }
-            <div className="flex">
-                {pagesArray.map((page) => {
-                    return (
-                        <button
-                            key={page}
-                            onClick={() => setPageNo(page)}
-                            className={page === page_no ? "secondary-button" : ""}
-                        >
-                            {page}
-                        </button>
-                    );
-                })}
-            </div>
-            <div className="flex">
-                <button onClick={() => setPageNo(page_no - 1)} disabled={page_no === 1}>
-                    Previous
-                </button>
-                <button
-                    onClick={() => setPageNo(page_no + 1)}
-                    disabled={page_no === (data?.total_pages ?? 1)}
-                >
-                    Next
-                </button>
-            </div>
-
-            <div className="flex card-container">
-                {(data?.users ?? [])
-                    .filter(
-                        (user) =>
-                            user.name.toLowerCase().includes(filter) ||
-                            user.bio.toLowerCase().includes(filter)
-                    )
-                    .map((user) => {
-                        return (
-                            <UserCard
-                                key={user.user_id}
-                                id={user.user_id}
-                                image={user.profile_picture_url}
-                                name={user.name}
-                                bio={user.bio}
-                            />
-                        );
-                        a
-                    })}
-            </div>
-        </div>
+      <Center h={"90vh"}>
+        <Loader color="#a91cc6" size="xl" type={"dots"} />
+      </Center>
     );
+  }
+  return (
+    <Stack>
+      <Center>
+        <Pagination
+          total={data?.total_pages}
+          onChange={setPageNo}
+          value={page_no}
+          siblings={1}
+        />
+      </Center>
+
+      <Center>
+        <form
+          style={{ width: "100%", justifyContent: "center", display: "flex" }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            refetchSearch();
+          }}
+        >
+          <TextInput
+            placeholder="Search by name or bio"
+            type="text"
+            onChange={(e) => setSearch(e.target.value.toLowerCase())}
+            value={search}
+            size={"lg"}
+            radius="xl"
+            w={"90%"}
+            rightSection={
+              <>
+                <Divider orientation="vertical" mr={"15px"} />
+                <ActionIcon
+                  variant={"transparent"}
+                  onClick={refetchSearch}
+                  mr={"30px"}
+                  loading={isSearching}
+                >
+                  <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+                </ActionIcon>
+              </>
+            }
+          ></TextInput>
+        </form>
+      </Center>
+      <Center>
+        {!!searchData?.users && <UsersTable users={searchData?.users} />}
+      </Center>
+
+      {!!searchData?.users && (
+        <Button
+          size={"md"}
+          variant="default"
+          fullWidth
+          onClick={() => {
+            queryClient.setQueryData(["search_users", search], null);
+            setSearch("");
+          }}
+        >
+          Clear
+        </Button>
+      )}
+      {!!searchData?.users && <Divider size={"md"} variant="dashed"></Divider>}
+
+      <Grid>
+        {(data?.users ?? []).map((user) => {
+          return (
+            <GridCol
+              span={{ base: 12, sm: 12, md: 6, lg: 4 }}
+              key={user.user_id}
+            >
+              <UserCard user_info={user} />
+            </GridCol>
+          );
+        })}
+      </Grid>
+    </Stack>
+  );
 }
 
 export default PublicProfiles;

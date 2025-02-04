@@ -1,16 +1,16 @@
-.frame {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    height: 30vh;
-    padding: 10px;
-    overflow-y: auto;
+/*.frame {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: flex-start;*/
+/*    align-items: center;*/
+/*    width: 100%;*/
+/*    height: 30vh;*/
+/*    padding: 10px;*/
+/*    overflow-y: auto;*/
 
-    img {
-        width: 90%;
-        height: fit-content;
-        object-fit: contain;
-    }
-}
+/*    img {*/
+/*        width: 90%;*/
+/*        height: fit-content;*/
+/*        object-fit: contain;*/
+/*    }*/
+/*}*/
