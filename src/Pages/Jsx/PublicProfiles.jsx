@@ -122,12 +122,12 @@ function PublicProfiles() {
       <Grid>
         {(data?.users ?? []).map((user) => {
           return (
-            <GridCol
+            <Grid.Col
               span={{ base: 12, sm: 12, md: 6, lg: 4 }}
               key={user.user_id}
             >
               <UserCard user_info={user} />
-            </GridCol>
+            </Grid.Col>
           );
         })}
       </Grid>

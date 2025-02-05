@@ -4,9 +4,17 @@ import { enqueueSnackbar } from "notistack";
 import API from "../../Scripts/API";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../Context";
-import { Fields, Genders, Standards, Times } from "../../Scripts/Const.js";
+import {
+  Fields,
+  Genders,
+  PageRoutes,
+  Standards,
+  Times,
+} from "../../Scripts/Const.js";
 import defaultImage from "../../assets/mascot1.png";
 import {
+  ActionIcon,
+  Affix,
   Button,
   Center,
   Group,
@@ -15,9 +23,12 @@ import {
   Select,
   Stack,
   TextInput,
+  Tooltip,
+  TooltipFloating,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import UserProfile from "../../Components/Jsx/UserProfile.jsx";
+import { LuPlus } from "react-icons/lu";
 
 export const numberFromStandard = (Standard) => {
   if (!Standard) return "";
@@ -81,7 +92,7 @@ function Dashboard() {
     {
       staleTime: Times.Minute * 10,
       enabled: !!user_info?.user_id,
-    },
+    }
   );
 
   const { data: juniorsData, status: juniorStatus } = useQuery(
@@ -90,7 +101,7 @@ function Dashboard() {
     {
       staleTime: Times.Minute * 10,
       enabled: !!user_info?.user_id,
-    },
+    }
   );
 
   if (seniorStatus === "error")
@@ -107,7 +118,7 @@ function Dashboard() {
       staleTime: Times.Minute * 10,
       enabled: !!user_info?.user_id,
       keepPreviousData: true,
-    },
+    }
   );
   const studyMaterialsOfUser = DataStudyMaterialsOfUser?.materials ?? [];
   const { mutate: uploadProfilePic, isLoading: uploadingProfilePic } =
@@ -165,6 +176,17 @@ function Dashboard() {
 
   return (
     <Stack w={"100%"} mih={"90vh"}>
+      <Affix position={{ bottom: 30, right: 30 }}>
+        <Tooltip label="Add Study Material">
+          <ActionIcon
+            size={"xl"}
+            radius={"xl"}
+            onClick={() => navigate(PageRoutes.UploadMaterial)}
+          >
+            <LuPlus />
+          </ActionIcon>
+        </Tooltip>
+      </Affix>
       <Modal
         opened={showModal}
         title={"Edit Info"}

@@ -92,7 +92,11 @@ const router = createBrowserRouter([
   },
   {
     path: PageRoutes.UploadMaterial,
-    element: <PrivateRoute element={<UploadMaterial />} />,
+    element: (
+      <NavBarPage>
+        <PrivateRoute element={<UploadMaterial />} />
+      </NavBarPage>
+    ),
   },
   {
     path: PageRoutes.StudyMaterial,
@@ -133,5 +137,5 @@ createRoot(document.getElementById("root")).render(
         </AuthProvider>
       </QueryClientProvider>
     </MantineProvider>
-  </StrictMode>,
+  </StrictMode>
 );

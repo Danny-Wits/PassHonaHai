@@ -18,6 +18,15 @@ export const PageRoutes = {
   UploadMaterial: "/upload-material",
   StudyMaterial: "/study-material/",
 };
+export const validFileTypes = [
+  "application/pdf",
+  "image/jpeg",
+  "image/png",
+  "image/jpg",
+  "application/msword",
+  "application/vnd.ms-powerpoint",
+];
+export const validFileTypesString = validFileTypes.join(", ");
 export const Times = {
   Second: 1000,
   Minute: 60 * 1000,
@@ -71,6 +80,39 @@ export const Fields = {
     "Statistics",
   ],
 };
+export const FieldsStatic = [
+  {
+    group: "Science",
+    items: [
+      "Biology",
+      "Chemistry",
+      "Physics",
+      "Mathematics",
+      "Computer Science",
+    ],
+  },
+  {
+    group: "Commerce",
+    items: [
+      "Accountancy",
+      "Business Studies",
+      "Economics",
+      "Business Mathematics",
+      "Statistics",
+    ],
+  },
+  {
+    group: "Arts",
+    items: [
+      "English",
+      "History",
+      "Geography",
+      "Political Science",
+      "Economics",
+      "Psychology",
+    ],
+  },
+];
 export const Genders = [
   { value: "male", label: "Male" },
   { value: "female", label: "Female" },

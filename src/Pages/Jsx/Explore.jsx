@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import API from "../../Scripts/API";
 import { Times } from "../../Scripts/Const";
 import MaterialCard from "../../Components/Jsx/MaterialCard.jsx";
+import { Grid, GridCol, SimpleGrid, Stack } from "@mantine/core";
 
 function Explore() {
   const [filter, setFilter] = React.useState("");
@@ -32,7 +33,7 @@ function Explore() {
     .map((_, i) => i + 1);
 
   return (
-    <div className="page">
+    <Stack>
       <form onSubmit={handleSubmit} className="flex login-form">
         <label htmlFor="filter">Filter</label>
         <input
@@ -68,20 +69,26 @@ function Explore() {
           Next
         </button>
       </div>
-      <div className="card-container">
+      <Grid>
         {data?.materials
           .filter(
             (material) =>
               material.title.toLowerCase().includes(filter) ||
-              material.description.toLowerCase().includes(filter),
+              material.description.toLowerCase().includes(filter)
           )
-          .map((material) => {
+          .map((material, index) => {
             return (
-              <MaterialCard key={material.material_id} material={material} />
+              <Grid.Col
+                key={index}
+                span={{ base: 12, sm: 6, md: 4, lg: 3 }}
+                mih={400}
+              >
+                <MaterialCard material={material} />
+              </Grid.Col>
             );
           })}
-      </div>
-    </div>
+      </Grid>
+    </Stack>
   );
 }
 
