@@ -45,7 +45,7 @@ function CommentCard({ comment }) {
   return (
     <Paper shadow="sm" p={"md"} withBorder>
       <Group>
-        <Avatar src={image} alt={name} name={name} radius="xl" />
+        <Avatar src={image} alt={name} name={name} radius="xl" size={"md"} />
         <div>
           <Text size="sm" truncate="end">
             {name}
@@ -59,10 +59,10 @@ function CommentCard({ comment }) {
         readOnly
         variant="unstyled"
         pl={54}
-        pt="sm"
+        pt="xs"
         size="sm"
         minRows={1}
-        maxRows={10}
+        maxRows={5}
         truncate="end"
         value={comment_text}
       ></Textarea>

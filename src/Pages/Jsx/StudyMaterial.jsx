@@ -255,7 +255,7 @@ function StudyMaterial() {
           material_info?.tags.split(",").map((tag, index) => (
             <Badge
               key={index}
-              size="lg"
+              size="sm"
               variant="default"
               leftSection={<LuTags />}
             >
@@ -264,15 +264,21 @@ function StudyMaterial() {
           ))}
       </Group>
 
-      <Group>
+      <Stack gap={1}>
+        <Text fw={900} c={"bright"}>
+          Description
+        </Text>
         <Textarea
+          px={"md"}
+          maxRows={4}
+          autosize
+          minRows={1}
           value={material_info?.description}
           readOnly
           variant="unstyled"
-          c="green"
           w={"100%"}
         />
-      </Group>
+      </Stack>
 
       <Paper shadow="sm" p={"sm"} withBorder>
         <Stack>
@@ -338,7 +344,7 @@ function StudyMaterial() {
                 <ActionIcon
                   loading={isCommenting || isDeletingComment}
                   mr={40}
-                  color="red"
+                  variant="default"
                   type="button"
                   onClick={handleCommentDelete}
                 >

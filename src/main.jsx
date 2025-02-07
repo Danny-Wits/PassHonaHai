@@ -138,7 +138,7 @@ createRoot(document.getElementById("root")).render(
         <AuthProvider>
           <RouterProvider router={router} />
           <SnackbarProvider />
-          <ReactQueryDevtools />
+          {/* <ReactQueryDevtools /> */}
         </AuthProvider>
       </QueryClientProvider>
     </MantineProvider>
