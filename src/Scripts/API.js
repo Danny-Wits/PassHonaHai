@@ -35,6 +35,8 @@ const API = {
   unlikeMaterial: async (id, data) => deleter("/like/" + id, data),
   deleteComment: async (id, data) => deleter("/comment/" + id, data),
   deleteRelationship: async (id, data) => deleter("/relationship/" + id, data),
+  searchMaterials: async (query) =>
+    getter("/search-materials/?query=" + encodeURIComponent(query)),
 };
 export default API;
 // Reusable functions for GET and POST requests

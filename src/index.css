@@ -1,38 +1,38 @@
 :root {
-    /* Colors */
-    --background-color: white;
-    /*--text-color: hsl(240, 96%, 10%);*/
+  /* Colors */
+  --background-color: white;
+  /*--text-color: hsl(240, 96%, 10%);*/
 
-    --primary-color: #9a07da;
-    --primary-hover-color: hsl(282, 93%, 25%);
+  --primary-color: #9a07da;
+  --primary-hover-color: hsl(282, 93%, 25%);
 
-    --secondary-color: hsl(84, 100%, 51%);
-    /* Font family */
-    --font-family: "Roboto", sans-serif;
+  --secondary-color: hsl(84, 100%, 51%);
+  /* Font family */
+  --font-family: "Roboto", sans-serif;
 
-    /* Small Text */
-    --text-small: normal 400 14px/1.5 var(--font-family);
+  /* Small Text */
+  --text-small: normal 400 14px/1.5 var(--font-family);
 
-    /* Medium Text */
-    --text-medium: normal 500 18px/1.6 var(--font-family);
+  /* Medium Text */
+  --text-medium: normal 500 18px/1.6 var(--font-family);
 
-    /* Large Text */
-    --text-large: normal 700 24px/1.8 var(--font-family);
+  /* Large Text */
+  --text-large: normal 700 24px/1.8 var(--font-family);
 
-    /* X-Large Text */
-    --text-x-large: normal 800 32px/1.4 var(--font-family);
+  /* X-Large Text */
+  --text-x-large: normal 800 32px/1.4 var(--font-family);
 
-    /* XX-Large Text */
-    --text-x-x-large: normal 800 48px/1.4 var(--font-family);
-    /* Title Text */
-    --text-title: normal 600 32px/1.4 var(--font-family);
-    --text-caption: normal 300 14px/1.2 var(--font-family);
+  /* XX-Large Text */
+  --text-x-x-large: normal 800 48px/1.4 var(--font-family);
+  /* Title Text */
+  --text-title: normal 600 32px/1.4 var(--font-family);
+  --text-caption: normal 300 14px/1.2 var(--font-family);
 
-    /* Shadows */
-    --default-shadow: 2px 3px 1px rgba(0, 0, 0, 0.251);
-    --thicker-shadow: 10px 5px 1px rgba(0, 0, 0, 0.251);
-    --left-shadow: -5px 2px 1px rgba(0, 0, 0, 0.5);
-    --left-shadow-primary: -5px 2px 1px rgba(180, 50, 255, 0.5);
+  /* Shadows */
+  --default-shadow: 2px 3px 1px rgba(0, 0, 0, 0.251);
+  --thicker-shadow: 10px 5px 1px rgba(0, 0, 0, 0.251);
+  --left-shadow: -5px 2px 1px rgba(0, 0, 0, 0.5);
+  --left-shadow-primary: -5px 2px 1px rgba(180, 50, 255, 0.5);
 }
 
 /** {*/
@@ -48,10 +48,9 @@
 /*}*/
 
 body::-webkit-scrollbar {
-    display: none;
-    background: var(--mantine-color-gray-0);
- }
-
+  display: none;
+  background: var(--mantine-color-gray-0);
+}
 
 /*.flex {*/
 /*    display: flex;*/
@@ -159,45 +158,45 @@ body::-webkit-scrollbar {
 /*    z-index: 9999 !important;*/
 /*}*/
 .mascot-1 {
-    position: absolute;
-    cursor: pointer;
-    left: -100px;
-    top: -95px;
-    background-image: url("assets/ms-1.png");
-    aspect-ratio: 1;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-blend-mode: color-burn;
-    width: 200px;
-    transform: rotate(-30deg);
-    transition: all 0.7s;
-    z-index: -1;
+  position: absolute;
+  cursor: pointer;
+  left: -100px;
+  top: -95px;
+  background-image: url("assets/ms-1.png");
+  aspect-ratio: 1;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-blend-mode: color-burn;
+  width: 200px;
+  transform: rotate(-30deg);
+  transition: all 0.7s;
+  z-index: -1;
 }
 .login-box-hover .mascot-1 {
-    transform: translate(250px, -10px);
+  transform: translate(250px, -10px);
 }
 .link-like {
-    color: var(--primary-color);
-    cursor: pointer;
+  color: var(--primary-color);
+  cursor: pointer;
 }
 @media (max-width: 600px) {
-    :root {
-        --text-small: normal 400 12px/1.5 var(--font-family);
-        --text-medium: normal 500 16px/1.6 var(--font-family);
-        --text-large: normal 700 20px/1.8 var(--font-family);
-        --text-x-large: normal 800 28px/1.4 var(--font-family);
-        --text-x-x-large: normal 800 32px/1.6 var(--font-family);
-        --text-title: normal 600 24px/1.4 var(--font-family);
-        --text-caption: normal 300 12px/1.2 var(--font-family);
-        --default-shadow: 2px 3px 1px rgba(0, 0, 0, 0.251);
-        --thicker-shadow: 10px 5px 1px rgba(0, 0, 0, 0.251);
-    }
-    .login-box-hover .mascot-1 {
-        transform: translate(250px, -10px);
-    }
-    .mascot-1 {
-        left: -75px;
-        top: -75px;
-        width: 150px;
-    }
+  :root {
+    --text-small: normal 400 12px/1.5 var(--font-family);
+    --text-medium: normal 500 16px/1.6 var(--font-family);
+    --text-large: normal 700 20px/1.8 var(--font-family);
+    --text-x-large: normal 800 28px/1.4 var(--font-family);
+    --text-x-x-large: normal 800 32px/1.6 var(--font-family);
+    --text-title: normal 600 24px/1.4 var(--font-family);
+    --text-caption: normal 300 12px/1.2 var(--font-family);
+    --default-shadow: 2px 3px 1px rgba(0, 0, 0, 0.251);
+    --thicker-shadow: 10px 5px 1px rgba(0, 0, 0, 0.251);
+  }
+  .login-box-hover .mascot-1 {
+    transform: translate(250px, -10px);
+  }
+  .mascot-1 {
+    left: -75px;
+    top: -75px;
+    width: 150px;
+  }
 }

@@ -24,6 +24,7 @@ import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import { Notifications } from "@mantine/notifications";
 import { NavBarPage } from "./NavBarPage.jsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -100,7 +101,11 @@ const router = createBrowserRouter([
   },
   {
     path: PageRoutes.StudyMaterial,
-    element: <PrivateRoute element={<StudyMaterial />} />,
+    element: (
+      <NavBarPage>
+        <PrivateRoute element={<StudyMaterial />} />{" "}
+      </NavBarPage>
+    ),
   },
 ]);
 const myColor = [
@@ -133,7 +138,7 @@ createRoot(document.getElementById("root")).render(
         <AuthProvider>
           <RouterProvider router={router} />
           <SnackbarProvider />
-          {/*<ReactQueryDevtools />*/}
+          <ReactQueryDevtools />
         </AuthProvider>
       </QueryClientProvider>
     </MantineProvider>

@@ -80,6 +80,11 @@ export const Fields = {
     "Statistics",
   ],
 };
+export const FieldsColor = {
+  Science: "green",
+  Commerce: "red",
+  Arts: "blue",
+};
 export const FieldsStatic = [
   {
     group: "Science",

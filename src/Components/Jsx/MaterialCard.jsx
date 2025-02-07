@@ -1,20 +1,27 @@
 import React from "react";
 import "../Styles/Card.css";
 import defaultImage from "../../assets/mascot1.png";
-import { useQueryClient } from "@tanstack/react-query";
-import { PageRoutes } from "../../Scripts/Const.js";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { FieldsColor, PageRoutes } from "../../Scripts/Const.js";
 import { useNavigate } from "react-router-dom";
 import {
   AspectRatio,
+  Avatar,
   Badge,
   Button,
   Card,
   Group,
   Image,
+  Overlay,
+  Pill,
+  PillGroup,
+  Skeleton,
   Text,
   Textarea,
 } from "@mantine/core";
-
+import { LuTags } from "react-icons/lu";
+import API from "../../Scripts/API.js";
+import { useComputedColorScheme } from "@mantine/core";
 // eslint-disable-next-line react/prop-types
 function MaterialCard({ material }) {
   const navigate = useNavigate();
@@ -27,7 +34,18 @@ function MaterialCard({ material }) {
     download_link,
     title,
     description,
+    tags,
+    user_id,
   } = material;
+  const { data, isLoading: isLoadingUser } = useQuery(
+    ["get_user", user_id],
+    () => API.getUserInfo(user_id),
+    {
+      cacheTime: Infinity,
+      staleTime: Infinity,
+    }
+  );
+  const user_info = data?.user_info ?? false;
   if (!field) field = "Unknown";
   if (!branch) branch = "Unknown";
   if (!standard) standard = 10;
@@ -62,23 +80,64 @@ function MaterialCard({ material }) {
   //     }
   // )
   const goToDetails = () => {
-    navigate(PageRoutes.StudyMaterial + id, {
-      state: material,
+    navigate(PageRoutes.StudyMaterial, {
+      state: { material },
     });
   };
+  const colorTheme = useComputedColorScheme();
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder maw={350} mih={340}>
-      <Card.Section>
+      <Card.Section pos={"relative"}>
         <AspectRatio ratio={16 / 9}>
           <Image src={download_link} alt="Study Material" />
+          <Overlay
+            backgroundOpacity={colorTheme === "dark" ? 0.5 : 0.0}
+            style={{ zIndex: 12 }}
+          ></Overlay>
         </AspectRatio>
+        <Badge
+          pos="absolute"
+          top={10}
+          right={10}
+          color={FieldsColor[field]}
+          style={{
+            zIndex: 401,
+          }}
+        >
+          {field}
+        </Badge>
       </Card.Section>
 
       <Group justify="space-between" mt="md" mb="xs">
-        <Text fw={600} size="sm" maw={150} truncate={"end"} c="bright">
+        <Text fw={600} size="sm" maw={100} truncate={"end"} c="bright">
           {title}
         </Text>
-        <Badge>{field}</Badge>
+        {isLoadingUser ? (
+          <Group w={100} justify="center" gap={3}>
+            <Skeleton circle h={25} w={"25%"}></Skeleton>
+            <Skeleton h={15} radius="xl" w={"65%"}></Skeleton>
+          </Group>
+        ) : (
+          <Badge
+            leftSection={
+              <Avatar
+                src={user_info?.profile_picture_url}
+                name={user_info?.name}
+                size={"xs"}
+              ></Avatar>
+            }
+            variant="default"
+            color="initials"
+            radius="md"
+            onClick={() =>
+              navigate(PageRoutes.PublicProfile, { state: { user_info } })
+            }
+            maw={150}
+            style={{ cursor: "pointer" }}
+          >
+            {user_info?.name}
+          </Badge>
+        )}
       </Group>
 
       <Textarea
@@ -91,6 +150,12 @@ function MaterialCard({ material }) {
       >
         {description}
       </Textarea>
+      <Group gap={0}>
+        <LuTags size={16} />
+        <PillGroup p={"sm"}>
+          {tags && tags.split(",").map((tag) => <Pill key={tag}>{tag}</Pill>)}
+        </PillGroup>
+      </Group>
 
       <Button
         color="blue"

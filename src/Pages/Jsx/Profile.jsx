@@ -22,7 +22,7 @@ const Profile = () => {
       staleTime: Times.Minute,
       keepPreviousData: true,
       enabled: !!user_info?.user_id,
-    },
+    }
   );
   const { data: juniors_data, isFetching: isFetchingJunior } = useQuery(
     ["get_juniors", user_info?.user_id],
@@ -31,7 +31,7 @@ const Profile = () => {
       staleTime: Times.Minute,
       keepPreviousData: true,
       enabled: !!user_info?.user_id,
-    },
+    }
   );
   const {
     data: page_user_data,
@@ -48,6 +48,9 @@ const Profile = () => {
       setPageUser(page_user_data?.user_info);
     } else if (location.state?.user_info) {
       setPageUser(location.state.user_info);
+    } else if (location.state?.user_id) {
+      setPageUser({ user_id: location.state.user_id });
+      refetchPageUser();
     } else {
       navigate(PageRoutes.PublicProfiles);
     }
@@ -89,7 +92,7 @@ const Profile = () => {
       onError: (error) => {
         enqueueSnackbar(error.message, { variant: "error" });
       },
-    },
+    }
   );
   const { mutateAsync: deleteRelationship, isLoading: isdeletingRelationship } =
     useMutation((data) => API.deleteRelationship(data.user_id, data.data), {

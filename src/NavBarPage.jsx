@@ -44,7 +44,7 @@ export function NavBarPage({ children }) {
       navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
       padding="md"
     >
-      <AppShell.Header>
+      <AppShell.Header style={{ zIndex: 999 }}>
         <Group h="100%" px="md">
           <Burger
             opened={opened}
