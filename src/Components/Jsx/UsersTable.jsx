@@ -8,7 +8,7 @@ const FieldColor = {
   Arts: "blue",
 };
 
-export function UsersTable({ users }) {
+export function UsersTable({ users, label }) {
   const navigate = useNavigate();
   const rows = users?.map((user_info, index) => (
     <Table.Tr
@@ -33,6 +33,13 @@ export function UsersTable({ users }) {
           </Text>
         </Group>
       </Table.Td>
+      {user_info?.total_count && (
+        <Table.Td>
+          <Badge color={FieldColor[user_info?.field]} variant="dot">
+            {user_info?.total_count}
+          </Badge>
+        </Table.Td>
+      )}
       <Table.Td>
         <Badge color={FieldColor[user_info?.field]} variant="light" miw={80}>
           {user_info?.field === "" ? "Unknown " : user_info?.field}
@@ -47,11 +54,12 @@ export function UsersTable({ users }) {
   ));
 
   return (
-    <Table.ScrollContainer minWidth={400} w={"100%"}>
+    <Table.ScrollContainer minWidth={600} w={"100%"}>
       <Table verticalSpacing="sm" highlightOnHover>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Name</Table.Th>
+            {label && <Table.Th>{label}</Table.Th>}
             <Table.Th>Field</Table.Th>
             <Table.Th>Branch</Table.Th>
           </Table.Tr>

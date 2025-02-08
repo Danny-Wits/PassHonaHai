@@ -12,7 +12,7 @@ const links = [
   {
     label: "Home",
     description: "Visit the Home Page",
-    link: PageRoutes.Landing,
+    link: PageRoutes.Home,
     icon: <RiHome3Line size={iconSize} />,
   },
   {

@@ -25,18 +25,23 @@ import "@mantine/notifications/styles.css";
 import { Notifications } from "@mantine/notifications";
 import { NavBarPage } from "./NavBarPage.jsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Home from "./Pages/Jsx/Home.jsx";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: PageRoutes.Landing,
+    element: <Landing />,
+    errorElement: <Error />,
+  },
+  {
+    path: PageRoutes.Home,
     element: (
       <NavBarPage>
-        <Landing />
+        <PrivateRoute element={<Home />}></PrivateRoute>
       </NavBarPage>
     ),
-    errorElement: <Error />,
   },
   {
     path: PageRoutes.Login,
@@ -62,7 +67,7 @@ const router = createBrowserRouter([
     path: PageRoutes.Explore,
     element: (
       <NavBarPage>
-        <Explore />
+        <PrivateRoute element={<Explore />} />
       </NavBarPage>
     ),
   },
@@ -138,7 +143,7 @@ createRoot(document.getElementById("root")).render(
         <AuthProvider>
           <RouterProvider router={router} />
           <SnackbarProvider />
-          {/* <ReactQueryDevtools /> */}
+          <ReactQueryDevtools />
         </AuthProvider>
       </QueryClientProvider>
     </MantineProvider>

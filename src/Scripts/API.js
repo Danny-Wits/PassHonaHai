@@ -37,6 +37,7 @@ const API = {
   deleteRelationship: async (id, data) => deleter("/relationship/" + id, data),
   searchMaterials: async (query) =>
     getter("/search-materials/?query=" + encodeURIComponent(query)),
+  getLeaderboard: async (category) => getter("/leaderboard/" + category),
 };
 export default API;
 // Reusable functions for GET and POST requests

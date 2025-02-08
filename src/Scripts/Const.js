@@ -7,6 +7,7 @@
 
 export const PageRoutes = {
   Landing: "/",
+  Home: "/home",
   Login: "/login",
   Register: "/register",
   Dashboard: "/dashboard/",
@@ -123,3 +124,8 @@ export const Genders = [
   { value: "female", label: "Female" },
   { value: "unknown", label: "Don't wanna share" },
 ];
+export const leaderboardCategories = {
+  Senior: "senior",
+  Junior: "junior",
+  Material: "material",
+};

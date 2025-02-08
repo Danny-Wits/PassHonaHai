@@ -68,7 +68,7 @@ function Login() {
         autoClose: 100000,
         withBorder: true,
       });
-      navigate(PageRoutes.Landing);
+      navigate(PageRoutes.Home);
     },
     onError: (error) => {
       notifications.show({
