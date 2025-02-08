@@ -19,7 +19,12 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import StatsBox from "./StatsBox.jsx";
 import { numberFromStandard } from "../../Pages/Jsx/Dashboard.jsx";
 
-function UserProfile({ page_user, relationship }) {
+function UserProfile({
+  page_user,
+  relationship,
+  onProfileClick,
+  profilePicRef,
+}) {
   const colorTheme = useComputedColorScheme();
   if (!relationship) relationship = "";
   return (
@@ -37,6 +42,7 @@ function UserProfile({ page_user, relationship }) {
         ></BackgroundImage>
 
         <Avatar
+          ref={profilePicRef}
           pos={"absolute"}
           variant={"filled"}
           src={page_user?.profile_picture_url}
@@ -45,6 +51,8 @@ function UserProfile({ page_user, relationship }) {
           color={"initials"}
           left={10}
           mt={-50}
+          style={{ cursor: onProfileClick ? "pointer" : "default" }}
+          onClick={onProfileClick ? onProfileClick : () => {}}
         ></Avatar>
         <Divider size={"md"}></Divider>
       </Box>

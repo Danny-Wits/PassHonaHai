@@ -46,11 +46,9 @@ export const numberFromStandard = (Standard) => {
 function Dashboard() {
   const { user_info, refetch_user_info } = useAuth();
   const navigate = useNavigate();
-  const picElement = React.useRef(null);
-  const profilePic = React.useRef(null);
   const [page_no, setPageNo] = React.useState(1);
   const [showModal, setShowModal] = React.useState(false);
-
+  const profilePic = React.useRef();
   const editForm = useForm({
     initialValues: {
       name: user_info?.name ?? "",
@@ -139,14 +137,13 @@ function Dashboard() {
       },
       retry: false,
     });
-  const handlePicSubmit = async (e) => {
-    e.preventDefault();
+  const handlePicSubmit = async (input) => {
     const user_id = user_info?.user_id ?? 0;
-    if (!picElement.current.files[0]) {
+    if (!input?.files[0]) {
       enqueueSnackbar("Please select a file", { variant: "error" });
       return;
     }
-    const file = picElement.current.files[0];
+    const file = input.files[0];
     profilePic.current.src = URL.createObjectURL(file);
     uploadProfilePic({ user_id: user_id, data: file });
   };
@@ -173,7 +170,15 @@ function Dashboard() {
     const user_id = user_info?.user_id ?? 0;
     updateUserInfo({ user_id: user_id, data: values });
   };
-
+  const handleProfileClick = () => {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.click();
+    input.onchange = (e) => {
+      e.preventDefault();
+      handlePicSubmit(e.target);
+    };
+  };
   return (
     <Stack w={"100%"} mih={"90vh"}>
       <Affix position={{ bottom: 30, right: 30 }}>
@@ -233,7 +238,11 @@ function Dashboard() {
           <LoadingOverlay visible={updatingUserInfo}></LoadingOverlay>
         </form>
       </Modal>
-      <UserProfile page_user={user_info}></UserProfile>
+      <UserProfile
+        page_user={user_info}
+        onProfileClick={handleProfileClick}
+        profilePicRef={profilePic}
+      ></UserProfile>
       <Group>
         <Button
           variant={"default"}
