@@ -1,11 +1,11 @@
-import React from "react";
 import { NavLink, Stack } from "@mantine/core";
-import { PageRoutes } from "../../Scripts/Const.js";
-import { useNavigate } from "react-router-dom";
-import { RiHome3Line } from "react-icons/ri";
-import { MdOutlineSearch } from "react-icons/md";
+import React from "react";
 import { GoPeople } from "react-icons/go";
 import { LuLayoutDashboard } from "react-icons/lu";
+import { MdOutlineSearch } from "react-icons/md";
+import { RiHome3Line } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import { PageRoutes } from "../../Scripts/Const.js";
 
 const iconSize = 24;
 const links = [

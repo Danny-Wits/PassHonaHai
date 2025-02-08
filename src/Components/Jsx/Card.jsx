@@ -1,5 +1,4 @@
 import React from "react";
-import "../Styles/Card.css";
 
 
 // eslint-disable-next-line react/prop-types

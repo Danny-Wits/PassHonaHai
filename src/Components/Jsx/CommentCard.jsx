@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../Styles/CommentCard.css";
 import { PageRoutes } from "../../Scripts/Const.js";
 import { useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/mascot1.png";

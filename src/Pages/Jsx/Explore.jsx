@@ -1,6 +1,5 @@
 import React from "react";
 import NavBar from "../../Components/Jsx/NavBar";
-import "../Styles/Login.css";
 import { useQuery } from "@tanstack/react-query";
 import API from "../../Scripts/API";
 import { Times } from "../../Scripts/Const";

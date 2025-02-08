@@ -1,35 +1,17 @@
-import React from "react";
-import NavBar from "../../Components/Jsx/NavBar";
-import { useAuth } from "../../Context";
-import Card from "../../Components/Jsx/Card";
-import "../Styles/Landing.css";
-import oldPaper from "../../assets/oldpapers.png";
-import studyNotes from "../../assets/studynotes.png";
-import colab from "../../assets/colab.png";
-import senior from "../../assets/senior.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBookOpen,
-  faDownload,
-  faHandshake,
-  faUpload,
-} from "@fortawesome/free-solid-svg-icons";
-import logoGif from "../../assets/logo.mp4";
-import landingImage from "../../assets/landing2.png";
-import {
-  Affix,
   BackgroundImage,
-  Box,
   Button,
-  Center,
   Divider,
   Flex,
   Group,
   Stack,
   Text,
-  Title,
+  Title
 } from "@mantine/core";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import landingImage from "../../assets/landing2.png";
+import logoGif from "../../assets/logo.mp4";
 import { PageRoutes } from "../../Scripts/Const";
 
 function Landing() {

@@ -1,5 +1,4 @@
 import React from "react";
-import "../Styles/PasswordInput.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 function PasswordInput({

@@ -1,6 +1,6 @@
 import { Avatar, Badge, Group, Table, Text } from "@mantine/core";
-import { PageRoutes } from "../../Scripts/Const.js";
 import { useNavigate } from "react-router-dom";
+import { PageRoutes } from "../../Scripts/Const.js";
 
 const FieldColor = {
   Science: "green",

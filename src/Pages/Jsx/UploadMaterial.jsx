@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../Components/Jsx/NavBar.jsx";
 import Dropzone from "react-dropzone";
-import "../Styles/UploadMaterial.css";
 import { enqueueSnackbar } from "notistack";
 import { useAuth } from "../../Context.jsx";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

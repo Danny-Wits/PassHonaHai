@@ -1,5 +1,4 @@
 import React from "react";
-import "../Styles/Card.css";
 import defaultImage from "../../assets/mascot1.png";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FieldsColor, PageRoutes } from "../../Scripts/Const.js";

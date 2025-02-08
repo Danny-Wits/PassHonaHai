@@ -12,7 +12,6 @@ import API from "../../Scripts/API.js";
 import { FieldsColor, PageRoutes, Times } from "../../Scripts/Const.js";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import "../Styles/StudyMaterial.css";
 import defaultImage from "../../assets/mascot1.png";
 import CommentCard, {
   timeDifferenceInMinutes,
