@@ -26,7 +26,7 @@ const footerOptions = [
     icon: <FaCog />,
   },
 ];
-function Footer() {
+function Footer({ setOpened }) {
   const navigate = useNavigate();
   return (
     <Group justify="space-around" h={"100%"} p={1} pos={"relative"}>
@@ -49,7 +49,10 @@ function Footer() {
       {footerOptions.map((option, index) => (
         <ActionIcon
           c={option.link === window.location.pathname ? "#c029df" : "dimmed"}
-          onClick={() => navigate(option.link)}
+          onClick={() => {
+            setOpened(false);
+            navigate(option.link);
+          }}
           key={index}
           variant="transparent"
           component="div"

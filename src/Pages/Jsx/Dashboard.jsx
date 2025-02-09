@@ -15,7 +15,8 @@ import { useForm } from "@mantine/form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import React from "react";
-import { LuPlus } from "react-icons/lu";
+import { CiEdit } from "react-icons/ci";
+import { LuLogOut, LuPlus } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import UserProfile from "../../Components/Jsx/UserProfile.jsx";
 import { useAuth } from "../../Context";
@@ -43,7 +44,7 @@ export const numberFromStandard = (Standard) => {
   }
 };
 function Dashboard() {
-  const { user_info, refetch_user_info } = useAuth();
+  const { user_info, refetch_user_info, logout } = useAuth();
   const navigate = useNavigate();
   const [page_no, setPageNo] = React.useState(1);
   const [showModal, setShowModal] = React.useState(false);
@@ -129,7 +130,11 @@ function Dashboard() {
           enqueueSnackbar(data.error, { variant: "error" });
           return;
         }
-        enqueueSnackbar("Profile Pic Uploaded", { variant: "success" });
+        enqueueSnackbar("Profile Pic Uploaded", {
+          variant: "success",
+          preventDuplicate: true,
+          autoHideDuration: 2000,
+        });
       },
       onError: (error) => {
         enqueueSnackbar(error.message, { variant: "error" });
@@ -172,6 +177,7 @@ function Dashboard() {
   const handleProfileClick = () => {
     var input = document.createElement("input");
     input.type = "file";
+    input.accept = "Image/jpg, Image/jpeg, Image/png";
     input.click();
     input.onchange = (e) => {
       e.preventDefault();
@@ -247,9 +253,19 @@ function Dashboard() {
         <Button
           variant={"default"}
           onClick={() => setShowModal(true)}
+          leftSection={<CiEdit />}
           fullWidth
         >
           Edit
+        </Button>
+        <Button
+          variant={"outline"}
+          onClick={() => logout()}
+          leftSection={<LuLogOut />}
+          color={"red"}
+          fullWidth
+        >
+          Logout
         </Button>
       </Group>
     </Stack>

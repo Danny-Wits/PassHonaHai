@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { PageRoutes } from "../../Scripts/Const.js";
 import classes from "../Styles/UserButton.module.css";
 
-function UserButton({ name, bio, profile_picture_url, logout }) {
+function UserButton({ name, bio, profile_picture_url, logout, setOpened }) {
   const navigate = useNavigate();
   const userButtonCard = () => {
     return (
@@ -38,7 +38,10 @@ function UserButton({ name, bio, profile_picture_url, logout }) {
         <Menu.Label>Links</Menu.Label>
         <Menu.Item
           leftSection={<FontAwesomeIcon icon={faCog} />}
-          onClick={() => navigate(PageRoutes.Dashboard)}
+          onClick={() => {
+            setOpened(false);
+            navigate(PageRoutes.Dashboard);
+          }}
         >
           Dashboard
         </Menu.Item>

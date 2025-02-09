@@ -32,6 +32,11 @@ export function NavBarPage({ children }) {
   };
   const { user_info, logout } = useAuth();
   const navigate = useNavigate();
+  const setOpened = (value) => {
+    if (opened ^ value) {
+      toggle();
+    }
+  };
   return (
     <AppShell
       header={{ height: 60, collapsed: !pinned }}
@@ -71,13 +76,14 @@ export function NavBarPage({ children }) {
       </AppShell.Header>
 
       <AppShell.Navbar p="sm" style={{ zIndex: 402 }}>
-        <NavBar setOpened={toggle}></NavBar>
+        <NavBar setOpened={setOpened}></NavBar>
         <Stack justify="flex-end" h={"100%"} mb={"sm"}>
           <UserButton
             name={user_info?.name}
             bio={user_info?.bio}
             profile_picture_url={user_info?.profile_picture_url}
             logout={logout}
+            setOpened={setOpened}
           ></UserButton>
         </Stack>
       </AppShell.Navbar>
@@ -85,8 +91,8 @@ export function NavBarPage({ children }) {
       <AppShell.Main pt={`calc(${rem(60)} + var(--mantine-spacing-md))`}>
         {children}
       </AppShell.Main>
-      <AppShell.Footer zIndex={401}>
-        <Footer></Footer>
+      <AppShell.Footer zIndex={999}>
+        <Footer setOpened={setOpened}></Footer>
       </AppShell.Footer>
     </AppShell>
   );

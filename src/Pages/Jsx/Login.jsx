@@ -1,8 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import { PageRoutes } from "../../Scripts/Const";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import API from "../../Scripts/API";
-import { useAuth } from "../../Context";
+import {
+  faAt,
+  faExclamationTriangle,
+  faEye,
+  faEyeSlash,
+  faKey,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   BackgroundImage,
   Button,
@@ -16,24 +19,15 @@ import {
   TextInput,
   useComputedColorScheme,
 } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import loginImageLeft from "../../assets/login-pic-left.png";
 import loginImageRight from "../../assets/login-pic-right.png";
-import { useForm } from "@mantine/form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAt,
-  faExclamationTriangle,
-  faEye,
-  faEyeSlash,
-  faKey,
-} from "@fortawesome/free-solid-svg-icons";
-import { notifications } from "@mantine/notifications";
-
-// users
-// (user_id: INT AUTO_INCREMENT, name: VARCHAR(100), email: VARCHAR(255) UNIQUE, password_hash: VARCHAR(255), created_at: TIMESTAMP DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(user_id))
-
-// user_profiles
-// (user_id: INT, bio: TEXT, profile_picture_url: TEXT, academic_details: TEXT, social_links: JSON, PRIMARY KEY(user_id), FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE)
+import { useAuth } from "../../Context";
+import API from "../../Scripts/API";
+import { PageRoutes } from "../../Scripts/Const";
 
 function Login() {
   const navigate = useNavigate();
@@ -65,7 +59,7 @@ function Login() {
         message: "Welcome " + user_info.name,
         icon: <FontAwesomeIcon icon={faKey} />,
         withCloseButton: true,
-        autoClose: 100000,
+        autoClose: 2000,
         withBorder: true,
       });
       navigate(PageRoutes.Home);
@@ -98,8 +92,8 @@ function Login() {
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
       password: (value) =>
-        value.length < 4 || value.length > 16
-          ? "Password must be 4-16 characters"
+        value.length < 6 || value.length > 16
+          ? "Password must be 6-16 characters"
           : null,
     },
   });

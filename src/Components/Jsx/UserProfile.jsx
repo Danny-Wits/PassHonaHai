@@ -1,5 +1,5 @@
-import React from "react";
 import {
+  ActionIcon,
   Avatar,
   BackgroundImage,
   Badge,
@@ -13,11 +13,13 @@ import {
   Title,
   useComputedColorScheme,
 } from "@mantine/core";
-import fallBackImage from "../../assets/login-pic-right.png";
-import { MdOutlineAlternateEmail } from "react-icons/md";
+import React from "react";
+import { CiEdit } from "react-icons/ci";
 import { IoIosInformationCircleOutline } from "react-icons/io";
-import StatsBox from "./StatsBox.jsx";
+import { MdOutlineAlternateEmail } from "react-icons/md";
+import fallBackImage from "../../assets/login-pic-right.png";
 import { numberFromStandard } from "../../Pages/Jsx/Dashboard.jsx";
+import StatsBox from "./StatsBox.jsx";
 
 function UserProfile({
   page_user,
@@ -40,20 +42,29 @@ function UserProfile({
             filter: colorTheme === "dark" ? "invert(1)" : "none",
           }}
         ></BackgroundImage>
+        <Box pos={"absolute"} left={10} mt={-50}>
+          <Avatar
+            ref={profilePicRef}
+            variant={"filled"}
+            src={page_user?.profile_picture_url}
+            name={page_user?.name}
+            size={96}
+            color={"initials"}
+          ></Avatar>
+          <ActionIcon
+            style={{ cursor: onProfileClick ? "pointer" : "default" }}
+            onClick={onProfileClick ? onProfileClick : () => {}}
+            pos={"absolute"}
+            bottom={0}
+            right={0}
+            size={"md"}
+            variant={"default"}
+            radius={"xl"}
+          >
+            <CiEdit />
+          </ActionIcon>
+        </Box>
 
-        <Avatar
-          ref={profilePicRef}
-          pos={"absolute"}
-          variant={"filled"}
-          src={page_user?.profile_picture_url}
-          name={page_user?.name}
-          size={96}
-          color={"initials"}
-          left={10}
-          mt={-50}
-          style={{ cursor: onProfileClick ? "pointer" : "default" }}
-          onClick={onProfileClick ? onProfileClick : () => {}}
-        ></Avatar>
         <Divider size={"md"}></Divider>
       </Box>
       <Stack px={"sm"} gap={10}>

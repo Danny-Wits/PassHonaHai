@@ -103,8 +103,8 @@ function Register() {
           ? "Name must be 3-16 characters"
           : null,
       password: (value) =>
-        value.length < 4 || value.length > 16
-          ? "Password must be 4-16 characters"
+        value.length < 6 || value.length > 16
+          ? "Password must be 6-16 characters"
           : null,
       confirm_password: (value, values) =>
         value !== values.password ? "Passwords did not match" : null,

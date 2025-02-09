@@ -1,52 +1,42 @@
-import NavBar from "../../Components/Jsx/NavBar.jsx";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../../Context.jsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faComment,
-  faThumbsUp,
-} from "@fortawesome/free-solid-svg-icons";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import API from "../../Scripts/API.js";
-import { FieldsColor, PageRoutes, Times } from "../../Scripts/Const.js";
-import { enqueueSnackbar } from "notistack";
-import { useEffect, useState } from "react";
-import defaultImage from "../../assets/mascot1.png";
-import CommentCard, {
-  timeDifferenceInMinutes,
-  timeText,
-} from "../../Components/Jsx/CommentCard.jsx";
-import { AiOutlineDelete } from "react-icons/ai";
 import {
   ActionIcon,
   AspectRatio,
   Avatar,
   Badge,
   Button,
-  Center,
   Divider,
   Group,
   Image,
   Paper,
-  Pill,
-  PillGroup,
   Stack,
   Text,
   Textarea,
   TextInput,
   Title,
 } from "@mantine/core";
-import { IoSend } from "react-icons/io5";
+import { useForm } from "@mantine/form";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
+import { useEffect, useState } from "react";
+import { AiOutlineDelete } from "react-icons/ai";
 import {
   FaDownload,
   FaRegCommentDots,
   FaRegStar,
   FaStar,
 } from "react-icons/fa6";
-import { useForm } from "@mantine/form";
-import { MdOutlineReport, MdOutlineReportOff } from "react-icons/md";
+import { IoSend } from "react-icons/io5";
 import { LuTags } from "react-icons/lu";
+import { MdOutlineReportOff } from "react-icons/md";
+import { useLocation, useNavigate } from "react-router-dom";
+import defaultImage from "../../assets/mascot1.png";
+import CommentCard, {
+  timeDifferenceInMinutes,
+  timeText,
+} from "../../Components/Jsx/CommentCard.jsx";
+import { useAuth } from "../../Context.jsx";
+import API from "../../Scripts/API.js";
+import { FieldsColor, PageRoutes, Times } from "../../Scripts/Const.js";
 
 function StudyMaterial() {
   const location = useLocation();
