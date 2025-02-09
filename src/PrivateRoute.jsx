@@ -11,6 +11,7 @@ function PrivateRoute({ element }) {
       enqueueSnackbar("Login to Continue", {
         variant: "success",
         preventDuplicate: true,
+        autoHideDuration: 2000,
       });
   }, [isAuthenticated]);
   return isAuthenticated() ? element : <Navigate to={PageRoutes.Login} />;
