@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAt,
   faEye,
@@ -8,11 +6,7 @@ import {
   faLock,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
-import { PageRoutes } from "../../Scripts/Const";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import API from "../../Scripts/API";
-import { useAuth } from "../../Context";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   BackgroundImage,
   Button,
@@ -26,10 +20,16 @@ import {
   TextInput,
   useComputedColorScheme,
 } from "@mantine/core";
-import loginImageLeft from "../../assets/login-pic-left.png";
-import loginImageRight from "../../assets/login-pic-right.png";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import loginImageLeft from "../../assets/login-pic-left.png";
+import loginImageRight from "../../assets/login-pic-right.png";
+import { useAuth } from "../../Context";
+import API from "../../Scripts/API";
+import { PageRoutes } from "../../Scripts/Const";
 
 function Register() {
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ function Register() {
         return;
       }
       const user_info = data["user_info"];
-      sessionStorage.setItem("__user__", JSON.stringify(user_info));
+      localStorage.setItem("__user__", JSON.stringify(user_info));
       queryClient.setQueryData(["user_info"], user_info);
       set_user_info(user_info);
       notifications.show({
@@ -250,104 +250,6 @@ function Register() {
           style={{ filter: colorSheme === "dark" ? "invert(1)" : "none" }}
         ></BackgroundImage>
       </Flex>
-
-      {/*<div className="page flex login-page">*/}
-      {/*    <div alt="background-image" className="bg-image image-right"></div>*/}
-      {/*    <div alt="background-image" className="bg-image image-left"></div>*/}
-
-      {/*    <div className="login-box">*/}
-      {/*        <div className="mascot-1"></div>*/}
-      {/*        <FontAwesomeIcon*/}
-      {/*            icon={faXmark}*/}
-      {/*            className="cross-button"*/}
-      {/*            onClick={() => navigate(PageRoutes.Landing)}*/}
-      {/*        />*/}
-      {/*        <div className="title">*/}
-      {/*            Welcome to{" "}*/}
-      {/*            <span*/}
-      {/*                className="link-like title"*/}
-      {/*                onClick={() => enqueueSnackbar("Login first", {variant: "info"})}*/}
-      {/*            >*/}
-      {/*    Pass Hona Hai*/}
-      {/*  </span>*/}
-      {/*        </div>*/}
-      {/*        <form className="login-form flex" onSubmit={handleSubmit}>*/}
-      {/*            <label htmlFor="name">*/}
-      {/*                Name &nbsp;*/}
-      {/*                <FontAwesomeIcon*/}
-      {/*                    icon={faUser}*/}
-      {/*                    style={{color: "var(--primary-color)"}}*/}
-      {/*                />*/}
-      {/*            </label>*/}
-      {/*            <input*/}
-      {/*                type="text"*/}
-      {/*                placeholder="Name"*/}
-      {/*                value={formData.name}*/}
-      {/*                name="name"*/}
-      {/*                onChange={handleChange}*/}
-      {/*                maxLength={255}*/}
-      {/*                minLength={5}*/}
-      {/*                required*/}
-      {/*            />*/}
-      {/*            <label htmlFor="email">*/}
-      {/*                Email &nbsp;*/}
-      {/*                <FontAwesomeIcon*/}
-      {/*                    icon={faEnvelope}*/}
-      {/*                    style={{color: "var(--primary-color)"}}*/}
-      {/*                />*/}
-      {/*            </label>*/}
-      {/*            <input*/}
-      {/*                type="email"*/}
-      {/*                placeholder="Email"*/}
-      {/*                value={formData.email}*/}
-      {/*                name="email"*/}
-      {/*                onChange={handleChange}*/}
-      {/*                maxLength={255}*/}
-      {/*                minLength={5}*/}
-      {/*                required*/}
-      {/*            />*/}
-      {/*            <label htmlFor="password">*/}
-      {/*                Password&nbsp;*/}
-      {/*                <FontAwesomeIcon*/}
-      {/*                    icon={faLock}*/}
-      {/*                    style={{color: "var(--primary-color)"}}*/}
-      {/*                />*/}
-      {/*                &nbsp;*/}
-      {/*            </label>*/}
-      {/*            <PasswordInput*/}
-      {/*                showPassword={showPassword}*/}
-      {/*                setShowPassword={setShowPassword}*/}
-      {/*                handleChange={handleChange}*/}
-      {/*                name="password"*/}
-      {/*                formData={formData.confirm_password}*/}
-      {/*            />*/}
-      {/*            <label htmlFor="password">*/}
-      {/*                Confirm Password&nbsp;*/}
-      {/*                <FontAwesomeIcon*/}
-      {/*                    icon={faLock}*/}
-      {/*                    style={{color: "var(--primary-color)"}}*/}
-      {/*                />*/}
-      {/*                &nbsp;*/}
-      {/*            </label>*/}
-      {/*            <PasswordInput*/}
-      {/*                showPassword={showPassword}*/}
-      {/*                setShowPassword={setShowPassword}*/}
-      {/*                handleChange={handleChange}*/}
-      {/*                name="confirm_password"*/}
-      {/*                formData={formData.confirm_password}*/}
-      {/*            />*/}
-      {/*            <button type="submit" disabled={isLoading}>*/}
-      {/*                {isLoading ? "Loading..." : "Register"}*/}
-      {/*            </button>*/}
-      {/*            <p className="caption">*/}
-      {/*                Already have an account? &nbsp;*/}
-      {/*                <Link className="link-like" to={PageRoutes.Login}>*/}
-      {/*                    Login*/}
-      {/*                </Link>*/}
-      {/*            </p>*/}
-      {/*        </form>*/}
-      {/*    </div>*/}
-      {/*</div>*/}
     </Flex>
   );
 }

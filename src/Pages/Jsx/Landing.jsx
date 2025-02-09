@@ -4,30 +4,29 @@ import {
   Divider,
   Flex,
   Group,
+  Space,
   Stack,
   Text,
-  Title
+  Title,
+  useMantineColorScheme,
 } from "@mantine/core";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import landingImage from "../../assets/landing2.png";
-import logoGif from "../../assets/logo.mp4";
+import Features from "../../Components/Jsx/Features";
+import Header from "../../Components/Jsx/Header";
+import { useAuth } from "../../Context";
 import { PageRoutes } from "../../Scripts/Const";
 
 function Landing() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  if (isAuthenticated()) navigate(PageRoutes.Home);
+  const { setColorScheme } = useMantineColorScheme();
+  setColorScheme("light");
   return (
     <Stack gap={0}>
-      <Group bg={"white"} w={"100%"} h={"10vh"} justify="center">
-        <video
-          src={logoGif}
-          autoPlay
-          muted
-          disablePictureInPicture
-          disableRemotePlayback
-          style={{ height: "100%" }}
-        ></video>
-      </Group>
+      <Header></Header>
       <Divider></Divider>
       <Flex
         direction={{ base: "column-reverse", sm: "row" }}
@@ -64,7 +63,7 @@ function Landing() {
             <Button
               variant="outline"
               onClick={() => {
-                navigate(PageRoutes.Login);
+                navigate(PageRoutes.Register);
               }}
             >
               Register
@@ -79,6 +78,8 @@ function Landing() {
           ></BackgroundImage>
         </Stack>
       </Flex>
+      <Space h={"xl"}></Space>
+      <Features></Features>
     </Stack>
   );
 }

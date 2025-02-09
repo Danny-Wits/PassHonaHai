@@ -1,23 +1,22 @@
-import React from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import API from "../../Scripts/API.js";
-import { Times } from "../../Scripts/Const.js";
-import { UserCard } from "../../Components/Jsx/UserCard.jsx";
-import { UsersTable } from "../../Components/Jsx/UsersTable.jsx";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   ActionIcon,
   Button,
   Center,
   Divider,
   Grid,
-  GridCol,
   Loader,
   Pagination,
   Stack,
   TextInput,
 } from "@mantine/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import React from "react";
+import { UserCard } from "../../Components/Jsx/UserCard.jsx";
+import { UsersTable } from "../../Components/Jsx/UsersTable.jsx";
+import API from "../../Scripts/API.js";
+import { Times } from "../../Scripts/Const.js";
 
 function PublicProfiles() {
   const [search, setSearch] = React.useState("");
@@ -59,15 +58,6 @@ function PublicProfiles() {
   }
   return (
     <Stack>
-      <Center>
-        <Pagination
-          total={data?.total_pages}
-          onChange={setPageNo}
-          value={page_no}
-          siblings={1}
-        />
-      </Center>
-
       <Center>
         <form
           style={{ width: "100%", justifyContent: "center", display: "flex" }}
@@ -118,7 +108,14 @@ function PublicProfiles() {
         </Button>
       )}
       {!!searchData?.users && <Divider size={"md"} variant="dashed"></Divider>}
-
+      <Center>
+        <Pagination
+          total={data?.total_pages}
+          onChange={setPageNo}
+          value={page_no}
+          siblings={1}
+        />
+      </Center>
       <Grid>
         {(data?.users ?? []).map((user) => {
           return (

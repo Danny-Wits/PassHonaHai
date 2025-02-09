@@ -3,8 +3,6 @@ import {
   AppShell,
   Avatar,
   Burger,
-  Button,
-  Container,
   Group,
   rem,
   Stack,
@@ -12,21 +10,15 @@ import {
   useComputedColorScheme,
   useMantineColorScheme,
 } from "@mantine/core";
-import logo from "./assets/phhLogo.png";
 import { useDisclosure, useHeadroom } from "@mantine/hooks";
+import logo from "./assets/phhLogo.png";
 
-import NavBar from "./Components/Jsx/NavBar.jsx";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMoon,
-  faSignIn,
-  faSun,
-  faUserPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import { useAuth } from "./Context.jsx";
-import UserButton from "./Components/Jsx/UserButton.jsx";
-import { PageRoutes } from "./Scripts/Const.js";
 import { useNavigate } from "react-router-dom";
+import NavBar from "./Components/Jsx/NavBar.jsx";
+import UserButton from "./Components/Jsx/UserButton.jsx";
+import { useAuth } from "./Context.jsx";
 
 export function NavBarPage({ children }) {
   const pinned = useHeadroom({ fixedAt: 120 });
@@ -72,39 +64,15 @@ export function NavBarPage({ children }) {
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar p="sm">
+      <AppShell.Navbar p="sm" style={{ zIndex: 402 }}>
         <NavBar setOpened={toggle}></NavBar>
         <Stack justify="flex-end" h={"100%"} mb={"sm"}>
-          {user_info ? (
-            <UserButton
-              name={user_info.name}
-              bio={user_info.bio}
-              profile_picture_url={user_info.profile_picture_url}
-              logout={logout}
-            ></UserButton>
-          ) : (
-            <Container mb={"md"}>
-              <Group>
-                <Button
-                  leftSection={
-                    <FontAwesomeIcon icon={faSignIn}></FontAwesomeIcon>
-                  }
-                  onClick={() => navigate(PageRoutes.Login)}
-                >
-                  Login
-                </Button>
-                <Button
-                  leftSection={
-                    <FontAwesomeIcon icon={faUserPlus}></FontAwesomeIcon>
-                  }
-                  onClick={() => navigate(PageRoutes.Register)}
-                  variant="default"
-                >
-                  Register
-                </Button>
-              </Group>
-            </Container>
-          )}
+          <UserButton
+            name={user_info?.name}
+            bio={user_info?.bio}
+            profile_picture_url={user_info?.profile_picture_url}
+            logout={logout}
+          ></UserButton>
         </Stack>
       </AppShell.Navbar>
 

@@ -1,25 +1,21 @@
-import React from "react";
-import NavBar from "../../Components/Jsx/NavBar";
-import { useQuery } from "@tanstack/react-query";
-import API from "../../Scripts/API";
-import { Times } from "../../Scripts/Const";
-import MaterialCard from "../../Components/Jsx/MaterialCard.jsx";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   ActionIcon,
-  Box,
   Center,
   Divider,
   Grid,
-  GridCol,
   Loader,
   Pagination,
-  SimpleGrid,
   Stack,
   TextInput,
 } from "@mantine/core";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import MaterialCard from "../../Components/Jsx/MaterialCard.jsx";
 import { MaterialTable } from "../../Components/Jsx/MaterialTable.jsx";
+import API from "../../Scripts/API";
+import { Times } from "../../Scripts/Const";
 
 function Explore() {
   const [page_no, setPageNo] = React.useState(1);

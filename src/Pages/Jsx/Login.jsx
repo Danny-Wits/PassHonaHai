@@ -57,7 +57,7 @@ function Login() {
         return;
       }
       const user_info = data["user_info"];
-      sessionStorage.setItem("__user__", JSON.stringify(user_info));
+      localStorage.setItem("__user__", JSON.stringify(user_info));
       queryClient.setQueryData(["user_info"], user_info);
       set_user_info(user_info);
       notifications.show({

@@ -1,7 +1,6 @@
-
+import { Avatar, Badge, Button, Card, Group, Text } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { PageRoutes } from "../../Scripts/Const.js";
-import { Avatar, Badge, Button, Card, Group, Text } from "@mantine/core";
 import classes from "../Styles/UserCardImage.module.css";
 
 export function UserCard({ user_info }) {

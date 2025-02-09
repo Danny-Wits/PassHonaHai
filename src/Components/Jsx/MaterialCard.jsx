@@ -1,8 +1,3 @@
-import React from "react";
-import defaultImage from "../../assets/mascot1.png";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { FieldsColor, PageRoutes } from "../../Scripts/Const.js";
-import { useNavigate } from "react-router-dom";
 import {
   AspectRatio,
   Avatar,
@@ -17,10 +12,15 @@ import {
   Skeleton,
   Text,
   Textarea,
+  useComputedColorScheme,
 } from "@mantine/core";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import React from "react";
 import { LuTags } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
+import defaultImage from "../../assets/mascot1.png";
 import API from "../../Scripts/API.js";
-import { useComputedColorScheme } from "@mantine/core";
+import { FieldsColor, PageRoutes } from "../../Scripts/Const.js";
 // eslint-disable-next-line react/prop-types
 function MaterialCard({ material }) {
   const navigate = useNavigate();

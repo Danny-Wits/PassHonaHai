@@ -1,13 +1,13 @@
-import { Avatar, Group, Menu, Text, UnstyledButton } from "@mantine/core";
-import classes from "../Styles/UserButton.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretRight,
   faCog,
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
-import { PageRoutes } from "../../Scripts/Const.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Avatar, Group, Menu, Text, UnstyledButton } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { PageRoutes } from "../../Scripts/Const.js";
+import classes from "../Styles/UserButton.module.css";
 
 function UserButton({ name, bio, profile_picture_url, logout }) {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ function UserButton({ name, bio, profile_picture_url, logout }) {
   return (
     <Menu>
       <Menu.Target>{userButtonCard()}</Menu.Target>
-      <Menu.Dropdown>
+      <Menu.Dropdown w={200} withinPortal style={{ zIndex: 999 }}>
         <Menu.Label>Links</Menu.Label>
         <Menu.Item
           leftSection={<FontAwesomeIcon icon={faCog} />}
