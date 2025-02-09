@@ -88,7 +88,11 @@ function MaterialCard({ material }) {
     <Card shadow="sm" padding="lg" radius="md" withBorder maw={350} mih={340}>
       <Card.Section pos={"relative"}>
         <AspectRatio ratio={16 / 9}>
-          <Image src={download_link} alt="Study Material" />
+          <Image
+            src={download_link}
+            fallbackSrc={defaultImage}
+            alt="Study Material"
+          />
           <Overlay
             backgroundOpacity={colorTheme === "dark" ? 0.5 : 0.0}
             style={{ zIndex: 12 }}
