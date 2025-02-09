@@ -96,8 +96,21 @@ export default function Header() {
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+            <Button
+              variant="default"
+              onClick={() => {
+                navigate(PageRoutes.Login);
+              }}
+            >
+              Log in
+            </Button>
+            <Button
+              onClick={() => {
+                navigate(PageRoutes.Register);
+              }}
+            >
+              Sign up
+            </Button>
           </Group>
         </ScrollArea>
       </Drawer>

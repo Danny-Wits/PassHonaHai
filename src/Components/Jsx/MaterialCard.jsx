@@ -146,9 +146,8 @@ function MaterialCard({ material }) {
         minRows={3}
         maxRows={3}
         readOnly
-      >
-        {description}
-      </Textarea>
+        defaultValue={description}
+      ></Textarea>
       <Group gap={0}>
         <LuTags size={16} />
         <PillGroup p={"sm"}>

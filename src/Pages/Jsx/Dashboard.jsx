@@ -1,17 +1,3 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { enqueueSnackbar } from "notistack";
-import API from "../../Scripts/API";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useAuth } from "../../Context";
-import {
-  Fields,
-  Genders,
-  PageRoutes,
-  Standards,
-  Times,
-} from "../../Scripts/Const.js";
-import defaultImage from "../../assets/mascot1.png";
 import {
   ActionIcon,
   Affix,
@@ -24,11 +10,24 @@ import {
   Stack,
   TextInput,
   Tooltip,
-  TooltipFloating,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import UserProfile from "../../Components/Jsx/UserProfile.jsx";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
+import React from "react";
 import { LuPlus } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
+import UserProfile from "../../Components/Jsx/UserProfile.jsx";
+import { useAuth } from "../../Context";
+import API from "../../Scripts/API";
+import {
+  Fields,
+  Genders,
+  PageRoutes,
+  Standards,
+  Times,
+} from "../../Scripts/Const.js";
+import defaultImage from "../../assets/mascot1.png";
 
 export const numberFromStandard = (Standard) => {
   if (!Standard) return "";
@@ -181,7 +180,7 @@ function Dashboard() {
   };
   return (
     <Stack w={"100%"} mih={"90vh"}>
-      <Affix position={{ bottom: 30, right: 30 }}>
+      <Affix visibleFrom="sm" position={{ bottom: 30, right: 30 }}>
         <Tooltip label="Add Study Material">
           <ActionIcon
             size={"xl"}
@@ -253,138 +252,6 @@ function Dashboard() {
         </Button>
       </Group>
     </Stack>
-    // <div>
-    //   <img
-    //     className={"avatar"}
-    //     ref={profilePic}
-    //     src={
-    //       !user_info?.profile_picture_url
-    //         ? defaultImage
-    //         : user_info?.profile_picture_url
-    //     }
-    //     alt=""
-    //     width={200}
-    //     height={200}
-    //   />
-    //   <div className={"section-header"}>{name}</div>
-    //   <div className={"section-subheader"}>{user_info?.email}</div>
-    //   <button onClick={() => navigate(PageRoutes.UploadMaterial)}>
-    //     Upload Material
-    //   </button>
-    //   <form onSubmit={handlePicSubmit}>
-    //     <label htmlFor="pic">Upload Profile Pic</label>
-    //     <input
-    //       ref={picElement}
-    //       type="file"
-    //       id="pic"
-    //       name="pic"
-    //       accept=".pdf,.jpg,.jpeg,.png"
-    //     />
-    //     <button type="submit" disabled={uploadingProfilePic}>
-    //       {uploadingProfilePic ? "Uploading..." : "Upload"}
-    //     </button>
-    //   </form>
-    //
-    //   <form className={"login-form login-box"} onSubmit={handleEditSubmit}>
-    //     <label htmlFor="name">Name</label>
-    //     <input
-    //       onChange={changeHandler}
-    //       type="text"
-    //       id="name"
-    //       name="name"
-    //       value={userFormData?.name ?? ""}
-    //     />
-    //
-    //     <label htmlFor="bio">Bio</label>
-    //     <textarea
-    //       onChange={changeHandler}
-    //       name="bio"
-    //       id="bio"
-    //       cols="30"
-    //       rows="10"
-    //       value={userFormData?.bio ?? ""}
-    //     ></textarea>
-    //     <label htmlFor="standard">Standard</label>
-    //     <select
-    //       name="standard"
-    //       id="standard"
-    //       onChange={changeHandler}
-    //       value={userFormData?.standard}
-    //     >
-    //       {Standards.map((standard) => (
-    //         <option key={standard} value={standard}>
-    //           {standard}
-    //         </option>
-    //       ))}
-    //     </select>
-    //     <label htmlFor="field">Field</label>
-    //     <select
-    //       onChange={changeHandler}
-    //       name="field"
-    //       id="field"
-    //       value={userFormData?.field}
-    //     >
-    //       {Object.keys(Fields ?? []).map((field) => (
-    //         <option key={field} value={field}>
-    //           {field}
-    //         </option>
-    //       ))}
-    //     </select>
-    //
-    //     <label htmlFor="branch">Branch</label>
-    //     <select
-    //       onChange={changeHandler}
-    //       name="branch"
-    //       id="branch"
-    //       value={userFormData?.branch}
-    //     >
-    //       {Fields[userFormData?.field]?.map((field) => (
-    //         <option key={field} value={field}>
-    //           {field}
-    //         </option>
-    //       ))}
-    //     </select>
-    //     <label htmlFor="gender">Gender</label>
-    //     <select
-    //       onChange={changeHandler}
-    //       name="gender"
-    //       id="gender"
-    //       value={userFormData?.gender}
-    //     >
-    //       <option value="unknown">{"Don't"} wanna share</option>
-    //       <option value="male">Male</option>
-    //       <option value="female">Female</option>
-    //     </select>
-    //     <button type={"submit"} disabled={updatingUserInfo}>
-    //       {updatingUserInfo ? "Updating..." : "Update"}
-    //     </button>
-    //   </form>
-    //
-    //   <div className={"section-header"}>Your Material</div>
-    //   <div className={"card-container"}>
-    //     {studyMaterialsOfUser?.map((material) => (
-    //       <MaterialCard material={material} key={material?.material_id} />
-    //     ))}
-    //   </div>
-    //
-    //   <div className={"section-header"}>Seniors</div>
-    //
-    //   <div className={"user-card-container"}>
-    //     {seniors?.map((senior) => (
-    //       <UserCard key={senior?.user_id} user_info={senior} />
-    //     ))}{" "}
-    //   </div>
-    //
-    //   <div className={"section-header"}>Juniors</div>
-    //   {juniors?.map((junior) => (
-    //     <UserCard
-    //       key={junior?.user_id}
-    //       image={junior?.profile_picture_url}
-    //       name={junior?.name}
-    //       id={junior?.user_id}
-    //     />
-    //   ))}
-    // </div>
   );
 }
 

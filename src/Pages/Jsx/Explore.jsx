@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   ActionIcon,
   Center,
-  Divider,
   Grid,
   Loader,
   Pagination,
@@ -74,18 +73,15 @@ function Explore() {
             radius="xl"
             w={"90%"}
             rightSection={
-              <>
-                <Divider orientation="vertical" mr={"15px"} />
-                <ActionIcon
-                  variant={"transparent"}
-                  onClick={() => {}}
-                  mr={"30px"}
-                  loading={isSearching}
-                  type="submit"
-                >
-                  <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-                </ActionIcon>
-              </>
+              <ActionIcon
+                variant={"transparent"}
+                onClick={() => {}}
+                mr={"20px"}
+                loading={isSearching}
+                type="submit"
+              >
+                <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+              </ActionIcon>
             }
           ></TextInput>
         </form>
@@ -103,13 +99,14 @@ function Explore() {
         />
       </Center>
 
-      <Grid>
+      <Grid align="center" justify="center">
         {data?.materials?.map((material, index) => {
           return (
             <Grid.Col
               key={index}
               span={{ base: 12, sm: 6, md: 4, lg: 3 }}
               mih={400}
+              maw={350}
             >
               <MaterialCard material={material} />
             </Grid.Col>

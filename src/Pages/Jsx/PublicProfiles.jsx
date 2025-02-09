@@ -75,17 +75,14 @@ function PublicProfiles() {
             radius="xl"
             w={"90%"}
             rightSection={
-              <>
-                <Divider orientation="vertical" mr={"15px"} />
-                <ActionIcon
-                  variant={"transparent"}
-                  onClick={refetchSearch}
-                  mr={"30px"}
-                  loading={isSearching}
-                >
-                  <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
-                </ActionIcon>
-              </>
+              <ActionIcon
+                variant={"transparent"}
+                onClick={refetchSearch}
+                mr={"10px"}
+                loading={isSearching}
+              >
+                <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+              </ActionIcon>
             }
           ></TextInput>
         </form>

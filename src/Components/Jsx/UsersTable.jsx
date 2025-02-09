@@ -2,7 +2,7 @@ import { Avatar, Badge, Group, Table, Text } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { PageRoutes } from "../../Scripts/Const.js";
 
-const FieldColor = {
+export const FieldColor = {
   Science: "green",
   Commerce: "red",
   Arts: "blue",

@@ -1,17 +1,4 @@
-import React, { useEffect, useState } from "react";
-import NavBar from "../../Components/Jsx/NavBar.jsx";
-import Dropzone from "react-dropzone";
-import { enqueueSnackbar } from "notistack";
-import { useAuth } from "../../Context.jsx";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import API from "../../Scripts/API.js";
 import {
-  Fields,
-  Standards,
-  validFileTypesString,
-} from "../../Scripts/Const.js";
-import {
-  Badge,
   Button,
   Center,
   FileInput,
@@ -24,22 +11,26 @@ import {
   Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { use } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
+import React, { useEffect, useState } from "react";
+import Dropzone from "react-dropzone";
+import { GoBook, GoGitBranch } from "react-icons/go";
 import {
-  MdOutline10K,
   MdOutlineDescription,
   MdOutlineFileUpload,
   MdOutlineSchool,
-  MdOutlineSubject,
   MdOutlineTag,
   MdOutlineTitle,
 } from "react-icons/md";
-import { GoBook, GoGitBranch } from "react-icons/go";
-
-// (material_id: INT AUTO_INCREMENT, user_id: INT, title: VARCHAR(255),
-// description: TEXT, view_count: INT, file_url: VARCHAR(255),
-// file_type:VARCHAR(255), category: VARCHAR(100), tags: VARCHAR(255),
-// upload_date: TIMESTAMP DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(material_id),
+import NavBar from "../../Components/Jsx/NavBar.jsx";
+import { useAuth } from "../../Context.jsx";
+import API from "../../Scripts/API.js";
+import {
+  Fields,
+  Standards,
+  validFileTypesString,
+} from "../../Scripts/Const.js";
 
 const UploadMaterial = () => {
   const { user_info } = useAuth();
@@ -188,7 +179,12 @@ const UploadMaterial = () => {
   return (
     <Stack>
       <Center>
-        <Title align="center">Upload Study Material</Title>
+        <Title align="center" visibleFrom="md" order={1}>
+          Upload Study Material
+        </Title>
+        <Title align="center" hiddenFrom="md" order={2}>
+          Upload Study Material
+        </Title>
       </Center>
       <Paper shadow="md" radius="md" p={"md"} m="sm">
         <form onSubmit={materialForm.onSubmit(handleMaterialUpload)}>

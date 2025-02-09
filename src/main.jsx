@@ -3,13 +3,12 @@ import "@mantine/core/styles.css";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SnackbarProvider } from "notistack";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./Context";
+import "./index.css";
 import { NavBarPage } from "./NavBarPage.jsx";
 import AboutUs from "./Pages/Jsx/AboutUs.jsx";
 import ContactUs from "./Pages/Jsx/ContactUs.jsx";
@@ -143,7 +142,7 @@ createRoot(document.getElementById("root")).render(
         <AuthProvider>
           <RouterProvider router={router} />
           <SnackbarProvider />
-          <ReactQueryDevtools />
+          {/* <ReactQueryDevtools /> */}
         </AuthProvider>
       </QueryClientProvider>
     </MantineProvider>

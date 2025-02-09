@@ -1,11 +1,4 @@
-import {
-  Button,
-  Grid,
-  SimpleGrid,
-  Text,
-  ThemeIcon,
-  Title,
-} from "@mantine/core";
+import { Grid, SimpleGrid, Text, ThemeIcon, Title } from "@mantine/core";
 import {
   FaBolt,
   FaExchangeAlt,
@@ -13,7 +6,6 @@ import {
   FaUserFriends,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { PageRoutes } from "../../Scripts/Const";
 import classes from "../Styles/FeaturesTitle.module.css";
 
 const features = [
@@ -72,16 +64,6 @@ export default function Features() {
             and a commitment to staying free forever, we ensure that you have
             all the tools you need to succeed.
           </Text>
-
-          <Button
-            size="md"
-            variant="default"
-            radius="md"
-            mt="xl"
-            onClick={() => navigate(PageRoutes.Login)}
-          >
-            Get started
-          </Button>
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 7 }}>
           <SimpleGrid cols={{ base: 1, md: 2 }} spacing={30}>

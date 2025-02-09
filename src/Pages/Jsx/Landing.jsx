@@ -11,17 +11,18 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import landingImage from "../../assets/landing2.png";
 import Features from "../../Components/Jsx/Features";
 import Header from "../../Components/Jsx/Header";
 import { useAuth } from "../../Context";
 import { PageRoutes } from "../../Scripts/Const";
+import LandingFooter from "../../Components/Jsx/LandingFooter";
 
 function Landing() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  if (isAuthenticated()) navigate(PageRoutes.Home);
+  if (isAuthenticated()) return <Navigate to={PageRoutes.Home}></Navigate>;
   const { setColorScheme } = useMantineColorScheme();
   setColorScheme("light");
   return (
@@ -80,6 +81,7 @@ function Landing() {
       </Flex>
       <Space h={"xl"}></Space>
       <Features></Features>
+      <LandingFooter></LandingFooter>
     </Stack>
   );
 }

@@ -10,18 +10,20 @@ import {
   useComputedColorScheme,
   useMantineColorScheme,
 } from "@mantine/core";
-import { useDisclosure, useHeadroom } from "@mantine/hooks";
+import { useDisclosure, useHeadroom, useMediaQuery } from "@mantine/hooks";
 import logo from "./assets/phhLogo.png";
 
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import Footer from "./Components/Jsx/Footer.jsx";
 import NavBar from "./Components/Jsx/NavBar.jsx";
 import UserButton from "./Components/Jsx/UserButton.jsx";
 import { useAuth } from "./Context.jsx";
 
 export function NavBarPage({ children }) {
   const pinned = useHeadroom({ fixedAt: 120 });
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [opened, { toggle }] = useDisclosure();
   const { setColorScheme } = useMantineColorScheme();
   const colorScheme = useComputedColorScheme();
@@ -34,6 +36,10 @@ export function NavBarPage({ children }) {
     <AppShell
       header={{ height: 60, collapsed: !pinned }}
       navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
+      footer={{
+        height: 60,
+        collapsed: !isMobile,
+      }}
       padding="md"
     >
       <AppShell.Header style={{ zIndex: 999 }}>
@@ -79,6 +85,9 @@ export function NavBarPage({ children }) {
       <AppShell.Main pt={`calc(${rem(60)} + var(--mantine-spacing-md))`}>
         {children}
       </AppShell.Main>
+      <AppShell.Footer zIndex={401}>
+        <Footer></Footer>
+      </AppShell.Footer>
     </AppShell>
   );
 }
