@@ -195,6 +195,7 @@ function Dashboard() {
         opened={showModal}
         title={"Edit Info"}
         onClose={() => setShowModal(false)}
+        zIndex={1000}
       >
         <form onSubmit={editForm.onSubmit(handleEditSubmit)}>
           <TextInput
