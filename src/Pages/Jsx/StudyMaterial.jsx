@@ -163,18 +163,7 @@ function StudyMaterial() {
   const handleCommentDelete = () => {
     deleteComment({ user_id: user_info?.user_id, data: { material_id: id } });
   };
-  const fileData = () => {
-    let download_link = material_info?.download_link;
-    const extention = download_link.substring(
-      download_link.length - 3,
-      download_link.length
-    );
-    const notVisible = ["pdf", "docx", "ppt"];
-    if (notVisible.includes(extention)) {
-      download_link = defaultImage;
-    }
-    return download_link;
-  };
+
   const commentForm = useForm({
     initialValues: {
       comment: "",
@@ -196,7 +185,12 @@ function StudyMaterial() {
   return (
     <Stack>
       <AspectRatio ratio={16 / 9} h={"30vh"}>
-        <Image src={fileData()} h={"100%"}></Image>
+        <Image
+          src={material_info?.download_link}
+          alt={material_info?.title}
+          fallbackSrc={defaultImage}
+          h={"100%"}
+        ></Image>
       </AspectRatio>
       <Divider></Divider>
       <Group>
@@ -292,14 +286,19 @@ function StudyMaterial() {
       </Paper>
       <Group gap={"lg"} justify="center">
         <Button
-          onClick={() => window.open(fileData())}
+          onClick={() => window.open(material_info?.download_link, "_blank")}
           variant="filled"
           rightSection={<FaDownload />}
         >
           Download
         </Button>
         <Button
-          onClick={() => window.open(fileData())}
+          onClick={() =>
+            enqueueSnackbar("Report Feature coming soon", {
+              variant: "success",
+              autoHideDuration: 2000,
+            })
+          }
           variant="default"
           color="red"
           rightSection={<MdOutlineReportOff />}

@@ -49,15 +49,6 @@ function MaterialCard({ material }) {
   if (!branch) branch = "Unknown";
   if (!standard) standard = 10;
 
-  // eslint-disable-next-line react/prop-types
-  const extention = download_link.substring(
-    download_link.length - 3,
-    download_link.length
-  );
-  const notVisible = ["pdf", "docx", "ppt"];
-  if (notVisible.includes(extention)) {
-    download_link = defaultImage;
-  }
   const queryClient = useQueryClient();
 
   // const {mutate: deleteMaterial, isLoading: isDeleting} = useMutation(

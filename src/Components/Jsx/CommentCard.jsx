@@ -1,18 +1,7 @@
+import { Avatar, Group, Paper, Text, Textarea } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { PageRoutes } from "../../Scripts/Const.js";
 import { useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/mascot1.png";
-import {
-  AspectRatio,
-  Avatar,
-  Badge,
-  Group,
-  Image,
-  Paper,
-  Stack,
-  Text,
-  Textarea,
-} from "@mantine/core";
 export const timeDifferenceInMinutes = (date1, date2) =>
   Math.floor((date1 - date2) / (1000 * 60));
 export const timeText = (time) => {

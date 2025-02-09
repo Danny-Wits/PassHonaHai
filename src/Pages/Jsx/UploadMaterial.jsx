@@ -55,7 +55,11 @@ const UploadMaterial = () => {
         tags: [],
         file: null,
       });
-      enqueueSnackbar("Material Uploaded Successfully", { variant: "success" });
+      enqueueSnackbar("Material Uploaded Successfully", {
+        variant: "success",
+        preventDuplicate: true,
+        autoHideDuration: 2000,
+      });
     },
     onError: (error) => {
       enqueueSnackbar(error.message, { variant: "error" });
@@ -159,7 +163,7 @@ const UploadMaterial = () => {
 
   const handleMaterialUpload = (values, e) => {
     e.preventDefault();
-    console.log(values);
+
     const formDataObject = new FormData();
     for (const key in values) {
       formDataObject.append(key, values[key]);

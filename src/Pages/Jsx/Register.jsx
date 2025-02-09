@@ -78,8 +78,6 @@ function Register() {
         autoClose: 1000,
         withCloseButton: true,
       });
-      console.log(error);
-      console.log(data);
     },
   });
 

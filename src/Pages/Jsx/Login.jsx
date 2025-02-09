@@ -73,7 +73,6 @@ function Login() {
         color: "red",
         withBorder: true,
       });
-      console.log(error);
     },
   });
 

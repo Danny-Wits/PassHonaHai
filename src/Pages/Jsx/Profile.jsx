@@ -1,12 +1,12 @@
+import { Button, Group, Stack } from "@mantine/core";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { PageRoutes, Times } from "../../Scripts/Const.js";
-import { enqueueSnackbar } from "notistack";
-import { Button, Group, Stack } from "@mantine/core";
-import API from "../../Scripts/API";
-import { useAuth } from "../../Context";
 import UserProfile from "../../Components/Jsx/UserProfile.jsx";
+import { useAuth } from "../../Context";
+import API from "../../Scripts/API";
+import { PageRoutes, Times } from "../../Scripts/Const.js";
 
 const Profile = () => {
   const { user_info } = useAuth();
@@ -115,12 +115,6 @@ const Profile = () => {
     });
   //User to Dashboard
   if (id !== null && id === user_info?.user_id) {
-    console.log("state : ");
-    console.log(location.state);
-    console.log("user :");
-    console.log(user_info);
-    console.log("page user : ");
-    console.log(page_user);
     return <Navigate to={PageRoutes.Dashboard} />;
   }
 
