@@ -78,7 +78,10 @@ const Profile = () => {
     {
       onSuccess: (data) => {
         if (data.error) {
-          enqueueSnackbar(data.error, { variant: "error" });
+          enqueueSnackbar(data.error, {
+            variant: "error",
+            autoHideDuration: 3000,
+          });
           return;
         }
         queryClient
@@ -98,7 +101,10 @@ const Profile = () => {
     useMutation((data) => API.deleteRelationship(data.user_id, data.data), {
       onSuccess: (data) => {
         if (data.error) {
-          enqueueSnackbar(data.error, { variant: "error" });
+          enqueueSnackbar(data.error, {
+            variant: "error",
+            autoHideDuration: 3000,
+          });
           return;
         }
         queryClient

@@ -85,7 +85,10 @@ function StudyMaterial() {
       onSuccess: (data) => {
         queryClient.refetchQueries(["get_material_likes", id]).then(() => {});
         if (data.error) {
-          enqueueSnackbar(data.error, { variant: "error" });
+          enqueueSnackbar(data.error, {
+            variant: "error",
+            autoHideDuration: 3000,
+          });
           return;
         }
       },
@@ -100,11 +103,17 @@ function StudyMaterial() {
       onSuccess: (data) => {
         queryClient.refetchQueries(["get_material_likes", id]).then(() => {});
         if (data.error) {
-          enqueueSnackbar(data.error, { variant: "error" });
+          enqueueSnackbar(data.error, {
+            variant: "error",
+            autoHideDuration: 3000,
+          });
         }
       },
       onError: (error) => {
-        enqueueSnackbar(error.message, { variant: "error" });
+        enqueueSnackbar(error.message, {
+          variant: "error",
+          autoHideDuration: 3000,
+        });
       },
     }
   );
@@ -128,11 +137,17 @@ function StudyMaterial() {
           .refetchQueries(["get_material_comments", id])
           .then(() => {});
         if (data.error) {
-          enqueueSnackbar(data.error, { variant: "error" });
+          enqueueSnackbar(data.error, {
+            variant: "error",
+            autoHideDuration: 3000,
+          });
         }
       },
       onError: (error) => {
-        enqueueSnackbar(error.message, { variant: "error" });
+        enqueueSnackbar(error.message, {
+          variant: "error",
+          autoHideDuration: 3000,
+        });
       },
     }
   );
@@ -144,11 +159,11 @@ function StudyMaterial() {
           .refetchQueries(["get_material_comments", id])
           .then(() => {});
         if (data.error) {
-          enqueueSnackbar(data.error, { variant: "error" });
+          enqueueSnackbar(data.error, { variant: "error",autoHideDuration: 3000 });
         }
       },
       onError: (error) => {
-        enqueueSnackbar(error.message, { variant: "error" });
+        enqueueSnackbar(error.message, { variant: "error",autoHideDuration: 3000 });
       },
     }
   );

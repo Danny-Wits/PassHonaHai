@@ -145,7 +145,10 @@ function Dashboard() {
         if (data.error) {
           profilePic.current.src =
             user_info?.profile_picture_url ?? defaultImage;
-          enqueueSnackbar(data.error, { variant: "error" });
+          enqueueSnackbar(data.error, {
+            variant: "error",
+            autoHideDuration: 3000,
+          });
           return;
         }
         enqueueSnackbar("Profile Pic Uploaded", {
@@ -175,7 +178,10 @@ function Dashboard() {
     onSuccess: (data) => {
       refetch_user_info();
       if (data.error) {
-        enqueueSnackbar(data.error, { variant: "error" });
+        enqueueSnackbar(data.error, {
+          variant: "error",
+          autoHideDuration: 3000,
+        });
         return;
       }
       setShowModal(false);

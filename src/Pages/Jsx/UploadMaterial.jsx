@@ -42,7 +42,10 @@ const UploadMaterial = () => {
     },
     onSuccess: (data) => {
       if (data.error) {
-        enqueueSnackbar(data.error, { variant: "error" });
+        enqueueSnackbar(data.error, {
+          variant: "error",
+          autoHideDuration: 3000,
+        });
         return;
       }
       queryClient.refetchQueries(["get_material", 1]).then(() => {});

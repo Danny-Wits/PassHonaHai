@@ -1,6 +1,6 @@
+import { enqueueSnackbar } from "notistack";
 import { createContext, useContext, useEffect, useState } from "react";
 import API from "./Scripts/API.js";
-import { enqueueSnackbar } from "notistack";
 
 const AuthContext = createContext();
 
@@ -25,7 +25,10 @@ const AuthProvider = ({ children }) => {
     const data = await API.getUserInfo(user_info.user_id);
     if (!data) return;
     if (data.error) {
-      enqueueSnackbar("Could not Refresh User Info", { variant: "error" });
+      enqueueSnackbar("Could not Refresh User Info", {
+        variant: "error",
+        autoHideDuration: 3000,
+      });
       return;
     }
     set_user_info(data.user_info);
@@ -49,4 +52,4 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export { useAuth, AuthProvider };
+export { AuthProvider, useAuth };
