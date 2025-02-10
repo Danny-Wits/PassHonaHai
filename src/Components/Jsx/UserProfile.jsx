@@ -73,9 +73,9 @@ function UserProfile({
       </Box>
       <Stack px={"sm"} gap={10}>
         <Title
-          order={isMobile ? 3 : 1}
+          order={isMobile ? 2 : 1}
           w={"100%"}
-          mb={0}
+          my={8}
           style={{
             overflowX: "auto",
             display: "flex",
