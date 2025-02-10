@@ -34,7 +34,7 @@ function UserButton({ name, bio, profile_picture_url, logout, setOpened }) {
   return (
     <Menu>
       <Menu.Target>{userButtonCard()}</Menu.Target>
-      <Menu.Dropdown w={200} withinPortal style={{ zIndex: 999 }}>
+      <Menu.Dropdown w={200} style={{ zIndex: 999 }}>
         <Menu.Label>Links</Menu.Label>
         <Menu.Item
           leftSection={<FontAwesomeIcon icon={faCog} />}

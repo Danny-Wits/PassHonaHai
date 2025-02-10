@@ -1,7 +1,7 @@
 import { del, get, post, put } from "superagent";
 
 const $API_URL = import.meta.env.VITE_API_URL;
-const $API_TOKEN = "123456";
+const $API_TOKEN = "_";
 
 const API = {
   getAllUsers: async (page_no = 1) => getter("/users/?page_no=" + page_no),
@@ -42,13 +42,14 @@ const API = {
 export default API;
 // Reusable functions for GET and POST requests
 export const getter = async (request) => {
-  const response = await get($API_URL + request);
+  const response = await get($API_URL + request).withCredentials();
   return response.body; // Superagent response body is accessible via `.body`
 };
 
 // Send a POST request with payload using Superagent
 export const poster = async (request, payload = {}) => {
   const response = await post($API_URL + request)
+    .withCredentials()
     .send(payload) // Send the payload data
     .set("Content-Type", "application/json") // Ensure this matches your server's expectation
     .set("Authorization", $API_TOKEN); // Add the Authorization header
@@ -57,6 +58,7 @@ export const poster = async (request, payload = {}) => {
 };
 export const posterMultipart = async (request, formData) => {
   const response = await post($API_URL + request)
+    .withCredentials()
     .send(formData) // Send the payload data
     .set("Authorization", $API_TOKEN); // Add the Authorization header
   return response.body;
@@ -64,12 +66,14 @@ export const posterMultipart = async (request, formData) => {
 //Send multipart file data
 export const posterMultipartFile = async (request, file) => {
   const response = await post($API_URL + request)
+    .withCredentials()
     .attach("file", file, file.name) // Send the payload data
     .set("Authorization", $API_TOKEN); // Add the Authorization header
   return response.body; // Superagent response body is accessible via `.body`
 };
 export const putter = async (url, payload = {}) => {
   const response = await put($API_URL + url)
+    .withCredentials()
     .send(payload) // Send the payload data
     .set("Content-Type", "application/json") // Ensure this matches your server's expectation
     .set("Authorization", $API_TOKEN); // Add the Authorization header
@@ -78,6 +82,7 @@ export const putter = async (url, payload = {}) => {
 };
 export const deleter = async (url, payload = {}) => {
   const response = await del($API_URL + url)
+    .withCredentials()
     .send(payload) // Send the payload data
     .set("Content-Type", "application/json") // Ensure this matches your server's expectation
     .set("Authorization", $API_TOKEN); // Add the Authorization header

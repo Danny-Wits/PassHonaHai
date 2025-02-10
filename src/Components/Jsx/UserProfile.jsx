@@ -51,18 +51,20 @@ function UserProfile({
             size={96}
             color={"initials"}
           ></Avatar>
-          <ActionIcon
-            style={{ cursor: onProfileClick ? "pointer" : "default" }}
-            onClick={onProfileClick ? onProfileClick : () => {}}
-            pos={"absolute"}
-            bottom={0}
-            right={0}
-            size={"md"}
-            variant={"default"}
-            radius={"xl"}
-          >
-            <CiEdit />
-          </ActionIcon>
+          {onProfileClick && (
+            <ActionIcon
+              style={{ cursor: onProfileClick ? "pointer" : "default" }}
+              onClick={onProfileClick ? onProfileClick : () => {}}
+              pos={"absolute"}
+              bottom={0}
+              right={0}
+              size={"md"}
+              variant={"default"}
+              radius={"xl"}
+            >
+              <CiEdit />
+            </ActionIcon>
+          )}
         </Box>
 
         <Divider size={"md"}></Divider>
