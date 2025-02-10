@@ -78,23 +78,19 @@ function UserProfile({
           my={8}
           style={{
             overflowX: "auto",
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
           }}
         >
           {page_user?.name}
-          {!!relationship && (
-            <Badge
-              variant={"dot"}
-              color={relationship === "Senior" ? "red" : "green"}
-              miw={80}
-            >
-              {relationship}
-            </Badge>
-          )}
         </Title>
-
+        {!!relationship && (
+          <Badge
+            variant={"dot"}
+            color={relationship === "Senior" ? "red" : "green"}
+            miw={80}
+          >
+            {relationship}
+          </Badge>
+        )}
         <Divider></Divider>
         <Group gap={20}>
           <Avatar
@@ -104,7 +100,10 @@ function UserProfile({
           ></Avatar>{" "}
           <StatsBox value={page_user?.materials} label={"Materials"}></StatsBox>
           <StatsBox value={page_user?.seniors} label={"Seniors"}></StatsBox>
-          <StatsBox value={page_user?.juniors} label={"Juniors"}></StatsBox>
+          <StatsBox
+            value={page_user?.juniors}
+            label={"Juniors"}
+          ></StatsBox>{" "}
         </Group>
         <Divider mb={10}></Divider>
         <Paper p={"md"} shadow={"md"} mb={10}>
