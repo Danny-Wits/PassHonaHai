@@ -68,6 +68,24 @@ function Dashboard() {
         value.length < 10 || value.length > 1000
           ? "Bio must be 10-1000 characters"
           : null,
+      standard: (value) => {
+        if (!value) {
+          return "Standard cannot be empty";
+        }
+        return null;
+      },
+      field: (value) => {
+        if (!value) {
+          return "Field cannot be empty";
+        }
+        return null;
+      },
+      branch: (value) => {
+        if (!value) {
+          return "Branch cannot be empty";
+        }
+        return null;
+      },
     },
   });
   React.useEffect(() => {
@@ -218,24 +236,28 @@ function Dashboard() {
             label={"Standard"}
             name={"standard"}
             data={Standards}
+            styles={{ dropdown: { zIndex: 1001 } }}
             {...editForm.getInputProps("standard")}
           ></Select>
           <Select
             name={"field"}
             label={"Field"}
             data={Object.keys(Fields)}
+            styles={{ dropdown: { zIndex: 1001 } }}
             {...editForm.getInputProps("field")}
           ></Select>
           <Select
             name={"branch"}
             label={"Branch"}
             data={Fields[editForm.values.field]}
+            styles={{ dropdown: { zIndex: 1001 } }}
             {...editForm.getInputProps("branch")}
           ></Select>
           <Select
             name={"gender"}
             label={"Gender"}
             data={Genders}
+            styles={{ dropdown: { zIndex: 1001 } }}
             {...editForm.getInputProps("gender")}
           ></Select>
           <Center p={"sm"}>

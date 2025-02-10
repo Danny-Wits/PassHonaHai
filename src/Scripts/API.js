@@ -1,7 +1,7 @@
 import { del, get, post, put } from "superagent";
 
 const $API_URL = import.meta.env.VITE_API_URL;
-const $API_TOKEN = "_";
+const $API_TOKEN = "1234";
 
 const API = {
   getAllUsers: async (page_no = 1) => getter("/users/?page_no=" + page_no),
