@@ -13,6 +13,7 @@ import {
   Title,
   useComputedColorScheme,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import React from "react";
 import { CiEdit } from "react-icons/ci";
 import { IoIosInformationCircleOutline } from "react-icons/io";
@@ -28,6 +29,7 @@ function UserProfile({
   profilePicRef,
 }) {
   const colorTheme = useComputedColorScheme();
+  const isMobile = useMediaQuery("(max-width: 768px)");
   if (!relationship) relationship = "";
   return (
     <Stack>
@@ -71,14 +73,14 @@ function UserProfile({
       </Box>
       <Stack px={"sm"} gap={10}>
         <Title
-          order={1}
-          w={"80%"}
+          order={isMobile ? 3 : 1}
+          w={"100%"}
           mb={0}
           style={{
             overflowX: "auto",
             display: "flex",
             alignItems: "center",
-            gap: "5px",
+            gap: "10px",
           }}
         >
           {page_user?.name}
@@ -86,6 +88,7 @@ function UserProfile({
             <Badge
               variant={"dot"}
               color={relationship === "Senior" ? "red" : "green"}
+              miw={80}
             >
               {relationship}
             </Badge>
