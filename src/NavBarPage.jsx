@@ -78,7 +78,11 @@ export function NavBarPage({ children }) {
           <Text size={isMobile ? "md" : "xl"} fw={900}>
             Pass Hona Hai
           </Text>
-          <ActionIcon onClick={toggleColorScheme} variant={"light"}>
+          <ActionIcon
+            onClick={toggleColorScheme}
+            variant={"default"}
+            ml={isMobile ? "auto" : "xs"}
+          >
             {colorScheme === "dark" ? (
               <FontAwesomeIcon icon={faMoon}></FontAwesomeIcon>
             ) : (
@@ -86,7 +90,7 @@ export function NavBarPage({ children }) {
             )}
           </ActionIcon>
           <ActionIcon
-            variant={"light"}
+            variant={"default"}
             onClick={async () => {
               setLoading(true);
               queryClient.refetchQueries([]).then(() => {
