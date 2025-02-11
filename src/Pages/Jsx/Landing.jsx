@@ -1,6 +1,7 @@
 import {
   BackgroundImage,
   Button,
+  Dialog,
   Divider,
   Flex,
   Group,
@@ -10,14 +11,19 @@ import {
   Title,
   useMantineColorScheme,
 } from "@mantine/core";
-import React from "react";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import React, { useEffect } from "react";
+import {
+  MdOutlineInstallDesktop,
+  MdOutlineInstallMobile,
+} from "react-icons/md";
 import { Navigate, useNavigate } from "react-router-dom";
 import landingImage from "../../assets/landing2.png";
 import Features from "../../Components/Jsx/Features";
 import Header from "../../Components/Jsx/Header";
+import LandingFooter from "../../Components/Jsx/LandingFooter";
 import { useAuth } from "../../Context";
 import { PageRoutes } from "../../Scripts/Const";
-import LandingFooter from "../../Components/Jsx/LandingFooter";
 
 function Landing() {
   const navigate = useNavigate();
@@ -25,8 +31,56 @@ function Landing() {
   if (isAuthenticated()) return <Navigate to={PageRoutes.Home}></Navigate>;
   const { setColorScheme } = useMantineColorScheme();
   setColorScheme("light");
+  const [promptEvent, setPromptEvent] = React.useState(null);
+  const [isInstalled, setIsInstalled] = React.useState(false);
+  const [opened, { close }] = useDisclosure(true);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  useEffect(() => {
+    const handleInstallPrompt = (e) => {
+      e.preventDefault();
+      setPromptEvent(e);
+      return false;
+    };
+    const handleAppInstalled = () => {
+      setIsInstalled(true);
+    };
+    window.addEventListener("beforeinstallprompt", handleInstallPrompt);
+    window.addEventListener("appinstalled", () => {
+      setIsInstalled(true);
+    });
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleInstallPrompt);
+      window.removeEventListener("appinstalled", handleAppInstalled);
+    };
+  }, []);
+
   return (
     <Stack gap={0}>
+      <Dialog
+        opened={!isInstalled && opened}
+        onClose={close}
+        size="md"
+        radius="md"
+        withCloseButton
+      >
+        <Stack>
+          <Text> Install Pass Hona Hai as a App</Text>
+          <Button
+            variant="default"
+            rightSection={
+              isMobile ? (
+                <MdOutlineInstallMobile />
+              ) : (
+                <MdOutlineInstallDesktop />
+              )
+            }
+            onClick={() => promptEvent.prompt()}
+            w={"50%"}
+          >
+            Install
+          </Button>
+        </Stack>
+      </Dialog>
       <Header></Header>
       <Divider></Divider>
       <Flex

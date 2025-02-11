@@ -1,6 +1,4 @@
 import {
-  ActionIcon,
-  Affix,
   Button,
   Center,
   Group,
@@ -9,25 +7,18 @@ import {
   Select,
   Stack,
   TextInput,
-  Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import React from "react";
 import { CiEdit } from "react-icons/ci";
-import { LuLogOut, LuPlus } from "react-icons/lu";
+import { LuLogOut } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import UserProfile from "../../Components/Jsx/UserProfile.jsx";
 import { useAuth } from "../../Context";
 import API from "../../Scripts/API";
-import {
-  Fields,
-  Genders,
-  PageRoutes,
-  Standards,
-  Times,
-} from "../../Scripts/Const.js";
+import { Fields, Genders, Standards, Times } from "../../Scripts/Const.js";
 import defaultImage from "../../assets/mascot1.png";
 
 export const numberFromStandard = (Standard) => {
@@ -210,17 +201,6 @@ function Dashboard() {
   };
   return (
     <Stack w={"100%"} mih={"90vh"}>
-      <Affix visibleFrom="sm" position={{ bottom: 30, right: 30 }}>
-        <Tooltip label="Add Study Material">
-          <ActionIcon
-            size={"xl"}
-            radius={"xl"}
-            onClick={() => navigate(PageRoutes.UploadMaterial)}
-          >
-            <LuPlus />
-          </ActionIcon>
-        </Tooltip>
-      </Affix>
       <Modal
         opened={showModal}
         title={"Edit Info"}

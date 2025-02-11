@@ -3,6 +3,7 @@ import {
   AppShell,
   Avatar,
   Burger,
+  Button,
   Group,
   rem,
   Stack,
@@ -15,11 +16,14 @@ import logo from "./assets/phhLogo.png";
 
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
+import { FaUpload } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Components/Jsx/Footer.jsx";
 import NavBar from "./Components/Jsx/NavBar.jsx";
 import UserButton from "./Components/Jsx/UserButton.jsx";
 import { useAuth } from "./Context.jsx";
+import { PageRoutes } from "./Scripts/Const.js";
 
 export function NavBarPage({ children }) {
   const pinned = useHeadroom({ fixedAt: 120 });
@@ -72,6 +76,21 @@ export function NavBarPage({ children }) {
               <FontAwesomeIcon icon={faSun}></FontAwesomeIcon>
             )}
           </ActionIcon>
+          <Button
+            rightSection={<FaUpload />}
+            visibleFrom="sm"
+            ml={"auto"}
+            variant="default"
+            onClick={() => navigate(PageRoutes.UploadMaterial)}
+            style={{
+              display:
+                window.location.pathname === PageRoutes.UploadMaterial
+                  ? "none"
+                  : "block",
+            }}
+          >
+            Upload Material
+          </Button>
         </Group>
       </AppShell.Header>
 

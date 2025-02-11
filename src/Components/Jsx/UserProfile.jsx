@@ -20,6 +20,7 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import fallBackImage from "../../assets/login-pic-right.png";
 import { numberFromStandard } from "../../Pages/Jsx/Dashboard.jsx";
+import { FieldsColor } from "../../Scripts/Const.js";
 import StatsBox from "./StatsBox.jsx";
 
 function UserProfile({
@@ -123,7 +124,7 @@ function UserProfile({
               color={"var(--mantine-color-bright)"}
             />
             <Textarea
-              defaultValue={page_user?.bio}
+              value={page_user?.bio ?? ""}
               readOnly
               autosize
               minRows={1}
@@ -139,10 +140,10 @@ function UserProfile({
           </Group>
 
           <Group>
-            <Badge variant={"dot"}>
+            <Badge color={FieldsColor[page_user?.field]}>
               {page_user?.field === "" ? "Haven't Set" : page_user?.field}
             </Badge>
-            <Badge variant={"dot"}>
+            <Badge variant={"dot"} color={FieldsColor[page_user?.field]}>
               {page_user?.branch === "" ? "Haven't Set" : page_user?.branch}
             </Badge>
           </Group>
