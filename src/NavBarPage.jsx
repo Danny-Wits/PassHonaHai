@@ -16,8 +16,10 @@ import logo from "./assets/phhLogo.png";
 
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { FaUpload } from "react-icons/fa";
+import { IoRefresh } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Components/Jsx/Footer.jsx";
 import NavBar from "./Components/Jsx/NavBar.jsx";
@@ -41,6 +43,8 @@ export function NavBarPage({ children }) {
       toggle();
     }
   };
+  const queryClient = useQueryClient();
+  const [isLoading, setLoading] = React.useState(false);
   return (
     <AppShell
       header={{ height: 60, collapsed: !pinned }}
@@ -52,7 +56,7 @@ export function NavBarPage({ children }) {
       padding="md"
     >
       <AppShell.Header style={{ zIndex: 999 }}>
-        <Group h="100%" px="md">
+        <Group h="100%" px="sm" align="center" gap={"xs"}>
           <Burger
             opened={opened}
             onClick={toggle}
@@ -66,7 +70,7 @@ export function NavBarPage({ children }) {
             bg={colorScheme === "light" ? "white" : "#C9C9C9"}
             name={"P H H"}
           ></Avatar>
-          <Text size={"xl"} fw={900}>
+          <Text size={isMobile ? "md" : "xl"} fw={900}>
             Pass Hona Hai
           </Text>
           <ActionIcon onClick={toggleColorScheme} variant={"transparent"}>
@@ -75,6 +79,18 @@ export function NavBarPage({ children }) {
             ) : (
               <FontAwesomeIcon icon={faSun}></FontAwesomeIcon>
             )}
+          </ActionIcon>
+          <ActionIcon
+            variant={"default"}
+            onClick={async () => {
+              setLoading(true);
+              queryClient.refetchQueries([]).then(() => {
+                setLoading(false);
+              });
+            }}
+            loading={isLoading}
+          >
+            <IoRefresh />
           </ActionIcon>
           <Button
             rightSection={<FaUpload />}
