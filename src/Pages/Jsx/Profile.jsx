@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import UserExtra from "../../Components/Jsx/UserExtra.jsx";
 import UserProfile from "../../Components/Jsx/UserProfile.jsx";
 import { useAuth } from "../../Context";
 import API from "../../Scripts/API";
@@ -168,6 +169,7 @@ const Profile = () => {
           </Button>
         )}
       </Group>
+      <UserExtra user_id={id}></UserExtra>
     </Stack>
     // <div className={"page"}>
     //   <UserCard user_info={person_info} />

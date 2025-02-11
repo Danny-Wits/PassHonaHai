@@ -1,6 +1,7 @@
 import {
   Button,
   Center,
+  Divider,
   Group,
   LoadingOverlay,
   Modal,
@@ -15,11 +16,12 @@ import React from "react";
 import { CiEdit } from "react-icons/ci";
 import { LuLogOut } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import defaultImage from "../../assets/mascot1.png";
+import UserExtra from "../../Components/Jsx/UserExtra.jsx";
 import UserProfile from "../../Components/Jsx/UserProfile.jsx";
 import { useAuth } from "../../Context";
 import API from "../../Scripts/API";
 import { Fields, Genders, Standards, Times } from "../../Scripts/Const.js";
-import defaultImage from "../../assets/mascot1.png";
 
 export const numberFromStandard = (Standard) => {
   if (!Standard) return "";
@@ -92,42 +94,7 @@ function Dashboard() {
     }
   }, [user_info]);
 
-  //Relation Fetch
-  const { data: seniorsData, status: seniorStatus } = useQuery(
-    ["get_seniors", user_info?.user_id],
-    () => API.getSeniors(user_info?.user_id),
-    {
-      staleTime: Times.Minute * 10,
-      enabled: !!user_info?.user_id,
-    }
-  );
-
-  const { data: juniorsData, status: juniorStatus } = useQuery(
-    ["get_juniors", user_info?.user_id],
-    () => API.getJuniors(user_info?.user_id),
-    {
-      staleTime: Times.Minute * 10,
-      enabled: !!user_info?.user_id,
-    }
-  );
-
-  if (seniorStatus === "error")
-    enqueueSnackbar("Error Fetching Seniors", { variant: "error" });
-  if (juniorStatus === "error")
-    enqueueSnackbar("Error Fetching Juniors", { variant: "error" });
-  const seniors = seniorsData?.seniors ?? [];
-  const juniors = juniorsData?.juniors ?? [];
-
-  const { data: DataStudyMaterialsOfUser } = useQuery(
-    ["get_material_of_user", page_no],
-    () => API.getStudyMaterialsOfUser(user_info?.user_id, page_no),
-    {
-      staleTime: Times.Minute * 10,
-      enabled: !!user_info?.user_id,
-      keepPreviousData: true,
-    }
-  );
-  const studyMaterialsOfUser = DataStudyMaterialsOfUser?.materials ?? [];
+  
   const { mutate: uploadProfilePic, isLoading: uploadingProfilePic } =
     useMutation({
       mutationFn: (data) => API.uploadProfilePic(data.user_id, data.data),
@@ -276,6 +243,8 @@ function Dashboard() {
           Logout
         </Button>
       </Group>
+      <Divider></Divider>
+      <UserExtra user_id={user_info?.user_id}></UserExtra>
     </Stack>
   );
 }
