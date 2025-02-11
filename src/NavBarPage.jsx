@@ -56,7 +56,12 @@ export function NavBarPage({ children }) {
       padding="md"
     >
       <AppShell.Header style={{ zIndex: 999 }}>
-        <Group h="100%" px="sm" align="center" gap={"xs"}>
+        <Group
+          h="100%"
+          px={isMobile ? "xs" : "md"}
+          align="center"
+          gap={isMobile ? "xs" : "md"}
+        >
           <Burger
             opened={opened}
             onClick={toggle}
@@ -73,7 +78,7 @@ export function NavBarPage({ children }) {
           <Text size={isMobile ? "md" : "xl"} fw={900}>
             Pass Hona Hai
           </Text>
-          <ActionIcon onClick={toggleColorScheme} variant={"transparent"}>
+          <ActionIcon onClick={toggleColorScheme} variant={"light"}>
             {colorScheme === "dark" ? (
               <FontAwesomeIcon icon={faMoon}></FontAwesomeIcon>
             ) : (
@@ -81,7 +86,7 @@ export function NavBarPage({ children }) {
             )}
           </ActionIcon>
           <ActionIcon
-            variant={"default"}
+            variant={"light"}
             onClick={async () => {
               setLoading(true);
               queryClient.refetchQueries([]).then(() => {
