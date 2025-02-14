@@ -5,30 +5,29 @@ import {
   Badge,
   Button,
   Divider,
+  Flex,
   Group,
   Image,
+  Modal,
   Paper,
   Stack,
   Text,
   Textarea,
   TextInput,
   Title,
+  useComputedColorScheme,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import {
-  FaDownload,
-  FaRegCommentDots,
-  FaRegStar,
-  FaStar,
-} from "react-icons/fa6";
+import { FaEdit, FaFlag, FaRegStar, FaStar, FaTrash } from "react-icons/fa";
+import { FaDownload, FaRegCommentDots } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
 import { LuTags } from "react-icons/lu";
-import { MdOutlineReportOff } from "react-icons/md";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/mascot1.png";
 import CommentCard, {
   timeDifferenceInMinutes,
@@ -41,12 +40,14 @@ import { FieldsColor, PageRoutes, Times } from "../../Scripts/Const.js";
 function StudyMaterial() {
   const location = useLocation();
   const material_info = location.state.material;
-  const id = material_info.material_id;
+  const id = material_info?.material_id;
+
   const { user_info } = useAuth();
   const [liked, setLiked] = useState(false);
   const [yourComment, setYourComment] = useState("");
   const [time, settime] = useState(0);
   const navigate = useNavigate();
+  const isCreater = material_info.user_id === user_info?.user_id;
   const queryOptions = {
     enabled: !!id,
     refetchOnMount: false,
@@ -159,15 +160,46 @@ function StudyMaterial() {
           .refetchQueries(["get_material_comments", id])
           .then(() => {});
         if (data.error) {
-          enqueueSnackbar(data.error, { variant: "error",autoHideDuration: 3000 });
+          enqueueSnackbar(data.error, {
+            variant: "error",
+            autoHideDuration: 3000,
+          });
         }
       },
       onError: (error) => {
-        enqueueSnackbar(error.message, { variant: "error",autoHideDuration: 3000 });
+        enqueueSnackbar(error.message, {
+          variant: "error",
+          autoHideDuration: 3000,
+        });
       },
     }
   );
-
+  const { mutate: deleteMaterial, isLoading: isDeleting } = useMutation(
+    (data) => API.deleteStudyMaterial(data.user_id, data.data),
+    {
+      onSuccess: (data) => {
+        if (data.error) {
+          enqueueSnackbar(data.error, {
+            variant: "error",
+            autoHideDuration: 3000,
+          });
+        } else {
+          navigate(PageRoutes.Explore);
+          queryClient.refetchQueries(["get_material"]).then(() => {});
+          enqueueSnackbar("Material Deleted", {
+            variant: "success",
+            autoHideDuration: 3000,
+          });
+        }
+      },
+      onError: (error) => {
+        enqueueSnackbar(error.message, {
+          variant: "error",
+          autoHideDuration: 3000,
+        });
+      },
+    }
+  );
   const handleCommentSubmit = (values, e) => {
     e.preventDefault();
     addComment({
@@ -178,7 +210,20 @@ function StudyMaterial() {
   const handleCommentDelete = () => {
     deleteComment({ user_id: user_info?.user_id, data: { material_id: id } });
   };
-
+  const [opened, { open, close }] = useDisclosure(false);
+  const handleMaterialDelete = async (info) => {
+    if (info === "prompt") {
+      open();
+    } else if (info === true) {
+      await deleteMaterial({
+        user_id: user_info?.user_id,
+        data: { material_id: id },
+      });
+      close();
+    } else {
+      close();
+    }
+  };
   const commentForm = useForm({
     initialValues: {
       comment: "",
@@ -197,8 +242,40 @@ function StudyMaterial() {
       timeDifferenceInMinutes(Date.now(), new Date(upload_date + " UTC"))
     );
   }, [upload_date]);
+  const gotoEdit = () =>
+    navigate(PageRoutes.EditMaterial, { state: { material_info } });
+  if (!id) {
+    return <Navigate to={PageRoutes.Explore}></Navigate>;
+  }
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isDark = useComputedColorScheme() === "dark";
   return (
     <Stack>
+      <Modal opened={opened} onClose={close} title="Delete Material" centered>
+        <Stack>
+          <Text c="dimmed" fz={"sm"}>
+            Are you sure you want to delete this material?
+          </Text>
+          <Group>
+            <Button
+              variant="light"
+              color="red"
+              onClick={() => handleMaterialDelete(true)}
+            >
+              Yes
+            </Button>
+            <Button
+              variant="light"
+              color="green"
+              onClick={() => {
+                handleMaterialDelete(false);
+              }}
+            >
+              No
+            </Button>
+          </Group>
+        </Stack>
+      </Modal>
       <AspectRatio ratio={16 / 9} h={"30vh"}>
         <Image
           src={material_info?.download_link}
@@ -208,28 +285,34 @@ function StudyMaterial() {
         ></Image>
       </AspectRatio>
       <Divider></Divider>
-      <Group>
-        <Title size={"xl"} maw={"60%"} truncate={"end"}>
-          {material_info?.title}
-        </Title>
-        <ActionIcon
-          onClick={toggleLike}
-          loading={isUnliking || isLiking || isFetchingLikes}
-          variant={liked ? "filled" : "default"}
-        >
-          {liked ? <FaStar /> : <FaRegStar />}
-        </ActionIcon>
+      <Flex gap={"md"} direction={{ base: "column", md: "row" }}>
+        <Group>
+          <Title size={"xl"} maw={"60%"} truncate={"end"}>
+            {material_info?.title}
+          </Title>
+          <ActionIcon
+            onClick={toggleLike}
+            loading={isUnliking || isLiking || isFetchingLikes}
+            variant={liked ? "filled" : "default"}
+          >
+            {liked ? <FaStar /> : <FaRegStar />}
+          </ActionIcon>
+        </Group>
+
         <Group
-          ml={"auto"}
-          p={"xs"}
+          ml={{ base: 0, md: "auto" }}
+          bg={isDark ? "#333333" : "#f5f5f5"}
+          pr={"sm"}
+          py={2}
           gap={4}
           align={"center"}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", borderRadius: "20px" }}
           onClick={() =>
             navigate(PageRoutes.PublicProfile, {
               state: { user_id: material_info?.user_id },
             })
           }
+          maw={120}
         >
           <Avatar
             src={material_info?.profile_picture_url}
@@ -237,30 +320,61 @@ function StudyMaterial() {
             name={material_info?.name}
             size={"sm"}
           />
-          <div>
-            <Text size="xs" truncate="end">
+          <Group w={"70%"} gap={0}>
+            <Text size="10" lh={1.5} w={"100%"} truncate="end">
               {material_info?.name}
             </Text>
-            <Text size={"xs"} c="dimmed">
+            <Text size="10" lh={1} w={"100%"} c="dimmed">
               {timeText(time)}
             </Text>
-          </div>
+          </Group>
         </Group>
-      </Group>
-
-      <Group gap={"md"} p={"xs"}>
-        {material_info?.tags &&
-          material_info?.tags.split(",").map((tag, index) => (
-            <Badge
-              key={index}
-              size="sm"
-              variant="default"
-              leftSection={<LuTags />}
+      </Flex>
+      <Group gap={"md"} justify="flex-start">
+        <Button
+          onClick={() => window.open(material_info?.download_link, "_blank")}
+          variant="light"
+          rightSection={isMobile ? null : <FaDownload />}
+        >
+          {isMobile ? <FaDownload /> : "Download "}
+        </Button>
+        {isCreater && (
+          <>
+            <Button
+              onClick={() => gotoEdit()}
+              variant="light"
+              color="blue"
+              rightSection={isMobile ? null : <FaEdit />}
             >
-              {tag}
-            </Badge>
-          ))}
+              {isMobile ? <FaEdit /> : "Edit "}
+            </Button>
+            <Button
+              onClick={() => handleMaterialDelete("prompt")}
+              variant="light"
+              color="red"
+              loading={isDeleting}
+              rightSection={isMobile ? null : <FaTrash />}
+            >
+              {isMobile ? <FaTrash /> : "Delete "}
+            </Button>
+          </>
+        )}
+
+        <Button
+          onClick={() =>
+            enqueueSnackbar("Report Feature coming soon", {
+              variant: "success",
+              autoHideDuration: 2000,
+            })
+          }
+          variant="light"
+          color="orange"
+          rightSection={isMobile ? null : <FaFlag />}
+        >
+          {isMobile ? <FaFlag /> : "Report "}
+        </Button>
       </Group>
+      <Divider></Divider>
 
       <Stack gap={1}>
         <Text fw={900} c={"bright"}>
@@ -296,31 +410,23 @@ function StudyMaterial() {
             <Badge variant="dot" color={FieldsColor[material_info?.field]}>
               {material_info?.branch}
             </Badge>
+            <Group gap={"md"} p={"xs"}>
+              {material_info?.tags &&
+                material_info?.tags.split(",").map((tag, index) => (
+                  <Badge
+                    key={index}
+                    size="sm"
+                    variant="default"
+                    leftSection={<LuTags />}
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+            </Group>
           </Group>
         </Stack>
       </Paper>
-      <Group gap={"lg"} justify="center">
-        <Button
-          onClick={() => window.open(material_info?.download_link, "_blank")}
-          variant="filled"
-          rightSection={<FaDownload />}
-        >
-          Download
-        </Button>
-        <Button
-          onClick={() =>
-            enqueueSnackbar("Report Feature coming soon", {
-              variant: "success",
-              autoHideDuration: 2000,
-            })
-          }
-          variant="default"
-          color="red"
-          rightSection={<MdOutlineReportOff />}
-        >
-          Report
-        </Button>
-      </Group>
+
       <Title order={4} mt={20}>
         Comments
       </Title>

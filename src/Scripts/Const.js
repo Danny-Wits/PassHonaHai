@@ -17,6 +17,7 @@ export const PageRoutes = {
   ContactUs: "/contact-us",
   Explore: "/explore",
   UploadMaterial: "/upload-material",
+  EditMaterial: "/edit-material/",
   StudyMaterial: "/study-material/",
 };
 export const validFileTypes = [

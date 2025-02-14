@@ -108,7 +108,15 @@ const router = createBrowserRouter([
     path: PageRoutes.StudyMaterial,
     element: (
       <NavBarPage>
-        <PrivateRoute element={<StudyMaterial />} />{" "}
+        <PrivateRoute element={<StudyMaterial />} />
+      </NavBarPage>
+    ),
+  },
+  {
+    path: PageRoutes.EditMaterial,
+    element: (
+      <NavBarPage>
+        <PrivateRoute element={<UploadMaterial updating={true} />} />
       </NavBarPage>
     ),
   },

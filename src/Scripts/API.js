@@ -26,8 +26,11 @@ const API = {
   getJuniors: async (user_id) => getter("/juniors/" + user_id),
   uploadStudyMaterial: async (user_id, data) =>
     posterMultipart("/study-material/" + user_id, data),
+  updateStudyMaterial: async (user_id, data) =>
+    putter("/study-material/" + user_id, data),
   updateUserInfo: async (user_id, data) => putter("/user/" + user_id, data),
-  deleteStudyMaterial: async (id) => deleter("/study-material/" + id),
+  deleteStudyMaterial: async (user_id, data) =>
+    deleter("/study-material/" + user_id, data),
   getStudyMaterialLikes: async (id) => getter("/likes/" + id),
   getStudyMaterialComments: async (id) => getter("/comments/" + id),
   likeMaterial: async (id, data) => poster("/like/" + id, data),
@@ -75,7 +78,7 @@ export const putter = async (url, payload = {}) => {
   const response = await put($API_URL + url)
     .withCredentials()
     .send(payload) // Send the payload data
-    .set("Content-Type", "application/json") // Ensure this matches your server's expectation
+    .set("Content-Type", "application/json")
     .set("Authorization", $API_TOKEN); // Add the Authorization header
 
   return response.body; // Superagent response body is accessible via `.body`

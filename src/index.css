@@ -197,6 +197,7 @@ body::-webkit-scrollbar {
   .mascot-1 {
     left: -75px;
     top: -75px;
+
     width: 150px;
   }
 }

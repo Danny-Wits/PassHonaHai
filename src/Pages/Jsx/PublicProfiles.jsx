@@ -88,10 +88,12 @@ function PublicProfiles() {
         </form>
       </Center>
       <Center>
-        {!!searchData?.users && <UsersTable users={searchData?.users} />}
+        {!!searchData?.users && !!searchData?.users.length > 0 && (
+          <UsersTable users={searchData?.users} />
+        )}
       </Center>
 
-      {!!searchData?.users && (
+      {!!searchData?.users && !!searchData?.users.length > 0 && (
         <Button
           size={"md"}
           variant="default"
@@ -104,7 +106,9 @@ function PublicProfiles() {
           Clear
         </Button>
       )}
-      {!!searchData?.users && <Divider size={"md"} variant="dashed"></Divider>}
+      {!!searchData?.users && !!searchData?.users.length > 0 && (
+        <Divider size={"md"} variant="dashed"></Divider>
+      )}
       <Center>
         <Pagination
           total={data?.total_pages}

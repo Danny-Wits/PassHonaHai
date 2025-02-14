@@ -43,7 +43,7 @@ function Explore() {
     keepPreviousData: true,
     cacheTime: Times.Minute * 5,
     staleTime: Times.Minute * 5,
-    enabled: false,
+    enabled: false && !!search,
   });
   const handleSubmit = (e) => {
     e.preventDefault();
