@@ -287,9 +287,9 @@ function StudyMaterial() {
       <Divider></Divider>
       <Flex gap={"md"} direction={{ base: "column", md: "row" }}>
         <Group>
-          <Title size={"xl"} maw={"60%"} truncate={"end"}>
+          <Text size={"xl"} maw={"75%"} fw={900} style={{ overflowX: "auto" }}>
             {material_info?.title}
-          </Title>
+          </Text>
           <ActionIcon
             onClick={toggleLike}
             loading={isUnliking || isLiking || isFetchingLikes}

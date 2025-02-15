@@ -10,7 +10,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import React from "react";
 import { CiEdit } from "react-icons/ci";
@@ -21,7 +21,7 @@ import UserExtra from "../../Components/Jsx/UserExtra.jsx";
 import UserProfile from "../../Components/Jsx/UserProfile.jsx";
 import { useAuth } from "../../Context";
 import API from "../../Scripts/API";
-import { Fields, Genders, Standards, Times } from "../../Scripts/Const.js";
+import { Fields, Genders, Standards } from "../../Scripts/Const.js";
 
 export const numberFromStandard = (Standard) => {
   if (!Standard) return "";
@@ -32,6 +32,8 @@ export const numberFromStandard = (Standard) => {
       return "2";
     case "3rd":
       return "3";
+    case "Higher Studies":
+      return "HS";
     default:
       return Standard.replace("th", "");
   }
@@ -94,7 +96,6 @@ function Dashboard() {
     }
   }, [user_info]);
 
-  
   const { mutate: uploadProfilePic, isLoading: uploadingProfilePic } =
     useMutation({
       mutationFn: (data) => API.uploadProfilePic(data.user_id, data.data),

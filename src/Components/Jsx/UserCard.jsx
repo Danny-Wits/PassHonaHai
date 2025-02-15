@@ -1,5 +1,6 @@
 import { Avatar, Badge, Button, Card, Group, Text } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { numberFromStandard } from "../../Pages/Jsx/Dashboard.jsx";
 import { PageRoutes } from "../../Scripts/Const.js";
 import classes from "../Styles/UserCardImage.module.css";
 
@@ -25,9 +26,18 @@ export function UserCard({ user_info }) {
     <Card withBorder padding="xl" radius="md" className={classes.card}>
       <Card.Section h={140}>
         <Group justify="space-between" p={"sm"}>
-          <Badge size={"xl"} variant={"default"}>
-            {user_info?.standard === "" ? "0th" : user_info?.standard}
-          </Badge>
+          <Avatar
+            name={
+              user_info?.standard === ""
+                ? "NO"
+                : numberFromStandard(user_info?.standard)
+            }
+            color="initials"
+          >
+            {user_info?.standard === ""
+              ? "NO"
+              : numberFromStandard(user_info?.standard)}
+          </Avatar>
           <Badge>
             {user_info?.branch === "" ? "Unknown Branch" : user_info?.branch}
           </Badge>

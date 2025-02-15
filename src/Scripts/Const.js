@@ -55,7 +55,7 @@ export const Standards = [
   },
   {
     group: "College",
-    items: ["UG", "PG", "Higher Studies"],
+    items: ["UG", "PG", "PhD"],
   },
 ];
 export const Fields = {
