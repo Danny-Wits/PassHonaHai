@@ -21,10 +21,10 @@ import { useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/mascot1.png";
 import API from "../../Scripts/API.js";
 import { FieldsColor, PageRoutes } from "../../Scripts/Const.js";
-// eslint-disable-next-line react/prop-types
-function MaterialCard({ material }) {
+
+function MaterialCard({ material, isPaper }) {
   const navigate = useNavigate();
-  // eslint-disable-next-line react/prop-types
+
   let {
     material_id: id,
     field,
@@ -51,32 +51,18 @@ function MaterialCard({ material }) {
 
   const queryClient = useQueryClient();
 
-  // const {mutate: deleteMaterial, isLoading: isDeleting} = useMutation(
-  //     () => API.deleteStudyMaterial(id),
-  //     {
-  //         onSuccess: (data) => {
-  //             if (data.error) {
-  //                 enqueueSnackbar(data.error, {variant: "error"});
-  //                 return
-  //             }
-  //             queryClient.refetchQueries(["get_material_of_user"]).then(() => {
-  //             });
-  //             queryClient.refetchQueries(["get_material"]).then(() => {
-  //             });
-  //         },
-  //         onError: (error) => {
-  //             enqueueSnackbar(error.message, {variant: "error"})
-  //         }
-  //     }
-  // )
   const goToDetails = () => {
+    if (isPaper) {
+      window.open(download_link, "_blank");
+      return;
+    }
     navigate(PageRoutes.StudyMaterial, {
       state: { material },
     });
   };
   const colorTheme = useComputedColorScheme();
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder maw={350} mih={340}>
+    <Card shadow="sm" padding="lg" radius="md" withBorder maw={300} mih={300}>
       <Card.Section pos={"relative"}>
         <AspectRatio ratio={16 / 9}>
           <Image
@@ -95,13 +81,12 @@ function MaterialCard({ material }) {
           right={10}
           color={FieldsColor[field]}
           style={{
-            zIndex: 401,
+            zIndex: 200,
           }}
         >
           {field}
         </Badge>
       </Card.Section>
-
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={600} size="sm" maw={100} truncate={"end"} c="bright">
           {title}
@@ -133,23 +118,34 @@ function MaterialCard({ material }) {
           </Badge>
         )}
       </Group>
-
       <Textarea
         size="sm"
         c="dimmed"
         variant="unstyled"
-        minRows={3}
-        maxRows={3}
+        maxRows={2}
         readOnly
+        autosize
         defaultValue={description}
       ></Textarea>
-      <Group gap={0}>
-        <LuTags size={16} />
-        <PillGroup p={"sm"}>
-          {tags && tags.split(",").map((tag) => <Pill key={tag}>{tag}</Pill>)}
-        </PillGroup>
-      </Group>
-
+      {isPaper && (
+        <Group py={"xs"} gap={4}>
+          <Badge variant="light" size="sm">
+            {material?.year}
+          </Badge>
+          <Badge size="sm">{material?.standard}</Badge>
+          <Badge variant="dot" size="sm">
+            {material?.branch}
+          </Badge>
+        </Group>
+      )}
+      {tags && (
+        <Group gap={4} p={4} m={0}>
+          <LuTags size={16} />
+          <PillGroup p={1}>
+            {tags && tags.split(",").map((tag) => <Pill key={tag}>{tag}</Pill>)}
+          </PillGroup>
+        </Group>
+      )}
       <Button
         color="blue"
         fullWidth
@@ -158,37 +154,9 @@ function MaterialCard({ material }) {
         variant="default"
         onClick={goToDetails}
       >
-        View
+        {isPaper ? "Download" : "View"}
       </Button>
     </Card>
-
-    // <div className="card">
-    //   <div className={"category"}>{branch}</div>
-    //   <img
-    //     className="avatar"
-    //     src={download_link}
-    //     alt="Avatar"
-    //     onClick={goToDetails}
-    //   />
-    //   <div className="text">
-    //     <p className="title" onClick={goToDetails}>
-    //       {title}
-    //     </p>
-    //     <p className="subtitle">{description}</p>
-    //     <p className="subtitle">
-    //       {standard} - {field}{" "}
-    //     </p>
-    //     {download_link && (
-    //       <p
-    //         className="link link-like"
-    //         onClick={() => window.open(download_link)}
-    //       >
-    //         Download
-    //       </p>
-    //     )}
-    //   </div>
-    //   <button onClick={() => deleteMaterial()}>View</button>
-    // </div>
   );
 }
 

@@ -41,6 +41,12 @@ const API = {
   searchMaterials: async (query) =>
     getter("/search-materials/?query=" + encodeURIComponent(query)),
   getLeaderboard: async (category) => getter("/leaderboard/" + category),
+  uploadPaper: async (user_id, data) =>
+    posterMultipart("/paper/" + user_id, data),
+  getPaper: async (id) => getter("/paper/" + id),
+  getPapers: async (page_no = 1) => getter("/papers/?page_no=" + page_no),
+  searchPapers: async (search) => getter("/search-papers/?query=" + search),
+  getPaperUsers: async (id) => getter("/paper-users/" + id),
 };
 export default API;
 // Reusable functions for GET and POST requests

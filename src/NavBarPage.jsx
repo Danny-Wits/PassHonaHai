@@ -5,7 +5,9 @@ import {
   Burger,
   Button,
   Group,
+  Modal,
   rem,
+  SegmentedControl,
   Stack,
   Text,
   useComputedColorScheme,
@@ -31,6 +33,8 @@ export function NavBarPage({ children }) {
   const pinned = useHeadroom({ fixedAt: 120 });
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [opened, { toggle }] = useDisclosure();
+  const [modalOpened, { close: modalClose, open: modalOpen }] = useDisclosure();
+  const [uploadPage, setUploadPage] = React.useState(PageRoutes.UploadMaterial);
   const { setColorScheme } = useMantineColorScheme();
   const colorScheme = useComputedColorScheme();
   const toggleColorScheme = () => {
@@ -45,6 +49,10 @@ export function NavBarPage({ children }) {
   };
   const queryClient = useQueryClient();
   const [isLoading, setLoading] = React.useState(false);
+  const handleNavigateToUploadPages = () => {
+    modalClose();
+    navigate(uploadPage);
+  };
   return (
     <AppShell
       header={{ height: 60, collapsed: !pinned }}
@@ -106,16 +114,43 @@ export function NavBarPage({ children }) {
             visibleFrom="sm"
             ml={"auto"}
             variant="default"
-            onClick={() => navigate(PageRoutes.UploadMaterial)}
+            onClick={modalOpen}
             style={{
               display:
-                window.location.pathname === PageRoutes.UploadMaterial
+                window.location.pathname === PageRoutes.UploadMaterial ||
+                window.location.pathname === PageRoutes.UploadPaper
                   ? "none"
                   : "block",
             }}
           >
             Upload Material
           </Button>
+          <Modal
+            opened={modalOpened}
+            onClose={modalClose}
+            title="Type of Upload"
+            centered
+          >
+            <Stack align="center">
+              <SegmentedControl
+                w={"100%"}
+                value={uploadPage}
+                onChange={setUploadPage}
+                data={[
+                  { label: "Study Material", value: PageRoutes.UploadMaterial },
+                  { label: "Paper", value: PageRoutes.UploadPaper },
+                ]}
+              ></SegmentedControl>
+              <Group>
+                <Button variant="default" onClick={handleNavigateToUploadPages}>
+                  OK
+                </Button>
+                <Button variant="default" onClick={modalClose}>
+                  Cancel
+                </Button>
+              </Group>
+            </Stack>
+          </Modal>
         </Group>
       </AppShell.Header>
 
@@ -136,7 +171,7 @@ export function NavBarPage({ children }) {
         {children}
       </AppShell.Main>
       <AppShell.Footer zIndex={999}>
-        <Footer setOpened={setOpened}></Footer>
+        <Footer setOpened={setOpened} setModelOpen={modalOpen}></Footer>
       </AppShell.Footer>
     </AppShell>
   );

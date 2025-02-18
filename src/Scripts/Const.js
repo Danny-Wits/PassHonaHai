@@ -1,10 +1,3 @@
-//Routes:
-//Landing:/
-//Login:/login
-//Register:/register
-//Dashboard:/dashboard/:name
-//PublicProfiles:/public-profile/:name
-
 export const PageRoutes = {
   Landing: "/",
   Home: "/home",
@@ -19,6 +12,8 @@ export const PageRoutes = {
   UploadMaterial: "/upload-material",
   EditMaterial: "/edit-material/",
   StudyMaterial: "/study-material/",
+  Paper: "/paper/",
+  UploadPaper: "/upload-paper",
 };
 export const validFileTypes = [
   "application/pdf",

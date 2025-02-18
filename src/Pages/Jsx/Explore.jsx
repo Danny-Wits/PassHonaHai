@@ -2,23 +2,29 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   ActionIcon,
+  Button,
   Center,
-  Grid,
   Loader,
-  Pagination,
+  ScrollArea,
+  Space,
+  Spoiler,
   Stack,
+  Text,
   TextInput,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import MaterialCard from "../../Components/Jsx/MaterialCard.jsx";
+import MaterialGroup from "../../Components/Jsx/MaterialGroup.jsx";
 import { MaterialTable } from "../../Components/Jsx/MaterialTable.jsx";
 import API from "../../Scripts/API";
 import { Times } from "../../Scripts/Const";
 
 function Explore() {
   const [page_no, setPageNo] = React.useState(1);
+  const [paperPageNo, setPaperPageNo] = React.useState(1);
   const [search, setSearch] = React.useState("");
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const { data, isLoading: isLoadingMaterials } = useQuery({
     queryKey: ["get_material", page_no],
     queryFn: () => API.getStudyMaterials(page_no),
@@ -33,6 +39,16 @@ function Explore() {
     cacheTime: Times.Minute * 10,
     staleTime: Times.Minute * 5,
   });
+  const { data: papersData, isLoading: isLoadingPapers } = useQuery(
+    ["get_papers", paperPageNo],
+    () => API.getPapers(paperPageNo),
+    {
+      staleTime: Times.Minute * 5,
+      cacheTime: Times.Minute * 5,
+      keepPreviousData: true,
+      enabled: !!paperPageNo,
+    }
+  );
   const {
     data: searchData,
     refetch: refetchSearch,
@@ -40,14 +56,22 @@ function Explore() {
   } = useQuery({
     queryKey: ["search_material", search],
     queryFn: () => API.searchMaterials(search),
-    keepPreviousData: true,
     cacheTime: Times.Minute * 5,
     staleTime: Times.Minute * 5,
     enabled: false && !!search,
   });
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  const {
+    data: paperSearchData,
+    refetch: refetchPaperSearch,
+    isFetching: isPaperSearching,
+  } = useQuery({
+    queryKey: ["search_papers", search],
+    queryFn: () => API.searchPapers(search),
+    cacheTime: Times.Minute * 5,
+    staleTime: Times.Minute * 5,
+    enabled: false && !!paperSearch,
+  });
+
   if (isLoadingMaterials)
     return (
       <Center h={"90vh"}>
@@ -55,13 +79,17 @@ function Explore() {
       </Center>
     );
   return (
-    <Stack>
+    <Stack gap={5}>
+      <Text fz={{ base: "h2", md: "h1" }} ta={"center"} fw={900}>
+        Explore
+      </Text>
       <Center>
         <form
           style={{ width: "100%", justifyContent: "center", display: "flex" }}
           onSubmit={(e) => {
             e.preventDefault();
             refetchSearch();
+            refetchPaperSearch();
           }}
         >
           <TextInput
@@ -69,9 +97,9 @@ function Explore() {
             type="text"
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
             value={search}
-            size={"lg"}
+            size={isMobile ? "sm" : "md"}
             radius="xl"
-            w={"90%"}
+            w={isMobile ? "100%" : "50%"}
             rightSection={
               <ActionIcon
                 variant={"transparent"}
@@ -86,33 +114,74 @@ function Explore() {
           ></TextInput>
         </form>
       </Center>
-      <Center>
-        {searchData?.materials?.length > 0 && (
-          <MaterialTable materials={searchData?.materials} />
-        )}
-      </Center>
-      <Center>
-        <Pagination
-          total={data?.total_pages}
-          page={page_no}
-          onChange={setPageNo}
-        />
-      </Center>
-
-      <Grid align="center" justify="center">
-        {data?.materials?.map((material, index) => {
-          return (
-            <Grid.Col
-              key={index}
-              span={{ base: 12, sm: 6, md: 4, lg: 3 }}
-              mih={400}
-              maw={350}
+      {searchData?.materials?.length > 0 && (
+        <ScrollArea>
+          <Stack align={{ base: "center", md: "start" }} p={"xs"}>
+            <Text fw={900} c={"dimmed"}>
+              Study Materials
+            </Text>
+            <Spoiler
+              maxHeight={200}
+              showLabel="Show More "
+              hideLabel="Show Less"
             >
-              <MaterialCard material={material} />
-            </Grid.Col>
-          );
-        })}
-      </Grid>
+              <MaterialTable
+                materials={searchData?.materials}
+                withoutHead={true}
+              />
+            </Spoiler>
+          </Stack>
+        </ScrollArea>
+      )}
+      {paperSearchData?.papers?.length > 0 && (
+        <ScrollArea>
+          <Stack align={{ base: "center", md: "start" }} p={"xs"}>
+            <Text fw={900} c={"dimmed"}>
+              Papers
+            </Text>
+            <Spoiler
+              maxHeight={200}
+              showLabel="Show More "
+              hideLabel="Show Less"
+            >
+              <MaterialTable
+                materials={paperSearchData?.papers}
+                arePapers={true}
+                withoutHead={true}
+              />
+            </Spoiler>
+          </Stack>
+        </ScrollArea>
+      )}
+      {(searchData?.materials?.length > 0 ||
+        paperSearchData?.papers?.length > 0) && (
+        <Button
+          variant="light"
+          color={"red"}
+          onClick={() => setSearch("")}
+          size="sm"
+        >
+          Clear
+        </Button>
+      )}
+      <Space h={"md"}></Space>
+      <MaterialGroup
+        title={"Some popular Study Materials"}
+        isPaper={false}
+        isLoadingMaterials={isLoadingMaterials}
+        data={data}
+        page_no={page_no}
+        setPageNo={setPageNo}
+      ></MaterialGroup>
+      <Space h={"md"}></Space>
+      <MaterialGroup
+        isPaper={true}
+        title={"Some popular Exam Papers"}
+        isLoadingMaterials={isLoadingPapers}
+        data={papersData}
+        page_no={paperPageNo}
+        setPageNo={setPaperPageNo}
+      ></MaterialGroup>
     </Stack>
   );
 }

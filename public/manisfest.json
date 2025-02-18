@@ -17,17 +17,5 @@
         "sizes": "512x512",
         "type": "image/png"
       }
-    ],"screenshots": [
-      {
-        "src": "banner1600.png",
-        "sizes": "1600x900",
-        "type": "image/png",
-        "form_factor": "wide"
-      },
-      {
-        "src": "banner1080.png",
-        "sizes": "1080x1920",
-        "type": "image/png"
-      }
     ]
 }

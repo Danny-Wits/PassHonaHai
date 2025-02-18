@@ -8,19 +8,33 @@ const FieldColor = {
   Arts: "blue",
 };
 
-export function MaterialTable({ materials }) {
+export function MaterialTable({
+  materials,
+  arePapers = false,
+  withoutHead = false,
+}) {
   const navigate = useNavigate();
   const rows = materials?.map((material, index) => (
     <Table.Tr
       key={index}
       style={{ cursor: "pointer" }}
-      onClick={() =>
-        navigate(PageRoutes.StudyMaterial, { state: { material } })
-      }
+      onClick={() => {
+        if (arePapers) {
+          window.open(material?.download_link, "_blank");
+        } else {
+          navigate(PageRoutes.StudyMaterial, { state: { material } });
+        }
+      }}
     >
       <Table.Td>
-        <Group gap="sm" maw={300} w={"100%"}>
-          <Text fz="sm" fw={500} truncate={"end"} w={"100%"}>
+        <Group gap="sm" maw={300} miw={150} w={"100%"}>
+          {arePapers && (
+            <Badge size={"xs"} circle>
+              P
+            </Badge>
+          )}
+
+          <Text fz="sm" fw={500} truncate={"end"} w={"80%"}>
             {material?.title}
           </Text>
         </Group>
@@ -39,15 +53,18 @@ export function MaterialTable({ materials }) {
   ));
 
   return (
-    <Table.ScrollContainer minWidth={400} w={"100%"}>
+    <Table.ScrollContainer minWidth={450} w={"100%"}>
       <Table verticalSpacing="sm" highlightOnHover>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Title</Table.Th>
-            <Table.Th>Field</Table.Th>
-            <Table.Th>Branch</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
+        {!withoutHead && (
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Title</Table.Th>
+              <Table.Th>Field</Table.Th>
+              <Table.Th>Branch</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+        )}
+
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
     </Table.ScrollContainer>

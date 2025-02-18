@@ -1,5 +1,6 @@
 import { createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -24,9 +25,9 @@ import PublicProfiles from "./Pages/Jsx/PublicProfiles.jsx";
 import Register from "./Pages/Jsx/Register.jsx";
 import StudyMaterial from "./Pages/Jsx/StudyMaterial.jsx";
 import UploadMaterial from "./Pages/Jsx/UploadMaterial.jsx";
+import UploadPaper from "./Pages/Jsx/UploadPaper.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
 import { PageRoutes } from "./Scripts/Const.js";
-
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -112,11 +113,20 @@ const router = createBrowserRouter([
       </NavBarPage>
     ),
   },
+
   {
     path: PageRoutes.EditMaterial,
     element: (
       <NavBarPage>
         <PrivateRoute element={<UploadMaterial updating={true} />} />
+      </NavBarPage>
+    ),
+  },
+  {
+    path: PageRoutes.UploadPaper,
+    element: (
+      <NavBarPage>
+        <PrivateRoute element={<UploadPaper />} />
       </NavBarPage>
     ),
   },

@@ -26,7 +26,7 @@ const footerOptions = [
     icon: <FaCog />,
   },
 ];
-function Footer({ setOpened }) {
+function Footer({ setOpened, setModelOpen }) {
   const navigate = useNavigate();
   return (
     <Group justify="space-around" h={"100%"} p={1} pos={"relative"}>
@@ -39,7 +39,7 @@ function Footer({ setOpened }) {
           <ActionIcon
             size={"xl"}
             radius={"xl"}
-            onClick={() => navigate(PageRoutes.UploadMaterial)}
+            onClick={setModelOpen}
             component="div"
           >
             <LuPlus />
