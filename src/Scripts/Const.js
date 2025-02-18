@@ -124,4 +124,5 @@ export const leaderboardCategories = {
   Senior: "senior",
   Junior: "junior",
   Material: "material",
+  Stars: "stars",
 };

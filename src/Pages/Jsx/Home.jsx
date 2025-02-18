@@ -22,12 +22,22 @@ function Home() {
     () => API.getLeaderboard(leaderboardCategories.Material),
     queryOptions
   );
+  const { data: starsLeaderboard } = useQuery(
+    ["starsLeaderboard"],
+    () => API.getLeaderboard(leaderboardCategories.Stars),
+    queryOptions
+  );
   const juniorLB = juniorLeaderboard?.leaders ?? [];
   const materialLB = materialLeaderboard?.leaders ?? [];
+  const starsLB = starsLeaderboard?.leaders ?? [];
   return (
     <Stack>
       <Stack>
-        <Leaderboards juniors={juniorLB} materials={materialLB}></Leaderboards>
+        <Leaderboards
+          juniors={juniorLB}
+          materials={materialLB}
+          stars={starsLB}
+        ></Leaderboards>
         <Divider></Divider>
       </Stack>
     </Stack>

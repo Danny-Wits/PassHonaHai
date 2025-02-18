@@ -13,7 +13,7 @@ import { CiSquareChevUp } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { PageRoutes } from "../../Scripts/Const";
 import { FieldColor } from "./UsersTable";
-function LeaderboardTable({ users, title, label, isMobile }) {
+function LeaderboardTable({ users, title, label, isMobile, logo }) {
   const navigate = useNavigate();
   const rows = users?.map((user_info, index) => (
     <Table.Tr key={index} style={{ cursor: "pointer" }}>
@@ -40,8 +40,14 @@ function LeaderboardTable({ users, title, label, isMobile }) {
         </Group>
       </Table.Td>
       <Table.Td>
-        <Badge color={FieldColor[user_info?.field]} variant="dot">
-          {user_info?.total_count}
+        <Badge
+          color={FieldColor[user_info?.field]}
+          variant={logo ? "light" : "dot"}
+        >
+          <Group gap={3} align="center">
+            {logo}
+            {user_info?.total_count}
+          </Group>
         </Badge>
       </Table.Td>
     </Table.Tr>
