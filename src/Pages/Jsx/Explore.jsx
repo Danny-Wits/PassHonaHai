@@ -4,6 +4,8 @@ import {
   ActionIcon,
   Button,
   Center,
+  Flex,
+  Group,
   Loader,
   ScrollArea,
   Space,
@@ -116,7 +118,11 @@ function Explore() {
       </Center>
       {searchData?.materials?.length > 0 && (
         <ScrollArea>
-          <Stack align={{ base: "center", md: "start" }} p={"xs"}>
+          <Flex
+            direction={"column"}
+            align={{ base: "flex-start", md: "center" }}
+            p={"xs"}
+          >
             <Text fw={900} c={"dimmed"}>
               Study Materials
             </Text>
@@ -124,18 +130,23 @@ function Explore() {
               maxHeight={200}
               showLabel="Show More "
               hideLabel="Show Less"
+              w={{ base: "100%", md: "50%" }}
             >
               <MaterialTable
                 materials={searchData?.materials}
                 withoutHead={true}
               />
             </Spoiler>
-          </Stack>
+          </Flex>
         </ScrollArea>
       )}
       {paperSearchData?.papers?.length > 0 && (
         <ScrollArea>
-          <Stack align={{ base: "center", md: "start" }} p={"xs"}>
+          <Flex
+            direction={"column"}
+            align={{ base: "flex-start", md: "center" }}
+            p={"xs"}
+          >
             <Text fw={900} c={"dimmed"}>
               Papers
             </Text>
@@ -143,6 +154,7 @@ function Explore() {
               maxHeight={200}
               showLabel="Show More "
               hideLabel="Show Less"
+              w={{ base: "100%", md: "50%" }}
             >
               <MaterialTable
                 materials={paperSearchData?.papers}
@@ -150,20 +162,24 @@ function Explore() {
                 withoutHead={true}
               />
             </Spoiler>
-          </Stack>
+          </Flex>
         </ScrollArea>
       )}
-      {(searchData?.materials?.length > 0 ||
-        paperSearchData?.papers?.length > 0) && (
-        <Button
-          variant="light"
-          color={"red"}
-          onClick={() => setSearch("")}
-          size="sm"
-        >
-          Clear
-        </Button>
-      )}
+      <Group justify="center">
+        {(searchData?.materials?.length > 0 ||
+          paperSearchData?.papers?.length > 0) && (
+          <Button
+            variant="light"
+            color={"red"}
+            onClick={() => setSearch("")}
+            size="sm"
+            w={{ base: "100%", md: "50%" }}
+          >
+            Clear
+          </Button>
+        )}
+      </Group>
+
       <Space h={"md"}></Space>
       <MaterialGroup
         title={"Some popular Study Materials"}

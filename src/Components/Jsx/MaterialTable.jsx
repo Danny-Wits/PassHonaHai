@@ -1,4 +1,5 @@
 import { Badge, Group, Table, Text } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
 import { PageRoutes } from "../../Scripts/Const.js";
 
@@ -14,6 +15,7 @@ export function MaterialTable({
   withoutHead = false,
 }) {
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const rows = materials?.map((material, index) => (
     <Table.Tr
       key={index}
@@ -27,7 +29,7 @@ export function MaterialTable({
       }}
     >
       <Table.Td>
-        <Group gap="sm" maw={300} miw={150} w={"100%"}>
+        <Group gap="sm" maw={isMobile ? 150 : 250} miw={100} w={"100%"}>
           {arePapers && (
             <Badge size={"xs"} circle>
               P
@@ -46,7 +48,11 @@ export function MaterialTable({
       </Table.Td>
       <Table.Td>
         <Badge color={FieldColor[material?.field]} variant="dot">
-          {material?.branch === "" ? "Unknown" : material?.branch}
+          {arePapers
+            ? material?.year
+            : material?.branch === ""
+              ? "Unknown"
+              : material?.branch}
         </Badge>
       </Table.Td>
     </Table.Tr>
