@@ -42,14 +42,14 @@ function Landing() {
           p={"lg"}
           pos={"relative"}
         >
-          <Title>
+          <Title fz={{ base: "h3", sm: "h1" }}>
             Ace Exams with Notes, Advice, and a Community{" "}
             <span style={{ color: "var(--primary-color)" }}>That Cares!</span>
           </Title>
-          <Text c={"bright"} fs={"italic"}>
+          <Text fz={{ base: "sm", sm: "lg" }} c={"bright"} fs={"italic"}>
             Explore a world of resources ———
           </Text>
-          <Text c="bright" size="md">
+          <Text fz={{ base: "sm", sm: "lg" }} c="bright" size="md">
             From old papers to expert advice and real connections. Join a
             thriving student community built to help you succeed.
           </Text>
