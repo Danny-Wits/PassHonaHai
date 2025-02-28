@@ -1,4 +1,12 @@
-import { Button, Divider, Group, Stack, Text, Title } from "@mantine/core";
+import {
+  Button,
+  Divider,
+  Group,
+  Space,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -78,7 +86,7 @@ function Home() {
   return (
     <Stack>
       <Stack spacing="md">
-        <Title mb="sm" px="sm" order={isMobile ? 4 : 2} fw={800}>
+        <Title mb="sm" px="sm" order={isMobile ? 3 : 2} fw={800}>
           Welcome 🎉🎉
         </Title>
 
@@ -90,12 +98,17 @@ function Home() {
         </Text>
 
         <Group px="sm" spacing="md">
-          <Button onClick={() => navigate(PageRoutes.Explore)} variant="light">
+          <Button
+            onClick={() => navigate(PageRoutes.Explore)}
+            variant="light"
+            fullWidth={isMobile}
+          >
             📚 Explore Study Material
           </Button>
           <Button
             onClick={() => navigate(PageRoutes.PublicProfiles)}
             variant="default"
+            fullWidth={isMobile}
           >
             👥 Find People
           </Button>
@@ -104,12 +117,13 @@ function Home() {
               enqueueSnackbar("Feature coming soon!", { variant: "info" })
             }
             variant="default"
+            fullWidth={isMobile}
           >
             ❓ Request Help
           </Button>
         </Group>
       </Stack>
-      <Divider m={30}></Divider>
+      <Space h="md"></Space>
       {popularMaterials.length > 0 ? (
         <MaterialGallery
           data={popularMaterials}
@@ -123,7 +137,7 @@ function Home() {
           icon={<MdOutlineTrendingUp size={20} />}
         />
       )}
-      <Divider m={20} />
+      <Space h={30} />
       {popularMaterialsByField.length > 0 ? (
         <MaterialGallery
           data={popularMaterialsByField}

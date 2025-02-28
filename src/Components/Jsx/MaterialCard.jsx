@@ -14,6 +14,7 @@ import {
   Textarea,
   useComputedColorScheme,
 } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { LuTags } from "react-icons/lu";
@@ -73,10 +74,19 @@ function MaterialCard({ material, isPaper }) {
   };
   const colorTheme = useComputedColorScheme();
 
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder maw={300} mih={300}>
+    <Card
+      shadow="sm"
+      padding="lg"
+      radius="md"
+      withBorder
+      maw={300}
+      mih={isMobile ? 200 : 300}
+    >
       <Card.Section pos={"relative"}>
-        <AspectRatio ratio={16 / 9}>
+        <AspectRatio ratio={isMobile ? 2.1 : 1.9}>
           <Image
             src={download_link}
             fallbackSrc={defaultImage}
@@ -138,6 +148,7 @@ function MaterialCard({ material, isPaper }) {
         readOnly
         autosize
         defaultValue={description}
+        p={3}
       ></Textarea>
       {isPaper && (
         <Group py={"xs"} gap={4}>
