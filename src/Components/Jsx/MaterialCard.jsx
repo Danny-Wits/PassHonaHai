@@ -110,11 +110,11 @@ function MaterialCard({ material, isPaper }) {
         </Badge>
       </Card.Section>
       <Group justify="space-between" mt="md" mb="xs">
-        <Text fw={600} size="sm" maw={100} truncate={"end"} c="bright">
+        <Text fw={600} size="sm" maw={120} truncate={"end"} c="bright">
           {title}
         </Text>
         {isLoadingUser ? (
-          <Group w={100} justify="center" gap={3}>
+          <Group w={90} justify="center" gap={3}>
             <Skeleton circle h={25} w={"25%"}></Skeleton>
             <Skeleton h={15} radius="xl" w={"65%"}></Skeleton>
           </Group>
