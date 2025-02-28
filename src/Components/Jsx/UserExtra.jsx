@@ -74,12 +74,21 @@ function UserExtra({ user_id }) {
           )}
         </Stack>
       </Spoiler>
+
       <Grid>
         <Grid.Col span={{ base: 12, md: 6 }}>
-          <UserList users={seniors} title={"Seniors"}></UserList>
+          <UserList
+            users={seniors}
+            title={"Seniors"}
+            maxHeight={300}
+          ></UserList>
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 6 }}>
-          <UserList users={juniors} title={"Juniors"}></UserList>
+          <UserList
+            users={juniors}
+            title={"Juniors"}
+            maxHeight={300}
+          ></UserList>
         </Grid.Col>
       </Grid>
     </Stack>

@@ -35,6 +35,7 @@ function LeaderboardTable({ users, title, label, isMobile, logo }) {
             color={"initials"}
           />
           <Text fz="sm" fw={500} truncate={"end"} w={"60%"}>
+            {index == 0 && "🥇"} {index == 1 && "🥈"} {index == 2 && "🥉"}{" "}
             {user_info?.name}
           </Text>
         </Group>
@@ -44,7 +45,7 @@ function LeaderboardTable({ users, title, label, isMobile, logo }) {
           color={FieldColor[user_info?.field]}
           variant={logo ? "light" : "dot"}
         >
-          <Group gap={3} align="center">
+          <Group gap={3} w={"100%"} align="center">
             {logo}
             {user_info?.total_count}
           </Group>

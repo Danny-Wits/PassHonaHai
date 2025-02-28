@@ -32,7 +32,7 @@ const links = [
     description: "View and Edit Your Profile",
     link: PageRoutes.Dashboard,
     icon: <LuLayoutDashboard size={iconSize} />,
-  },{}
+  },
 ];
 function NavBar({ setOpened }) {
   const navigate = useNavigate();

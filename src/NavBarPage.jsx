@@ -5,6 +5,7 @@ import {
   Burger,
   Button,
   Group,
+  Loader,
   Modal,
   rem,
   SegmentedControl,
@@ -48,11 +49,13 @@ export function NavBarPage({ children }) {
     }
   };
   const queryClient = useQueryClient();
+  const isFetching = queryClient.isFetching();
   const [isLoading, setLoading] = React.useState(false);
   const handleNavigateToUploadPages = () => {
     modalClose();
     navigate(uploadPage);
   };
+
   return (
     <AppShell
       header={{ height: 60, collapsed: !pinned }}
@@ -109,6 +112,7 @@ export function NavBarPage({ children }) {
           >
             <IoRefresh />
           </ActionIcon>
+          {isFetching && <Loader type="bars" size="xs"></Loader>}
           <Button
             rightSection={<FaUpload />}
             visibleFrom="sm"

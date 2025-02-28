@@ -13,9 +13,10 @@ const Profile = () => {
   const { user_info } = useAuth();
   const queryClient = useQueryClient();
   const location = useLocation();
+  const stateUserInfo = location.state?.user_info;
   const [page_user, setPageUser] = React.useState(null);
   const navigate = useNavigate();
-  const id = page_user?.user_id ?? -1;
+  const id = stateUserInfo?.user_id ?? null;
   const { data: senior_data, isFetching: isFetchingSenior } = useQuery(
     ["get_seniors", user_info?.user_id],
     () => API.getSeniors(user_info?.user_id),
@@ -41,21 +42,20 @@ const Profile = () => {
   } = useQuery(["get_user", id], () => API.getUserInfo(id), {
     staleTime: Times.Minute,
     keepPreviousData: true,
-    enabled: true,
+    enabled: !!id,
   });
 
   useEffect(() => {
     if (page_user_data?.user_info) {
       setPageUser(page_user_data?.user_info);
-    } else if (location.state?.user_info) {
-      setPageUser(location.state.user_info);
-    } else if (location.state?.user_id) {
-      setPageUser({ user_id: location.state.user_id });
+    } else if (stateUserInfo?.user_info) {
+      setPageUser(stateUserInfo.user_info);
+    } else if (stateUserInfo?.user_id) {
       refetchPageUser();
     } else {
       navigate(PageRoutes.PublicProfiles);
     }
-  }, [location.state, page_user_data]);
+  }, [stateUserInfo, page_user_data]);
 
   const seniors = senior_data?.seniors ?? [];
   const juniors = juniors_data?.juniors ?? [];
@@ -171,25 +171,7 @@ const Profile = () => {
       </Group>
       <UserExtra user_id={id}></UserExtra>
     </Stack>
-    // <div className={"page"}>
-    //   <UserCard user_info={person_info} />
-    //   {!relationship ? (
-    //     <button
-    //       onClick={makePersonSenior}
-    //       disabled={
-    //         isLoading || isFetching || isFetchingSenior || isFetchingJunior
-    //       }
-    //     >
-    //       Make Senior
-    //     </button>
-    //   ) : (
-    //     <h2> Relationship : {relationship}</h2>
-    //   )}
-    //   <pre>
-    //     json: {JSON.stringify(seniors, null, 2)}
-    //     json: {JSON.stringify(juniors, null, 2)}
-    //   </pre>
-    // </div>
+
   );
 };
 

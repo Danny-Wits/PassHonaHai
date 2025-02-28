@@ -47,6 +47,10 @@ const API = {
   getPapers: async (page_no = 1) => getter("/papers/?page_no=" + page_no),
   searchPapers: async (search) => getter("/search-papers/?query=" + search),
   getPaperUsers: async (id) => getter("/paper-users/" + id),
+  getPopularMaterialsByBranch: async (branch) =>
+    getter("/popular-materials/?branch=" + branch),
+  getPopularMaterialsByField: async (field) =>
+    getter("/popular-materials/?field=" + field),
 };
 export default API;
 // Reusable functions for GET and POST requests
@@ -97,6 +101,3 @@ export const deleter = async (url, payload = {}) => {
     .set("Authorization", $API_TOKEN); // Add the Authorization header
   return response.body; // Superagent response body is accessible via `.body`
 };
-
-export const registerDemoUser = async (name, email, password) =>
-  poster("/register", { name: name, email: email, password: password });

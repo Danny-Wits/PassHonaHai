@@ -27,7 +27,7 @@ function Landing() {
   setColorScheme("light");
 
   return (
-    <Stack gap={0}>
+    <Stack gap={0} px={"lg"}>
       <Header></Header>
       <Divider></Divider>
       <Flex

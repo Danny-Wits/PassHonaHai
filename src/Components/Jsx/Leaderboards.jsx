@@ -1,4 +1,4 @@
-import { Center, Grid, Stack, Title } from "@mantine/core";
+import { Grid, Stack, Title } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import React from "react";
 import { FaRegStar } from "react-icons/fa";
@@ -8,9 +8,9 @@ function Leaderboards({ juniors, materials, stars }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
   return (
     <Stack>
-      <Center>
-        <Title order={isMobile ? 2 : 1}>Leaderboards</Title>
-      </Center>
+      <Title order={isMobile ? 4 : 2} fw={800} px="sm">
+        🏆Leaderboards
+      </Title>
 
       <Grid justify="flex-start" p={isMobile ? 0 : "xl"}>
         <Grid.Col span={{ base: 12, md: 4 }}>

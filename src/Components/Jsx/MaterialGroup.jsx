@@ -7,7 +7,7 @@ export default function MaterialGroup({
   setPageNo,
   isLoadingMaterials,
   title,
-  isPaper,
+  isPaper = false,
 }) {
   return (
     <Paper shadow="sm" withBorder p={"xs"}>
@@ -15,13 +15,16 @@ export default function MaterialGroup({
         <Text fz="md" fw={500} c={"dimmed"}>
           {title}
         </Text>
-        <Pagination
-          p={3}
-          size={"sm"}
-          total={data?.total_pages}
-          page={page_no}
-          onChange={setPageNo}
-        />
+        {page_no && (
+          <Pagination
+            p={3}
+            size={"sm"}
+            total={data?.total_pages}
+            page={page_no}
+            onChange={setPageNo}
+          />
+        )}
+
         <Spoiler showLabel="Show More " hideLabel="Show Less" maxHeight={350}>
           <Grid align="center" justify="center" p={3}>
             {(isPaper ? data?.papers : data?.materials)?.map(

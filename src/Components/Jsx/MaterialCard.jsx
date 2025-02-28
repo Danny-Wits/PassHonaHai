@@ -22,6 +22,17 @@ import defaultImage from "../../assets/mascot1.png";
 import API from "../../Scripts/API.js";
 import { FieldsColor, PageRoutes } from "../../Scripts/Const.js";
 
+function getFileExtension(filename) {
+  if (typeof filename !== "string") {
+    return "";
+  }
+
+  const parts = filename.split(".");
+  if (parts.length <= 1) {
+    return "";
+  }
+  return parts.pop();
+}
 function MaterialCard({ material, isPaper }) {
   const navigate = useNavigate();
 
@@ -61,6 +72,7 @@ function MaterialCard({ material, isPaper }) {
     });
   };
   const colorTheme = useComputedColorScheme();
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder maw={300} mih={300}>
       <Card.Section pos={"relative"}>
