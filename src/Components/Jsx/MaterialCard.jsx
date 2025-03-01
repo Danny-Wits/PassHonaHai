@@ -2,16 +2,15 @@ import {
   AspectRatio,
   Avatar,
   Badge,
-  Button,
   Card,
   Group,
   Image,
   Overlay,
   Pill,
   PillGroup,
+  ScrollArea,
   Skeleton,
   Text,
-  Textarea,
   useComputedColorScheme,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
@@ -82,11 +81,12 @@ function MaterialCard({ material, isPaper }) {
       padding="lg"
       radius="md"
       withBorder
-      maw={300}
-      mih={isMobile ? 200 : 300}
+      w="100%"
+      maw={280}
+      mih={260}
     >
-      <Card.Section pos={"relative"}>
-        <AspectRatio ratio={isMobile ? 2.1 : 1.9}>
+      <Card.Section pos={"relative"} onClick={goToDetails}>
+        <AspectRatio ratio={isMobile ? 2.2 : 2.0}>
           <Image
             src={download_link}
             fallbackSrc={defaultImage}
@@ -109,8 +109,15 @@ function MaterialCard({ material, isPaper }) {
           {field}
         </Badge>
       </Card.Section>
-      <Group justify="space-between" mt="md" mb="xs">
-        <Text fw={600} size="sm" maw={120} truncate={"end"} c="bright">
+      <Group justify="space-between" mt="md" mb="xs" grow>
+        <Text
+          fw={800}
+          size="sm"
+          truncate={"end"}
+          c="bright"
+          onClick={goToDetails}
+          style={{ cursor: "pointer" }}
+        >
           {title}
         </Text>
         {isLoadingUser ? (
@@ -125,60 +132,60 @@ function MaterialCard({ material, isPaper }) {
                 src={user_info?.profile_picture_url}
                 name={user_info?.name}
                 size={"xs"}
+                color="initials"
               ></Avatar>
             }
             variant="default"
             color="initials"
             radius="md"
-            onClick={() =>
-              navigate(PageRoutes.PublicProfile, { state: { user_info } })
-            }
-            maw={150}
+            onClick={() => {
+              navigate(PageRoutes.PublicProfile, { state: { user_info } });
+            }}
             style={{ cursor: "pointer" }}
+            size="xs"
           >
             {user_info?.name}
           </Badge>
         )}
       </Group>
-      <Textarea
-        size="sm"
-        c="dimmed"
-        variant="unstyled"
-        maxRows={2}
-        readOnly
-        autosize
-        defaultValue={description}
-        p={3}
-      ></Textarea>
+
+      <ScrollArea
+        offsetScrollbars
+        w={"100%"}
+        h={isMobile ? 50 : 30}
+        scrollbarSize={4}
+        fz={"xs"}
+        p={5}
+      >
+        <Text c="dimmed" size="sm">
+          {description}
+        </Text>
+      </ScrollArea>
+
       {isPaper && (
         <Group py={"xs"} gap={4}>
-          <Badge variant="light" size="sm">
+          <Badge variant="light" size="xs">
             {material?.year}
           </Badge>
-          <Badge size="sm">{material?.standard}</Badge>
-          <Badge variant="dot" size="sm">
+          <Badge size="xs">{material?.standard}</Badge>
+          <Badge variant="dot" size="xs">
             {material?.branch}
           </Badge>
         </Group>
       )}
       {tags && (
-        <Group gap={4} p={4} m={0}>
+        <Group gap={4} p={4}>
           <LuTags size={16} />
           <PillGroup p={1}>
-            {tags && tags.split(",").map((tag) => <Pill key={tag}>{tag}</Pill>)}
+            {tags &&
+              tags.split(",").map((tag) => (
+                <Pill key={tag} size="xs">
+                  {tag}
+                </Pill>
+              ))}
           </PillGroup>
         </Group>
       )}
-      <Button
-        color="blue"
-        fullWidth
-        mt="auto"
-        radius="md"
-        variant="default"
-        onClick={goToDetails}
-      >
-        {isPaper ? "Download" : "View"}
-      </Button>
     </Card>
   );
 }

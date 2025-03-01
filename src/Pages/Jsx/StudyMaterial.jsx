@@ -309,7 +309,7 @@ function StudyMaterial() {
           style={{ cursor: "pointer", borderRadius: "20px" }}
           onClick={() =>
             navigate(PageRoutes.PublicProfile, {
-              state: { user_id: material_info?.user_id },
+              state: { user_info: { user_id: material_info?.user_id } },
             })
           }
           maw={120}

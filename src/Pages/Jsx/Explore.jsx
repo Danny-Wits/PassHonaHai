@@ -179,10 +179,9 @@ function Explore() {
           </Button>
         )}
       </Group>
-
       <Space h={"md"}></Space>
       <MaterialGroup
-        title={"Some popular Study Materials"}
+        title={"🚀Some popular Study Materials🚀"}
         isPaper={false}
         isLoadingMaterials={isLoadingMaterials}
         data={data}
@@ -192,7 +191,7 @@ function Explore() {
       <Space h={"md"}></Space>
       <MaterialGroup
         isPaper={true}
-        title={"Some popular Exam Papers"}
+        title={"📝Some popular Exam Papers📝"}
         isLoadingMaterials={isLoadingPapers}
         data={papersData}
         page_no={paperPageNo}

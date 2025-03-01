@@ -54,10 +54,10 @@ function LeaderboardTable({ users, title, label, isMobile, logo }) {
     </Table.Tr>
   ));
   return (
-    <Paper shadow="md" p={"md"}>
+    <Paper shadow="lg" withBorder p={"md"}>
       <Stack>
         <Center>
-          <Text fz={isMobile ? "md" : "xl"} fw={500} c={"dimmed"}>
+          <Text fz={isMobile ? "md" : "lg"} fw={500} c={"dimmed"}>
             {title}
           </Text>
         </Center>

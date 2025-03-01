@@ -25,7 +25,7 @@ export default function MaterialGroup({
           />
         )}
 
-        <Spoiler showLabel="Show More " hideLabel="Show Less" maxHeight={350}>
+        <Spoiler showLabel="Show More " hideLabel="Show Less" maxHeight={260}>
           <Grid align="center" justify="center" p={3}>
             {(isPaper ? data?.papers : data?.materials)?.map(
               (material, index) => {
@@ -33,8 +33,8 @@ export default function MaterialGroup({
                   <Grid.Col
                     key={index}
                     span={{ base: 12, sm: 6, md: 4, lg: 3 }}
-                    mih={350}
-                    maw={350}
+                    mih={250}
+                    maw={270}
                     p={5}
                   >
                     <MaterialCard material={material} isPaper={isPaper} />

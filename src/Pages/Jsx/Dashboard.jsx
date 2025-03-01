@@ -1,7 +1,6 @@
 import {
   Button,
   Center,
-  Divider,
   Group,
   LoadingOverlay,
   Modal,
@@ -224,16 +223,19 @@ function Dashboard() {
         page_user={user_info}
         onProfileClick={handleProfileClick}
         profilePicRef={profilePic}
+        actionButton={
+          <Button
+            variant={"light"}
+            onClick={() => setShowModal(true)}
+            size="xs"
+            leftSection={<CiEdit />}
+          >
+            Edit Profile
+          </Button>
+        }
       ></UserProfile>
+      <UserExtra user_id={user_info?.user_id}></UserExtra>
       <Group>
-        <Button
-          variant={"default"}
-          onClick={() => setShowModal(true)}
-          leftSection={<CiEdit />}
-          fullWidth
-        >
-          Edit
-        </Button>
         <Button
           variant={"outline"}
           onClick={() => logout()}
@@ -244,8 +246,6 @@ function Dashboard() {
           Logout
         </Button>
       </Group>
-      <Divider></Divider>
-      <UserExtra user_id={user_info?.user_id}></UserExtra>
     </Stack>
   );
 }

@@ -48,8 +48,6 @@ const Profile = () => {
   useEffect(() => {
     if (page_user_data?.user_info) {
       setPageUser(page_user_data?.user_info);
-    } else if (stateUserInfo?.user_info) {
-      setPageUser(stateUserInfo.user_info);
     } else if (stateUserInfo?.user_id) {
       refetchPageUser();
     } else {
@@ -139,39 +137,48 @@ const Profile = () => {
       <UserProfile
         page_user={page_user}
         relationship={relationship}
+        actionButton={
+          <Group>
+            {!relationship ? (
+              <Button
+                onClick={makePersonSenior}
+                variant={"light"}
+                color="green"
+                loading={
+                  isLoading ||
+                  isFetching ||
+                  isFetchingSenior ||
+                  isFetchingJunior
+                }
+                size="xs"
+              >
+                🏅Make Senior
+              </Button>
+            ) : (
+              <Button
+                onClick={deleteSenior}
+                variant={"light"}
+                color={relationship === "Senior" ? "blue" : "orange"}
+                loading={
+                  isLoading ||
+                  isFetching ||
+                  isFetchingSenior ||
+                  isFetchingJunior ||
+                  isdeletingRelationship
+                }
+                size="xs"
+              >
+                {relationship === "Senior"
+                  ? "Remove Senior🏅"
+                  : "Remove Junior🐣"}
+              </Button>
+            )}
+          </Group>
+        }
       ></UserProfile>
-      <Group>
-        {!relationship ? (
-          <Button
-            onClick={makePersonSenior}
-            variant={"default"}
-            loading={
-              isLoading || isFetching || isFetchingSenior || isFetchingJunior
-            }
-            fullWidth
-          >
-            Make Senior
-          </Button>
-        ) : (
-          <Button
-            onClick={deleteSenior}
-            variant={"default"}
-            loading={
-              isLoading ||
-              isFetching ||
-              isFetchingSenior ||
-              isFetchingJunior ||
-              isdeletingRelationship
-            }
-            fullWidth
-          >
-            Remove {relationship === "Senior" ? " Senior" : " Junior"}
-          </Button>
-        )}
-      </Group>
+
       <UserExtra user_id={id}></UserExtra>
     </Stack>
-
   );
 };
 

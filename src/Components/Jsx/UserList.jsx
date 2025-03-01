@@ -1,7 +1,7 @@
 import {
   Avatar,
-  List,
   Paper,
+  SimpleGrid,
   Spoiler,
   Stack,
   Text,
@@ -15,41 +15,44 @@ function UserList({ users, title, maxHeight = Infinity }) {
   const navigate = useNavigate();
   return (
     <Spoiler maxHeight={maxHeight} showLabel="Show More " hideLabel="Show Less">
-      <Paper shadow="sm" p={"md"}>
+      <Paper shadow="sm" withBorder p={"md"}>
         <Stack>
           <Title order={3} c={"dimmed"}>
             {title}
           </Title>
-          <List spacing={"lg"}>
+          <SimpleGrid
+            cols={{ base: 4, sm: 4, md: 5, lg: 7 }}
+            spacing={"sm"}
+            verticalSpacing={"sm"}
+          >
             {users.map((user_info, index) => (
-              <List.Item
+              <Stack
                 key={index}
-                icon={
-                  <Avatar
-                    src={user_info?.profile_picture_url}
-                    name={user_info?.name}
-                    color="initials"
-                  />
-                }
+                w={"100%"}
                 style={{
                   cursor: "pointer",
-                  borderBottom: "1px solid rgba(135, 135, 135, 0.5)",
                 }}
                 onClick={() => {
                   navigate(PageRoutes.PublicProfile, {
                     state: { user_info },
                   });
                 }}
+                gap={2}
+                p={"xs"}
               >
-                <Stack gap={1} w={"100%"}>
-                  <Text truncate={"end"}>{user_info?.name}</Text>
-                  <Text c={"dimmed"} fz={"xs"} truncate={"end"}>
-                    {user_info?.bio}
-                  </Text>
-                </Stack>
-              </List.Item>
+                <Avatar
+                  size={"sm"}
+                  src={user_info?.profile_picture_url}
+                  name={user_info?.name}
+                  variant={"light"}
+                  color={"initials"}
+                />
+                <Text fw={600} fz={10} truncate={"end"}>
+                  {user_info?.name}
+                </Text>
+              </Stack>
             ))}
-          </List>
+          </SimpleGrid>
         </Stack>
       </Paper>
     </Spoiler>

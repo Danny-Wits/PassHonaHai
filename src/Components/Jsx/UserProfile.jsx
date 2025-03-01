@@ -7,6 +7,7 @@ import {
   Divider,
   Group,
   Paper,
+  ScrollArea,
   Stack,
   Text,
   Textarea,
@@ -28,6 +29,7 @@ function UserProfile({
   relationship,
   onProfileClick,
   profilePicRef,
+  actionButton,
 }) {
   const colorTheme = useComputedColorScheme();
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -73,28 +75,14 @@ function UserProfile({
         <Divider size={"md"}></Divider>
       </Box>
       <Stack px={"sm"} gap={10}>
-        <Title
-          order={isMobile ? 3 : 1}
-          w={"100%"}
-          my={8}
-          style={{
-            overflowX: "auto",
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
-          {page_user?.name}
-          {!!relationship && (
-            <Badge
-              variant={"dot"}
-              color={relationship === "Senior" ? "red" : "green"}
-              miw={80}
-            >
-              {relationship}
-            </Badge>
-          )}
-        </Title>
+        <Stack gap={0} align="flex-start">
+          <ScrollArea w={"100%"} scrollbarSize={4}>
+            <Title order={isMobile ? 3 : 2} w={"100%"} my={8}>
+              {page_user?.name}
+            </Title>
+          </ScrollArea>
+          {actionButton}
+        </Stack>
 
         <Divider></Divider>
         <Group gap={20}>
@@ -102,7 +90,7 @@ function UserProfile({
             size={"md"}
             name={numberFromStandard(page_user?.standard)}
             color={"initials"}
-          ></Avatar>{" "}
+          ></Avatar>
           <StatsBox value={page_user?.materials} label={"Materials"}></StatsBox>
           <StatsBox value={page_user?.seniors} label={"Seniors"}></StatsBox>
           <StatsBox value={page_user?.juniors} label={"Juniors"}></StatsBox>
@@ -115,7 +103,7 @@ function UserProfile({
           <Group gap={5}>
             <MdOutlineAlternateEmail size={18} color={"dimmed"} />
             <Text c={"dimmed"} truncate={"end"} w={"80%"}>
-              {page_user?.email}
+              {!!page_user?.email ? page_user?.email : "Haven't Set Email"}
             </Text>
           </Group>
           <Group gap={5}>
@@ -124,7 +112,9 @@ function UserProfile({
               color={"var(--mantine-color-bright)"}
             />
             <Textarea
-              value={page_user?.bio ?? ""}
+              value={
+                !!page_user?.bio ? page_user?.bio : "Too cool for a bio ? "
+              }
               readOnly
               autosize
               minRows={1}
@@ -140,12 +130,28 @@ function UserProfile({
           </Group>
 
           <Group>
-            <Badge color={FieldsColor[page_user?.field]}>
+            <Badge
+              color={FieldsColor[page_user?.field]}
+              size={isMobile ? "sm" : "md"}
+            >
               {page_user?.field === "" ? "Haven't Set" : page_user?.field}
             </Badge>
-            <Badge variant={"dot"} color={FieldsColor[page_user?.field]}>
+            <Badge
+              variant={"dot"}
+              color={FieldsColor[page_user?.field]}
+              size={isMobile ? "sm" : "md"}
+            >
               {page_user?.branch === "" ? "Haven't Set" : page_user?.branch}
             </Badge>
+            {!!relationship && (
+              <Badge
+                variant={"dot"}
+                color={relationship === "Senior" ? "red" : "green"}
+                size={isMobile ? "sm" : "md"}
+              >
+                {relationship}
+              </Badge>
+            )}
           </Group>
         </Paper>
       </Stack>

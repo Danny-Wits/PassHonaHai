@@ -7,7 +7,6 @@ import API from "../../Scripts/API";
 import { Times } from "../../Scripts/Const";
 import { MaterialTable } from "./MaterialTable";
 import UserList from "./UserList";
-
 function UserExtra({ user_id }) {
   const [page_no, setPageNo] = React.useState(1);
   const { data: seniorsData, status: seniorStatus } = useQuery(
@@ -53,6 +52,22 @@ function UserExtra({ user_id }) {
 
   return (
     <Stack gap={50}>
+      <Grid>
+        <Grid.Col span={{ base: 12, md: 6 }}>
+          <UserList
+            users={seniors}
+            title={"Seniors🏅"}
+            maxHeight={300}
+          ></UserList>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, md: 6 }}>
+          <UserList
+            users={juniors}
+            title={"Juniors🐣"}
+            maxHeight={300}
+          ></UserList>
+        </Grid.Col>
+      </Grid>
       <Spoiler
         p={"xs"}
         hideLabel="Hide Materials"
@@ -61,7 +76,7 @@ function UserExtra({ user_id }) {
       >
         <Stack gap={2}>
           <Center p={"xs"}>
-            <Title order={isMobile ? 3 : 2}>Material</Title>
+            <Title order={isMobile ? 3 : 2}>Materials Uploaded</Title>
           </Center>
           {studyMaterialsOfUser?.length === 0 ? (
             <Center p={0}>
@@ -74,23 +89,6 @@ function UserExtra({ user_id }) {
           )}
         </Stack>
       </Spoiler>
-
-      <Grid>
-        <Grid.Col span={{ base: 12, md: 6 }}>
-          <UserList
-            users={seniors}
-            title={"Seniors"}
-            maxHeight={300}
-          ></UserList>
-        </Grid.Col>
-        <Grid.Col span={{ base: 12, md: 6 }}>
-          <UserList
-            users={juniors}
-            title={"Juniors"}
-            maxHeight={300}
-          ></UserList>
-        </Grid.Col>
-      </Grid>
     </Stack>
   );
 }
