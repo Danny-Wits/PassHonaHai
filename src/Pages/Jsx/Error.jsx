@@ -26,9 +26,21 @@ export default function Error() {
             ta="center"
             className={classes.description}
           >
-            Page you are trying to open does not exist. You may have mistyped
-            the address, or the page has been moved to another URL. If you think
-            this is an error contact support.
+            Page you are trying to open does not exist or there was an error in
+            the application. You may have mistyped the address, or the page has
+            been moved to another URL or the page has been deleted. If the error
+            persists,{" "}
+            <b>
+              please contact us at{" "}
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=oceanofsites@gmail.com&su=Error%20in%20PassHonaHai&body=THERE_IS_ERROR_IN_"
+                target="_blank"
+                style={{ color: "inherit" }}
+              >
+                oceanofsites@gmail.com
+              </a>
+            </b>{" "}
+            .
           </Text>
           <Group justify="center">
             <Button size="md" onClick={() => navigate(PageRoutes.Landing)}>

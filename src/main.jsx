@@ -44,14 +44,17 @@ const router = createBrowserRouter([
         <PrivateRoute element={<Home />}></PrivateRoute>
       </NavBarPage>
     ),
+    errorElement: <Error />,
   },
   {
     path: PageRoutes.Login,
     element: <Login />,
+    errorElement: <Error />,
   },
   {
     path: PageRoutes.Register,
     element: <Register />,
+    errorElement: <Error />,
   },
   {
     path: PageRoutes.AboutUs,
@@ -60,10 +63,12 @@ const router = createBrowserRouter([
         <AboutUs />
       </NavBarPage>
     ),
+    errorElement: <Error />,
   },
   {
     path: PageRoutes.ContactUs,
     element: <ContactUs />,
+    errorElement: <Error />,
   },
   {
     path: PageRoutes.Explore,
@@ -72,6 +77,7 @@ const router = createBrowserRouter([
         <PrivateRoute element={<Explore />} />
       </NavBarPage>
     ),
+    errorElement: <Error />,
   },
   {
     path: PageRoutes.Dashboard,
@@ -80,6 +86,7 @@ const router = createBrowserRouter([
         <PrivateRoute element={<Dashboard />} />
       </NavBarPage>
     ),
+    errorElement: <Error />,
   },
 
   {
@@ -89,6 +96,7 @@ const router = createBrowserRouter([
         <PrivateRoute element={<PublicProfiles />} />
       </NavBarPage>
     ),
+    errorElement: <Error />,
   },
   {
     path: PageRoutes.PublicProfile,
@@ -97,6 +105,7 @@ const router = createBrowserRouter([
         <PrivateRoute element={<Profile />} />
       </NavBarPage>
     ),
+    errorElement: <Error />,
   },
   {
     path: PageRoutes.UploadMaterial,
@@ -105,6 +114,7 @@ const router = createBrowserRouter([
         <PrivateRoute element={<UploadMaterial />} />
       </NavBarPage>
     ),
+    errorElement: <Error />,
   },
   {
     path: PageRoutes.StudyMaterial,
@@ -113,6 +123,7 @@ const router = createBrowserRouter([
         <PrivateRoute element={<StudyMaterial />} />
       </NavBarPage>
     ),
+    errorElement: <Error />,
   },
 
   {
@@ -122,6 +133,7 @@ const router = createBrowserRouter([
         <PrivateRoute element={<UploadMaterial updating={true} />} />
       </NavBarPage>
     ),
+    errorElement: <Error />,
   },
   {
     path: PageRoutes.UploadPaper,
@@ -130,6 +142,7 @@ const router = createBrowserRouter([
         <PrivateRoute element={<UploadPaper />} />
       </NavBarPage>
     ),
+    errorElement: <Error />,
   },
 ]);
 const myColor = [

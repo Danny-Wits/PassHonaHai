@@ -80,6 +80,7 @@ function Explore() {
         <Loader color="#a91cc6" size="xl" type={"dots"} />
       </Center>
     );
+
   return (
     <Stack gap={5}>
       <Text fz={{ base: "h2", md: "h1" }} ta={"center"} fw={900}>
