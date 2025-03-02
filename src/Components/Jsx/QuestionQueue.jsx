@@ -55,7 +55,7 @@ function QuestionQueue() {
               </ActionIcon>
 
               <Text c="dimmed" size="xs">
-                Add more
+                Load more
               </Text>
             </Stack>
           )}
