@@ -2,7 +2,7 @@ import { NavLink, Stack } from "@mantine/core";
 import React from "react";
 import { GoPeople } from "react-icons/go";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { MdOutlineSearch } from "react-icons/md";
+import { MdOutlineQuestionAnswer, MdOutlineSearch } from "react-icons/md";
 import { RiHome3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { PageRoutes } from "../../Scripts/Const.js";
@@ -32,6 +32,12 @@ const links = [
     description: "View and Edit Your Profile",
     link: PageRoutes.Dashboard,
     icon: <LuLayoutDashboard size={iconSize} />,
+  },
+  {
+    label: "Requests",
+    description: "Ask and Answer Questions",
+    link: PageRoutes.Requests,
+    icon: <MdOutlineQuestionAnswer size={iconSize} />,
   },
 ];
 function NavBar({ setOpened }) {

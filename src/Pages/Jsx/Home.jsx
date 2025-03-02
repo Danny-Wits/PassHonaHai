@@ -11,7 +11,6 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 import { useMediaQuery } from "@mantine/hooks";
-import { enqueueSnackbar } from "notistack";
 import { FaUserGraduate } from "react-icons/fa";
 import { MdOutlineTrendingUp, MdSchool } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -113,9 +112,7 @@ function Home() {
             👥 Find People
           </Button>
           <Button
-            onClick={() =>
-              enqueueSnackbar("Feature coming soon!", { variant: "info" })
-            }
+            onClick={() => navigate(PageRoutes.Requests)}
             variant="default"
             fullWidth={isMobile}
           >

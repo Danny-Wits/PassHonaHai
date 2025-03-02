@@ -4,6 +4,7 @@ import {
   Avatar,
   Badge,
   Button,
+  CopyButton,
   Divider,
   Flex,
   Group,
@@ -23,7 +24,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { FaEdit, FaFlag, FaRegStar, FaStar, FaTrash } from "react-icons/fa";
+import {
+  FaCheck,
+  FaCopy,
+  FaEdit,
+  FaFlag,
+  FaRegStar,
+  FaStar,
+  FaTrash,
+} from "react-icons/fa";
 import { FaDownload, FaRegCommentDots } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
 import { LuTags } from "react-icons/lu";
@@ -41,7 +50,6 @@ function StudyMaterial() {
   const location = useLocation();
   const material_info = location.state.material;
   const id = material_info?.material_id;
-
   const { user_info } = useAuth();
   const [liked, setLiked] = useState(false);
   const [yourComment, setYourComment] = useState("");
@@ -343,7 +351,7 @@ function StudyMaterial() {
             <Button
               onClick={() => gotoEdit()}
               variant="light"
-              color="blue"
+              color="cyan"
               rightSection={isMobile ? null : <FaEdit />}
             >
               {isMobile ? <FaEdit /> : "Edit "}
@@ -359,7 +367,34 @@ function StudyMaterial() {
             </Button>
           </>
         )}
-
+        <CopyButton value={window.location.href + material_info?.material_id}>
+          {({ copied, copy }) => (
+            <Button
+              onClick={() => {
+                copy();
+                enqueueSnackbar("Link Copied to clipboard", {
+                  variant: "info",
+                  autoHideDuration: 1000,
+                });
+              }}
+              variant="light"
+              color={copied ? "green" : "blue"}
+              rightSection={isMobile ? null : <FaCopy />}
+            >
+              {!isMobile ? (
+                copied ? (
+                  "Copied"
+                ) : (
+                  "Copy"
+                )
+              ) : copied ? (
+                <FaCheck />
+              ) : (
+                <FaCopy />
+              )}
+            </Button>
+          )}
+        </CopyButton>
         <Button
           onClick={() =>
             enqueueSnackbar("Report Feature coming soon", {

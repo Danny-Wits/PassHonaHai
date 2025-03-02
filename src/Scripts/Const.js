@@ -14,6 +14,7 @@ export const PageRoutes = {
   StudyMaterial: "/study-material/",
   Paper: "/paper/",
   UploadPaper: "/upload-paper",
+  Requests: "/requests",
 };
 export const validFileTypes = [
   "application/pdf",

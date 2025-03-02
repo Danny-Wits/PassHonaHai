@@ -51,6 +51,8 @@ const API = {
     getter("/popular-materials/?branch=" + branch),
   getPopularMaterialsByField: async (field) =>
     getter("/popular-materials/?field=" + field),
+  uploadRequest: async (user_id, data) => poster("/request/" + user_id, data),
+  getRequests: async (page_no = 1) => getter("/requests/?page_no=" + page_no),
 };
 export default API;
 // Reusable functions for GET and POST requests

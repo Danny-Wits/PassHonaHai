@@ -75,6 +75,19 @@ function MaterialCard({ material, isPaper }) {
 
   const isMobile = useMediaQuery("(max-width: 768px)");
 
+  const getFileExtension = (filename) => {
+    if (typeof filename !== "string") {
+      return "";
+    }
+    const parts = filename.split(".");
+    if (parts.length <= 1) {
+      return "";
+    }
+    return parts.pop();
+  };
+  const imageExtensions = ["jpg", "jpeg", "png", "gif", "webp"];
+  const isImage = () =>
+    imageExtensions.includes(getFileExtension(download_link));
   return (
     <Card
       shadow="sm"
@@ -88,7 +101,7 @@ function MaterialCard({ material, isPaper }) {
       <Card.Section pos={"relative"} onClick={goToDetails}>
         <AspectRatio ratio={isMobile ? 2.2 : 2.0}>
           <Image
-            src={download_link}
+            src={isImage() ? download_link : defaultImage}
             fallbackSrc={defaultImage}
             alt="Study Material"
           />

@@ -160,15 +160,17 @@ export function NavBarPage({ children }) {
 
       <AppShell.Navbar p="sm" style={{ zIndex: 402 }}>
         <NavBar setOpened={setOpened}></NavBar>
-        <Stack justify="flex-end" h={"100%"} mb={"sm"}>
-          <UserButton
-            name={user_info?.name}
-            bio={user_info?.bio}
-            profile_picture_url={user_info?.profile_picture_url}
-            logout={logout}
-            setOpened={setOpened}
-          ></UserButton>
-        </Stack>
+        {!isMobile && (
+          <Stack justify="flex-end" h={"100%"} mb={"sm"}>
+            <UserButton
+              name={user_info?.name}
+              bio={user_info?.bio}
+              profile_picture_url={user_info?.profile_picture_url}
+              logout={logout}
+              setOpened={setOpened}
+            ></UserButton>
+          </Stack>
+        )}
       </AppShell.Navbar>
 
       <AppShell.Main pt={`calc(${rem(60)} + var(--mantine-spacing-md))`}>

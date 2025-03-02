@@ -24,7 +24,9 @@ import Login from "./Pages/Jsx/Login.jsx";
 import Profile from "./Pages/Jsx/Profile.jsx";
 import PublicProfiles from "./Pages/Jsx/PublicProfiles.jsx";
 import Register from "./Pages/Jsx/Register.jsx";
+import Requests from "./Pages/Jsx/Requests.jsx";
 import StudyMaterial from "./Pages/Jsx/StudyMaterial.jsx";
+import StudyMaterialLink from "./Pages/Jsx/StudyMaterialLink.jsx";
 import UploadMaterial from "./Pages/Jsx/UploadMaterial.jsx";
 import UploadPaper from "./Pages/Jsx/UploadPaper.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
@@ -125,7 +127,15 @@ const router = createBrowserRouter([
     ),
     errorElement: <Error />,
   },
-
+  {
+    path: PageRoutes.StudyMaterial + ":id",
+    element: (
+      <NavBarPage>
+        <PrivateRoute element={<StudyMaterialLink />} />
+      </NavBarPage>
+    ),
+    errorElement: <Error />,
+  },
   {
     path: PageRoutes.EditMaterial,
     element: (
@@ -140,6 +150,15 @@ const router = createBrowserRouter([
     element: (
       <NavBarPage>
         <PrivateRoute element={<UploadPaper />} />
+      </NavBarPage>
+    ),
+    errorElement: <Error />,
+  },
+  {
+    path: PageRoutes.Requests,
+    element: (
+      <NavBarPage>
+        <PrivateRoute element={<Requests />} />
       </NavBarPage>
     ),
     errorElement: <Error />,
