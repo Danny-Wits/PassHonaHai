@@ -65,7 +65,7 @@ function QuestionCard({ request }) {
               {timeText(
                 timeDifferenceInMinutes(
                   Date.now(),
-                  new Date(request?.created_at)
+                  new Date(request?.created_at + " UTC")
                 )
               )}
             </Badge>
