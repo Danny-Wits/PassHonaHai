@@ -27,11 +27,13 @@ function RequestForm() {
     },
     onSuccess: () => {
       field.reset();
-      queryClient.invalidateQueries(["get_requests"]);
       enqueueSnackbar("Question added to the queue", {
         variant: "success",
         autoHideDuration: 1000,
       });
+      setTimeout(() => {
+        queryClient.refetchQueries(["get_requests"]);
+      }, 500);
     },
   });
 
