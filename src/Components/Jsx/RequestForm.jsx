@@ -4,7 +4,6 @@ import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import React from "react";
-import { FaQuestion } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { useAuth } from "../../Context";
 import API from "../../Scripts/API";
@@ -63,7 +62,7 @@ function RequestForm() {
   return (
     <Stack gap={0} w={"100%"}>
       <Title mb="sm" order={isMobile ? 3 : 2} fw={800}>
-        Request Assistance <FaQuestion color="var(--primary-color)" />
+        Request Assistance🆘
       </Title>
       <Group gap={0} grow w={{ base: "100%", md: "50%" }}>
         <TextInput
