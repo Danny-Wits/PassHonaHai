@@ -8,6 +8,8 @@ const API = {
   searchUsers: async (search) => getter("/users-search/?search=" + search),
   getUserInfo: async (user_id) => getter("/user/" + user_id),
   getProfilePic: async (user_id) => getter("/pic/" + user_id),
+  auth: async (user_id) => poster("/auth/" + user_id),
+  logout: async (user_id) => poster("/logout/" + user_id),
   getStudyMaterials: async (page_no = 1) =>
     getter("/study-materials/?page_no=" + page_no),
   getStudyMaterialByID: async (id) => getter("/study-material/" + id),
@@ -52,7 +54,8 @@ const API = {
   getPopularMaterialsByField: async (field) =>
     getter("/popular-materials/?field=" + field),
   uploadRequest: async (user_id, data) => poster("/request/" + user_id, data),
-  getRequests: async (page_no = 1) => getter("/requests/?page_no=" + page_no),
+  getRequests: async (page_no = 1, category) =>
+    getter("/requests/?page_no=" + page_no + "&category=" + category),
 };
 export default API;
 // Reusable functions for GET and POST requests

@@ -19,8 +19,9 @@ import logo from "./assets/phhLogo.png";
 
 import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { enqueueSnackbar } from "notistack";
+import React, { useEffect } from "react";
 import { FaUpload } from "react-icons/fa";
 import { IoRefresh } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +29,7 @@ import Footer from "./Components/Jsx/Footer.jsx";
 import NavBar from "./Components/Jsx/NavBar.jsx";
 import UserButton from "./Components/Jsx/UserButton.jsx";
 import { useAuth } from "./Context.jsx";
+import API from "./Scripts/API.js";
 import { PageRoutes } from "./Scripts/Const.js";
 
 export function NavBarPage({ children }) {
@@ -41,7 +43,7 @@ export function NavBarPage({ children }) {
   const toggleColorScheme = () => {
     setColorScheme(colorScheme === "dark" ? "light" : "dark");
   };
-  const { user_info, logout } = useAuth();
+  const { user_info, logout, isFirstLoad } = useAuth();
   const navigate = useNavigate();
   const setOpened = (value) => {
     if (opened ^ value) {
@@ -55,7 +57,38 @@ export function NavBarPage({ children }) {
     modalClose();
     navigate(uploadPage);
   };
-
+  const { mutateAsync: checkAuth } = useMutation(
+    ["auth"],
+    (user_id) => API.auth(user_id),
+    {
+      retry: false,
+      onSuccess: (data) => {
+        if (data?.error) {
+          enqueueSnackbar(data.error, {
+            variant: "error",
+            autoHideDuration: 5000,
+            preventDuplicate: true,
+          });
+          navigate(PageRoutes.Login);
+        } else if (data.user_id === user_info?.user_id) {
+          enqueueSnackbar("Authenticated Successfully", {
+            variant: "success",
+            preventDuplicate: true,
+            autoHideDuration: 2000,
+          });
+        }
+      },
+    }
+  );
+  useEffect(() => {
+    if (!isFirstLoad || !user_info?.user_id) return;
+    enqueueSnackbar("Welcome to Back", {
+      variant: "success",
+      preventDuplicate: true,
+      autoHideDuration: 2000,
+    });
+    checkAuth(user_info?.user_id);
+  }, [user_info, isFirstLoad]);
   return (
     <AppShell
       header={{ height: 60, collapsed: !pinned }}

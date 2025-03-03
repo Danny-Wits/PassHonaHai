@@ -15,8 +15,8 @@ function RequestForm() {
     mode: "controlled",
     initialValue: "",
     validate: (value) =>
-      value.trim().length < 5
-        ? "Question must be at least 5 characters"
+      value.trim().length < 5 || value.trim().length > 1000
+        ? "Request must be at least 5 and at most 1000 characters"
         : false,
   });
   const queryClient = useQueryClient();
@@ -25,7 +25,14 @@ function RequestForm() {
     mutationFn: (data) => {
       API.uploadRequest(data.user_id, data.data);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (data?.error) {
+        enqueueSnackbar("Error:" + data.error, {
+          variant: "error",
+          autoHideDuration: 1000,
+        });
+        return;
+      }
       field.reset();
       enqueueSnackbar("Question added to the queue", {
         variant: "success",
@@ -34,6 +41,12 @@ function RequestForm() {
       setTimeout(() => {
         queryClient.refetchQueries(["get_requests"]);
       }, 500);
+    },
+    onError: (error) => {
+      enqueueSnackbar("Error:" + error, {
+        variant: "error",
+        autoHideDuration: 1000,
+      });
     },
   });
 
@@ -50,14 +63,15 @@ function RequestForm() {
   return (
     <Stack gap={0} w={"100%"}>
       <Title mb="sm" order={isMobile ? 3 : 2} fw={800}>
-        Have a question <FaQuestion color="var(--primary-color)" />
+        Request Assistance <FaQuestion color="var(--primary-color)" />
       </Title>
       <Group gap={0} grow w={{ base: "100%", md: "50%" }}>
         <TextInput
           miw={250}
+          description={"Unable to find what you are looking for? Ask here."}
           variant="default"
           {...field.getInputProps("question")}
-          placeholder="Ask your question here"
+          placeholder="Ask for notes, advice, or papers here"
           rightSection={
             <ActionIcon
               variant="transparent"
