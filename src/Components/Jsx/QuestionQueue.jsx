@@ -96,8 +96,8 @@ export default QuestionQueue;
 function QuestionStack(list, hasNextPage, isLoading, fetchNextPage) {
   return (
     <Stack w={"100%"} p={"xs"}>
-      {list?.map((request) => (
-        <QuestionCard request={request} />
+      {list?.map((request, index) => (
+        <QuestionCard request={request} key={index} />
       ))}
       <Center w={{ base: "100%", sm: "50%" }}>
         {hasNextPage && (

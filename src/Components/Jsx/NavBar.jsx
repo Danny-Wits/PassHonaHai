@@ -28,16 +28,16 @@ const links = [
     icon: <GoPeople size={iconSize} />,
   },
   {
-    label: "Dashboard",
-    description: "View and Edit Your Profile",
-    link: PageRoutes.Dashboard,
-    icon: <LuLayoutDashboard size={iconSize} />,
-  },
-  {
     label: "Requests",
     description: "Ask and Answer Questions",
     link: PageRoutes.Requests,
     icon: <MdOutlineQuestionAnswer size={iconSize} />,
+  },
+  {
+    label: "Dashboard",
+    description: "View and Edit Your Profile",
+    link: PageRoutes.Dashboard,
+    icon: <LuLayoutDashboard size={iconSize} />,
   },
 ];
 function NavBar({ setOpened }) {

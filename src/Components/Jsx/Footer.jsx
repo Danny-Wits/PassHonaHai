@@ -1,7 +1,17 @@
-import { ActionIcon, Box, Group, Stack, Text, Tooltip } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Group,
+  Popover,
+  Stack,
+  Text,
+  Tooltip,
+} from "@mantine/core";
 import React from "react";
-import { FaCog, FaHome, FaSearch, FaUsers } from "react-icons/fa";
-import { LuPlus } from "react-icons/lu";
+import { FaCog, FaHome, FaSearch } from "react-icons/fa";
+import { GoPeople } from "react-icons/go";
+import { LuPlus, LuUserSearch } from "react-icons/lu";
+import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { PageRoutes } from "../../Scripts/Const";
 const footerOptions = [
@@ -16,9 +26,20 @@ const footerOptions = [
     icon: <FaSearch />,
   },
   {
-    label: "Users",
-    link: PageRoutes.PublicProfiles,
-    icon: <FaUsers />,
+    label: "Community",
+    children: [
+      {
+        label: "Users",
+        link: PageRoutes.PublicProfiles,
+        icon: <GoPeople />,
+      },
+      {
+        label: "Requests",
+        link: PageRoutes.Requests,
+        icon: <MdOutlineQuestionAnswer />,
+      },
+    ],
+    icon: <LuUserSearch />,
   },
   {
     label: "Dashboard",
@@ -28,6 +49,7 @@ const footerOptions = [
 ];
 function Footer({ setOpened, setModelOpen }) {
   const navigate = useNavigate();
+
   return (
     <Group justify="space-around" h={"100%"} p={1} pos={"relative"}>
       <Box
@@ -46,25 +68,82 @@ function Footer({ setOpened, setModelOpen }) {
           </ActionIcon>
         </Tooltip>
       </Box>
-      {footerOptions.map((option, index) => (
-        <ActionIcon
-          c={option.link === window.location.pathname ? "#c029df" : "dimmed"}
-          onClick={() => {
-            setOpened(false);
-            navigate(option.link);
-          }}
-          key={index}
-          variant="transparent"
-          component="div"
-          w={"20%"}
-          h={"100%"}
-        >
-          <Stack align={"center"} p={0} gap={0}>
-            {option.icon}
-            <Text fz={10}>{option.label}</Text>
-          </Stack>
-        </ActionIcon>
-      ))}
+      {footerOptions.map((option, index) =>
+        !option?.children ? (
+          <ActionIcon
+            c={option.link === window.location.pathname ? "#c029df" : "dimmed"}
+            onClick={() => {
+              setOpened(false);
+              navigate(option.link);
+            }}
+            key={index}
+            variant="transparent"
+            component="div"
+            w={"20%"}
+            h={"100%"}
+          >
+            <Stack align={"center"} p={0} gap={0}>
+              {option.icon}
+              <Text fz={10}>{option.label}</Text>
+            </Stack>
+          </ActionIcon>
+        ) : (
+          <Popover
+            key={index}
+            width={100}
+            trapFocus
+            position="bottom"
+            withArrow
+            shadow="md"
+          >
+            <Popover.Target>
+              <ActionIcon
+                key={index}
+                variant="transparent"
+                w={"20%"}
+                h={"100%"}
+                c={
+                  option.children
+                    .flatMap((child) => child.link)
+                    .includes(window?.location.pathname)
+                    ? "#c029df"
+                    : "dimmed"
+                }
+              >
+                <Stack align={"center"} p={0} gap={0}>
+                  {option.icon}
+                  <Text fz={10}>{option.label}</Text>
+                </Stack>
+              </ActionIcon>
+            </Popover.Target>
+            <Popover.Dropdown>
+              {option.children.map((child, index) => (
+                <ActionIcon
+                  c={
+                    child.link === window?.location.pathname
+                      ? "#c029df"
+                      : "dimmed"
+                  }
+                  key={index}
+                  onClick={() => {
+                    setOpened(false);
+                    navigate(child.link);
+                  }}
+                  variant="transparent"
+                  component="div"
+                  w={"100%"}
+                  h={"100%"}
+                >
+                  <Stack align={"center"} p={0} gap={0}>
+                    {child.icon}
+                    <Text fz={10}>{child.label}</Text>
+                  </Stack>
+                </ActionIcon>
+              ))}
+            </Popover.Dropdown>
+          </Popover>
+        )
+      )}
     </Group>
   );
 }
