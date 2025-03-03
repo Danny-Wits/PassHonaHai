@@ -39,7 +39,7 @@ function RequestForm() {
         autoHideDuration: 1000,
       });
       setTimeout(() => {
-        queryClient.refetchQueries(["get_requests"]);
+        queryClient.refetchQueries(["get_pending_requests"]);
       }, 500);
     },
     onError: (error) => {

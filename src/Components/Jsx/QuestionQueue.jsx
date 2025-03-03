@@ -53,7 +53,7 @@ function QuestionQueue() {
       <Title mb="sm" order={isMobile ? 3 : 2} fw={800}>
         {"Solve other people's problems 💡"}
       </Title>
-      <Tabs variant="default" defaultValue="pending">
+      <Tabs variant="default" defaultValue={"pending"}>
         <Tabs.List>
           <Tabs.Tab
             value="pending"
