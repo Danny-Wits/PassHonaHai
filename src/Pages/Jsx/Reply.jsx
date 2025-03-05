@@ -130,7 +130,7 @@ function Reply() {
       {request && (
         <Stack>
           <Title order={isMobile ? 3 : 2} fw={800}>
-            Question❓ / Request 🙏
+            Question❓/ Request🙏
           </Title>
           <Stack pos={"relative"}>
             <Group>
