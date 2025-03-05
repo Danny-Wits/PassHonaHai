@@ -54,6 +54,8 @@ const API = {
   getPopularMaterialsByField: async (field) =>
     getter("/popular-materials/?field=" + field),
   uploadRequest: async (user_id, data) => poster("/request/" + user_id, data),
+  getRequest: async (request_id) =>
+    getter("/request/?request_id=" + request_id),
   getRequests: async (page_no = 1, category) =>
     getter("/requests/?page_no=" + page_no + "&category=" + category),
   answer: async (user_id, data) => poster("/answer/" + user_id, data),

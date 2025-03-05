@@ -1,9 +1,12 @@
 import {
   ActionIcon,
+  Avatar,
+  Badge,
   Button,
   Divider,
   Group,
   Paper,
+  ScrollArea,
   Select,
   Stack,
   Text,
@@ -16,12 +19,16 @@ import { enqueueSnackbar } from "notistack";
 import React from "react";
 import { FaReply } from "react-icons/fa";
 import { IoAdd } from "react-icons/io5";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AnswerCard from "../../Components/Jsx/AnswerCard";
+import {
+  timeDifferenceInMinutes,
+  timeText,
+} from "../../Components/Jsx/CommentCard";
 import MaterialScrollList from "../../Components/Jsx/MaterialScrollList";
 import { useAuth } from "../../Context";
 import API from "../../Scripts/API";
-import { Times } from "../../Scripts/Const";
+import { PageRoutes, Times } from "../../Scripts/Const";
 
 function Reply() {
   const [search, setSearch] = React.useState("");
@@ -107,8 +114,72 @@ function Reply() {
     };
     postAnswer(data);
   };
+  const { data: requestData } = useQuery(
+    ["request", request_id],
+    () => API.getRequest(request_id),
+    {
+      enabled: !!request_id,
+      staleTime: Times.Minute,
+      cacheTime: Times.Minute * 5,
+    }
+  );
+  const navigate = useNavigate();
+  const request = requestData?.request ?? false;
   return (
     <Stack pr={0}>
+      {request && (
+        <Stack>
+          <Title order={isMobile ? 3 : 2} fw={800}>
+            Question❓ / Request 🙏
+          </Title>
+          <Stack pos={"relative"}>
+            <Group>
+              <ScrollArea w={"100%"} offsetScrollbars scrollbarSize={5}>
+                <Text size="sm" fw={500} c={"dimmed"}>
+                  {request?.question}
+                </Text>
+              </ScrollArea>
+            </Group>
+            <Group>
+              <Badge
+                leftSection={
+                  <Avatar
+                    src={request?.profile_picture_url}
+                    name={request?.name}
+                    size={"xs"}
+                    color="initials"
+                  ></Avatar>
+                }
+                variant="default"
+                color="initials"
+                radius="md"
+                onClick={() => {
+                  navigate(PageRoutes.PublicProfile, {
+                    state: { user_info: { user_id: request?.user_id } },
+                  });
+                }}
+                style={{ cursor: "pointer" }}
+                size="xs"
+              >
+                {request?.name}
+              </Badge>
+              <Badge
+                color={request?.status === "pending" ? "red" : "green"}
+                variant="dot"
+                size="xs"
+              >
+                {timeText(
+                  timeDifferenceInMinutes(
+                    Date.now(),
+                    new Date(request?.created_at + " UTC")
+                  )
+                )}
+              </Badge>
+            </Group>
+          </Stack>
+        </Stack>
+      )}
+
       <Paper shadow="sm" withBorder p={isMobile ? "sm" : "md"}>
         <Stack>
           <Title order={isMobile ? 3 : 2} fw={800}>
