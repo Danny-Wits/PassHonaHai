@@ -24,6 +24,7 @@ import Login from "./Pages/Jsx/Login.jsx";
 import Profile from "./Pages/Jsx/Profile.jsx";
 import PublicProfiles from "./Pages/Jsx/PublicProfiles.jsx";
 import Register from "./Pages/Jsx/Register.jsx";
+import Reply from "./Pages/Jsx/Reply.jsx";
 import Requests from "./Pages/Jsx/Requests.jsx";
 import StudyMaterial from "./Pages/Jsx/StudyMaterial.jsx";
 import StudyMaterialLink from "./Pages/Jsx/StudyMaterialLink.jsx";
@@ -159,6 +160,15 @@ const router = createBrowserRouter([
     element: (
       <NavBarPage>
         <PrivateRoute element={<Requests />} />
+      </NavBarPage>
+    ),
+    errorElement: <Error />,
+  },
+  {
+    path: PageRoutes.Reply + ":request_id",
+    element: (
+      <NavBarPage>
+        <PrivateRoute element={<Reply />} />
       </NavBarPage>
     ),
     errorElement: <Error />,

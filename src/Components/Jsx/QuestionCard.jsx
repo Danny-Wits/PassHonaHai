@@ -8,7 +8,6 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import { enqueueSnackbar } from "notistack";
 import React from "react";
 import { FaCheckCircle, FaReply } from "react-icons/fa";
 import { MdPending } from "react-icons/md";
@@ -16,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { PageRoutes } from "../../Scripts/Const";
 import { timeDifferenceInMinutes, timeText } from "./CommentCard";
 
-function QuestionCard({ request }) {
+function QuestionCard({ request, replyIcon = <FaReply />, replyColor = "" }) {
   const navigate = useNavigate();
   return (
     <Group gap={6}>
@@ -71,15 +70,12 @@ function QuestionCard({ request }) {
             </Badge>
             <ActionIcon
               onClick={() => {
-                enqueueSnackbar("Feature coming soon", {
-                  preventDuplicate: true,
-                  autoHideDuration: 2000,
-                  variant: "info",
-                });
+                navigate(PageRoutes.Reply + request?.request_id);
               }}
               ml={"auto"}
+              color={replyColor}
             >
-              <FaReply />
+              {replyIcon}
             </ActionIcon>
           </Group>
         </Stack>

@@ -15,6 +15,7 @@ export const PageRoutes = {
   Paper: "/paper/",
   UploadPaper: "/upload-paper",
   Requests: "/requests",
+  Reply: "/reply/",
 };
 export const validFileTypes = [
   "application/pdf",

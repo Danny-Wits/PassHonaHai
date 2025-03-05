@@ -84,7 +84,9 @@ function QuestionQueue() {
             answeredRequests,
             hasAnsweredRequests,
             isLoadingAnsweredRequests,
-            fetchAnsweredRequests
+            fetchAnsweredRequests,
+            <IoAdd />,
+            "lightgreen"
           )}
         </Tabs.Panel>
       </Tabs>
@@ -93,11 +95,23 @@ function QuestionQueue() {
 }
 
 export default QuestionQueue;
-function QuestionStack(list, hasNextPage, isLoading, fetchNextPage) {
+function QuestionStack(
+  list,
+  hasNextPage,
+  isLoading,
+  fetchNextPage,
+  replyIcon,
+  replyColor
+) {
   return (
     <Stack w={"100%"} p={"xs"}>
       {list?.map((request, index) => (
-        <QuestionCard request={request} key={index} />
+        <QuestionCard
+          request={request}
+          key={index}
+          replyIcon={replyIcon}
+          replyColor={replyColor}
+        />
       ))}
       <Center w={{ base: "100%", sm: "50%" }}>
         {hasNextPage && (

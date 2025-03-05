@@ -10,7 +10,8 @@ import {
 import React from "react";
 import { FaCog, FaHome, FaSearch } from "react-icons/fa";
 import { GoPeople } from "react-icons/go";
-import { LuPlus, LuUserSearch } from "react-icons/lu";
+import { IoPersonAdd } from "react-icons/io5";
+import { LuPlus } from "react-icons/lu";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { PageRoutes } from "../../Scripts/Const";
@@ -39,7 +40,7 @@ const footerOptions = [
         icon: <MdOutlineQuestionAnswer />,
       },
     ],
-    icon: <LuUserSearch />,
+    icon: <IoPersonAdd />,
   },
   {
     label: "Dashboard",
@@ -116,30 +117,32 @@ function Footer({ setOpened, setModelOpen }) {
                 </Stack>
               </ActionIcon>
             </Popover.Target>
-            <Popover.Dropdown>
-              {option.children.map((child, index) => (
-                <ActionIcon
-                  c={
-                    child.link === window?.location.pathname
-                      ? "#c029df"
-                      : "dimmed"
-                  }
-                  key={index}
-                  onClick={() => {
-                    setOpened(false);
-                    navigate(child.link);
-                  }}
-                  variant="transparent"
-                  component="div"
-                  w={"100%"}
-                  h={"100%"}
-                >
-                  <Stack align={"center"} p={0} gap={0}>
-                    {child.icon}
-                    <Text fz={10}>{child.label}</Text>
-                  </Stack>
-                </ActionIcon>
-              ))}
+            <Popover.Dropdown w={"95%"}>
+              <Group justify="space-around">
+                {option.children.map((child, index) => (
+                  <ActionIcon
+                    c={
+                      child.link === window?.location.pathname
+                        ? "#c029df"
+                        : "dimmed"
+                    }
+                    key={index}
+                    onClick={() => {
+                      setOpened(false);
+                      navigate(child.link);
+                    }}
+                    variant="transparent"
+                    component="div"
+                    w={"20%"}
+                    h={"100%"}
+                  >
+                    <Stack align={"center"} p={0} gap={0}>
+                      {child.icon}
+                      <Text fz={10}>{child.label}</Text>
+                    </Stack>
+                  </ActionIcon>
+                ))}
+              </Group>
             </Popover.Dropdown>
           </Popover>
         )
