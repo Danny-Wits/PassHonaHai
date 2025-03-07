@@ -43,7 +43,7 @@ export function NavBarPage({ children }) {
   const toggleColorScheme = () => {
     setColorScheme(colorScheme === "dark" ? "light" : "dark");
   };
-  const { user_info, logout, isFirstLoad } = useAuth();
+  const { user_info, logout, isFirstLoad, refetch_user_info } = useAuth();
   const navigate = useNavigate();
   const setOpened = (value) => {
     if (opened ^ value) {
@@ -140,6 +140,7 @@ export function NavBarPage({ children }) {
               queryClient.refetchQueries([]).then(() => {
                 setLoading(false);
               });
+              refetch_user_info();
             }}
             loading={isLoading}
           >
