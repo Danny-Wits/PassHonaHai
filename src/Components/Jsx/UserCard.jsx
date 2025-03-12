@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { numberFromStandard } from "../../Pages/Jsx/Dashboard.jsx";
 import { PageRoutes } from "../../Scripts/Const.js";
 import classes from "../Styles/UserCardImage.module.css";
+import { FieldColor } from "./UsersTable.jsx";
 
 export function UserCard({ user_info }) {
   const navigate = useNavigate();
@@ -13,20 +14,27 @@ export function UserCard({ user_info }) {
   ];
   const items = stats.map((stat) => (
     <div key={stat.label}>
-      <Text ta="center" fz="lg" fw={500}>
+      <Text ta="center" fz="md" fw={500}>
         {stat.value}
       </Text>
-      <Text ta="center" fz="sm" c="dimmed" lh={1}>
+      <Text ta="center" fz="xs" c="dimmed" lh={1}>
         {stat.label}
       </Text>
     </div>
   ));
 
   return (
-    <Card withBorder padding="xl" radius="md" className={classes.card}>
-      <Card.Section h={140}>
+    <Card
+      withBorder
+      padding="xl"
+      radius="md"
+      mah={300}
+      className={classes.card}
+    >
+      <Card.Section h={80}>
         <Group justify="space-between" p={"sm"}>
           <Avatar
+            size={"sm"}
             name={
               user_info?.standard === ""
                 ? "NO"
@@ -38,7 +46,7 @@ export function UserCard({ user_info }) {
               ? "NO"
               : numberFromStandard(user_info?.standard)}
           </Avatar>
-          <Badge>
+          <Badge size="xs" color={FieldColor[user_info?.field]}>
             {user_info?.branch === "" ? "Unknown Branch" : user_info?.branch}
           </Badge>
         </Group>
@@ -46,10 +54,10 @@ export function UserCard({ user_info }) {
       <Avatar
         src={user_info?.profile_picture_url}
         style={{ cursor: "pointer" }}
-        size={80}
-        radius={80}
+        size={68}
+        radius={68}
         mx="auto"
-        mt={-30}
+        mt={-40}
         name={user_info?.name}
         color={"initials"}
         className={classes.avatar}
@@ -61,7 +69,7 @@ export function UserCard({ user_info }) {
       />
       <Text
         ta="center"
-        fz="lg"
+        fz="md"
         fw={500}
         mt="sm"
         onClick={() => {
@@ -74,17 +82,17 @@ export function UserCard({ user_info }) {
       >
         {user_info?.name}
       </Text>
-      <Text ta="center" fz="sm" c="dimmed" truncate={"end"}>
+      <Text ta="center" fz="xs" c="dimmed" truncate={"end"}>
         {user_info?.bio || "Too cool for a bio"}
       </Text>
-      <Group mt="md" justify="center" gap={30}>
+      <Group mt="sm" justify="center" gap={30}>
         {items}
       </Group>
       <Button
         fullWidth
         radius="md"
-        mt="xl"
-        size="md"
+        mt="md"
+        size="sm"
         variant="default"
         onClick={() =>
           navigate(PageRoutes.PublicProfile, {

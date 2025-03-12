@@ -9,6 +9,7 @@ import {
   Loader,
   Pagination,
   Stack,
+  Text,
   TextInput,
 } from "@mantine/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -59,6 +60,11 @@ function PublicProfiles() {
   return (
     <Stack>
       <Center>
+        <Text fz={{ base: "h2", md: "h1" }} ta={"center"} fw={900}>
+          Public Profiles
+        </Text>
+      </Center>
+      <Center>
         <form
           style={{ width: "100%", justifyContent: "center", display: "flex" }}
           onSubmit={(e) => {
@@ -71,7 +77,7 @@ function PublicProfiles() {
             type="text"
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
             value={search}
-            size={"lg"}
+            size={"sm"}
             radius="xl"
             w={"90%"}
             rightSection={
@@ -109,19 +115,23 @@ function PublicProfiles() {
       {!!searchData?.users && !!searchData?.users.length > 0 && (
         <Divider size={"md"} variant="dashed"></Divider>
       )}
+
+      <Divider mt="md" label={"New Users"} labelPosition="left"></Divider>
       <Center>
         <Pagination
           total={data?.total_pages}
           onChange={setPageNo}
           value={page_no}
           siblings={1}
+          size={"xs"}
         />
       </Center>
+
       <Grid>
         {(data?.users ?? []).map((user) => {
           return (
             <Grid.Col
-              span={{ base: 12, sm: 12, md: 6, lg: 4 }}
+              span={{ base: 12, sm: 6, md: 4, lg: 3 }}
               key={user.user_id}
             >
               <UserCard user_info={user} />
