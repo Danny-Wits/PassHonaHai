@@ -31,7 +31,7 @@ export function UserCard({ user_info }) {
       mah={300}
       className={classes.card}
     >
-      <Card.Section h={80}>
+      <Card.Section h={90}>
         <Group justify="space-between" p={"sm"}>
           <Avatar
             size={"sm"}
@@ -46,7 +46,7 @@ export function UserCard({ user_info }) {
               ? "NO"
               : numberFromStandard(user_info?.standard)}
           </Avatar>
-          <Badge size="xs" color={FieldColor[user_info?.field]}>
+          <Badge size="xs" variant="dot" color={FieldColor[user_info?.field]}>
             {user_info?.branch === "" ? "Unknown Branch" : user_info?.branch}
           </Badge>
         </Group>
